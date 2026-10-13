@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instaclustr/main/json-schema/instaclustr-bundle-compatibility-response-schema-schema.json",
+  "title": "BundleCompatibilityResponseSchema",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/instaclustr-deprecated-openapi.yml#/components/schemas/BundleCompatibilityResponseSchema",
+  "type": "object",
+  "properties": {
+    "APACHE_CASSANDRA": {
+      "type": "array",
+      "description": "Compatible versions of Cassandra",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Cassandra"
+      }
+    },
+    "DEBEZIUM_CONNECTOR_CASSANDRA": {
+      "type": "array",
+      "description": "Compatible versions of Debezium Connector Cassandra",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Debezium Connector Cassandra"
+      }
+    },
+    "CASSANDRA_SHOTOVER_PROXY": {
+      "type": "array",
+      "description": "Compatible versions of Cassandra Shotover Proxy",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Cassandra Shotover Proxy"
+      }
+    },
+    "REDIS": {
+      "type": "array",
+      "description": "Compatible versions of Redis",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Redis"
+      }
+    },
+    "KAFKA": {
+      "type": "array",
+      "description": "Compatible versions of Kafka",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka"
+      }
+    },
+    "KAFKA_DISKLESS": {
+      "type": "array",
+      "description": "Compatible versions of Kafka Diskless",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka Diskless"
+      }
+    },
+    "ELASTICSEARCH": {
+      "type": "array",
+      "description": "Compatible versions of Elasticsearch",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Elasticsearch"
+      }
+    },
+    "SPARK": {
+      "type": "array",
+      "description": "Compatible versions of Spark",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Spark"
+      }
+    },
+    "KAFKA_CONNECT": {
+      "type": "array",
+      "description": "Compatible versions of Kafka Connect",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka Connect"
+      }
+    },
+    "KAFKA_SCHEMA_REGISTRY": {
+      "type": "array",
+      "description": "Compatible versions of Kafka Schema Registry",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka Schema Registry"
+      }
+    },
+    "KAFKA_REST_PROXY": {
+      "type": "array",
+      "description": "Compatible versions of Kafka Rest Proxy",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka Rest Proxy"
+      }
+    },
+    "KAFKA_SHOTOVER_PROXY": {
+      "type": "array",
+      "description": "Compatible versions of Apache ZooKeeper",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Apache ZooKeeper"
+      }
+    },
+    "APACHE_ZOOKEEPER": {
+      "type": "array",
+      "description": "Compatible versions of Kafka Shotover Proxy",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Kafka Shotover Proxy"
+      }
+    },
+    "POSTGRESQL": {
+      "type": "array",
+      "description": "Compatible versions of Postgresql",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Postgresql"
+      }
+    },
+    "KARAPACE_REST_PROXY": {
+      "type": "array",
+      "description": "Compatible versions of Karapace Rest Proxy",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Karapace Rest Proxy"
+      }
+    },
+    "KARAPACE_SCHEMA_REGISTRY": {
+      "type": "array",
+      "description": "Compatible versions of Karapace Schema Registry",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of Karapace Schema Registry"
+      }
+    },
+    "MCP_GATEWAY": {
+      "type": "array",
+      "description": "Compatible versions of MCP Gateway",
+      "items": {
+        "type": "string",
+        "description": "Compatible versions of MCP Gateway"
+      }
+    }
+  }
+}

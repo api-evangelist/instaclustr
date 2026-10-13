@@ -1,0 +1,122 @@
+generated: '2026-10-13'
+method: searched
+source: https://www.instaclustr.com/support/documentation/mcp-gateway/using-mcp-gateway/configure-instaclustr-api-server-mcp-backend-and-tools/
+name: Instaclustr API Server MCP Backend (NetApp Instaclustr MCP Gateway)
+status: documented
+note: 'Instaclustr sells MCP Gateway as a managed cluster type; each customer provisions an MCP Gateway cluster and attaches a platform-managed "Instaclustr API" backend whose tools proxy read-only Instaclustr
+  API operations. There is no single public endpoint: the virtual-server URL is per customer cluster, so no endpoint is recorded. Tool names are as DOCUMENTED on the provider page, not observed from a live
+  tools/list. api.instaclustr.com/mcp answered 401 to an anonymous probe (pre-flight, opaque).'
+deployment:
+  mode: none
+  auth: api-key
+  verified: searched
+  note: Provider-managed but per-customer-provisioned (MCP Gateway cluster); no fixed endpoint an arbitrary agent can POST to.
+auth:
+  type: api-key
+  description: MCP Gateway calls the Instaclustr API as a selected account user or Service User; Cluster Management tools need a Read Only Provisioning API key, Monitoring tools need a Monitoring API key.
+tools:
+- name: listActiveClusters
+  description: Get active cluster IDs.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listActiveClustersV2
+- name: listResizeOperations
+  description: Get resize operations for a cluster data centre.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listResizeOperationsV2
+- name: listUpcomingMaintenanceEvents
+  description: List upcoming maintenance events for a cluster.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listUpcomingMaintenanceEventsV2
+- name: listInProgressMaintenanceEvents
+  description: List in-progress maintenance events for a cluster.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listInProgressMaintenanceEventsV2
+- name: listPastMaintenanceEvents
+  description: List past maintenance events for a cluster.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listPastMaintenanceEventsV2
+- name: listNetworkFirewallRules
+  description: List all cluster network firewall rules.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listNetworkFirewallRulesV2
+- name: getCassandraCluster
+  description: Get Cassandra cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getCassandraClusterV2
+- name: listCassandraClusterBackups
+  description: List backups and restores for each node in a Cassandra cluster for the last 7 days.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listCassandraClusterBackupsV2
+- name: getKafkaCluster
+  description: Get Kafka cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getKafkaClusterV3
+- name: getOpenSearchCluster
+  description: Get OpenSearch cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getOpenSearchClusterV2
+- name: listOpenSearchClusterBackups
+  description: List backups and restores for each node in an OpenSearch cluster for the last 7 days.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listOpenSearchClusterBackupsV2
+- name: getPostgreSQLCluster
+  description: Get PostgreSQL cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getPostgreSQLClusterV2
+- name: listPostgreSQLClusterBackups
+  description: List backups and restores for each node in a PostgreSQL cluster for the last 7 days.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listPostgreSQLClusterBackupsV2
+- name: getClickHouseCluster
+  description: Get ClickHouse cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getClickHouseClusterV2
+- name: listClickHouseClusterBackups
+  description: List backups and restores for each node in a ClickHouse cluster for the last 7 days.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: listClickHouseClusterBackupsV2
+- name: getCadenceCluster
+  description: Get Cadence cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getCadenceClusterV2
+- name: getMcpGatewayCluster
+  description: Get MCP Gateway cluster details.
+  component: Cluster Management API Core
+  read_only: true
+  operationId: getMcpGatewayClusterV1
+- name: getClusterMetricDefinitions
+  description: Fetch metric types compatible with the provided cluster.
+  component: Monitoring API Core
+  read_only: true
+  operationId: getClusterMetricDefinitions
+- name: getClusterMetrics
+  description: Retrieve cluster-level monitoring metrics.
+  component: Monitoring API Core
+  read_only: true
+  operationId: getClusterMetrics
+- name: getDataCentreMetrics
+  description: Retrieve data centre-level monitoring metrics.
+  component: Monitoring API Core
+  read_only: true
+  operationId: getDataCentreMetrics
+- name: getNodeMetrics
+  description: Retrieve node-level monitoring metrics.
+  component: Monitoring API Core
+  read_only: true
+  operationId: getNodeMetrics

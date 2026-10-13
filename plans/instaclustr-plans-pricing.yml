@@ -1,0 +1,15 @@
+generated: '2026-10-13'
+method: searched
+source: https://www.instaclustr.com/pricing/
+name: Instaclustr Pricing
+audience: business-product
+pricing_basis: usage-other
+published: false
+currency: USD
+delivery:
+  delivery: managed
+  evidence: All prices are for Bring Your Own Cloud (BYOC).
+plan_count: 0
+plans: []
+note: The pricing page is an interactive per-node/per-cluster calculator ("Price per node per month*", "Cluster price per month*") with no fixed tiers in the static page; it states "All prices are in United States Dollars." and "For pricing information related to this offering, contact us directly." The
+  API also exposes node size pricing via getEnabledNodesPricing.

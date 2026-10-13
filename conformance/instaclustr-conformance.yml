@@ -1,0 +1,20 @@
+generated: '2026-10-13'
+method: searched
+source: openapi/instaclustr-openapi.yml
+standards:
+- id: scim-2.0
+  conforms: true
+  evidence: openapi/instaclustr-openapi.yml paths /scim/v2/Users, /scim/v2/Groups; schemas reference urn:ietf:params:scim:schemas:core:2.0 and
+    urn:ietf:params:scim:api:messages:2.0
+- id: openapi-3.0
+  conforms: true
+  evidence: the document declares 3.0.1
+- id: oauth2
+  conforms: false
+  evidence: 'securitySchemes: Basic Authentication (http), No Authentication (http)'
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations

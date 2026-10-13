@@ -1,0 +1,21 @@
+generated: '2026-10-13'
+method: generated
+generator: finish-artifacts.py (index from skill frontmatter)
+source: skills/*.md frontmatter; every operationId checked against openapi/
+skills:
+- file: skills/instaclustr-kafka-health-check.md
+  name: instaclustr-kafka-health-check
+  api: instaclustr:instaclustr-api
+  operations:
+  - listActiveClustersV2
+  - getKafkaClusterV3
+  - getKafkaTopicMetrics
+  - getKafkaConsumerGroups
+  - getKafkaGroupMetrics
+- file: skills/instaclustr-service-user-keys.md
+  name: instaclustr-service-user-keys
+  api: instaclustr:instaclustr-api
+  operations:
+  - createServiceUser
+  - generateApiKey
+  - revokeApiKey

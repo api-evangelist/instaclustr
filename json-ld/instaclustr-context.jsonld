@@ -1,0 +1,1240 @@
+{
+  "@context": {
+    "@vocab": "https://instaclustr.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "instaclustr": "https://instaclustr.com/schema#",
+    "AccountAwsEncryptionKeysV2": "instaclustr:AccountAwsEncryptionKeysV2",
+    "accountId": {
+      "@id": "instaclustr:accountId",
+      "@type": "xsd:string"
+    },
+    "encryptionKeys": {
+      "@id": "instaclustr:encryptionKeys",
+      "@container": "@list"
+    },
+    "AccountAwsVpcPeersV2": "instaclustr:AccountAwsVpcPeersV2",
+    "peeringRequests": {
+      "@id": "instaclustr:peeringRequests",
+      "@container": "@list"
+    },
+    "AccountAzureVnetPeersV2": "instaclustr:AccountAzureVnetPeersV2",
+    "AccountClustersV2": "instaclustr:AccountClustersV2",
+    "clusters": {
+      "@id": "instaclustr:clusters",
+      "@container": "@list"
+    },
+    "AccountGcpVpcPeersV2": "instaclustr:AccountGcpVpcPeersV2",
+    "AccountInfoResponse": "instaclustr:AccountInfoResponse",
+    "id": {
+      "@id": "instaclustr:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "instaclustr:name",
+      "@type": "xsd:string"
+    },
+    "companyName": {
+      "@id": "instaclustr:companyName",
+      "@type": "xsd:string"
+    },
+    "accountType": {
+      "@id": "instaclustr:accountType",
+      "@type": "xsd:string"
+    },
+    "AccountUpdateUserRoleResponseSchema": "instaclustr:AccountUpdateUserRoleResponseSchema",
+    "message": {
+      "@id": "instaclustr:message",
+      "@type": "xsd:string"
+    },
+    "AddOnRateItem": "instaclustr:AddOnRateItem",
+    "upliftRate": {
+      "@id": "instaclustr:upliftRate",
+      "@type": "xsd:integer"
+    },
+    "addonType": {
+      "@id": "instaclustr:addonType",
+      "@type": "xsd:string"
+    },
+    "AddonBundles": "instaclustr:AddonBundles",
+    "bundle": {
+      "@id": "instaclustr:bundle",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "instaclustr:version",
+      "@type": "xsd:string"
+    },
+    "options": {
+      "@id": "instaclustr:options"
+    },
+    "AggrType": "instaclustr:AggrType",
+    "AllProviderSpecificSettingsUpdateV2": "instaclustr:AllProviderSpecificSettingsUpdateV2",
+    "awsSettings": {
+      "@id": "instaclustr:awsSettings",
+      "@container": "@list"
+    },
+    "azureSettings": {
+      "@id": "instaclustr:azureSettings",
+      "@container": "@list"
+    },
+    "gcpSettings": {
+      "@id": "instaclustr:gcpSettings",
+      "@container": "@list"
+    },
+    "AllProviderSpecificSettingsV2": "instaclustr:AllProviderSpecificSettingsV2",
+    "ApacheZookeeperClusterV2": "instaclustr:ApacheZookeeperClusterV2",
+    "dataCentres": {
+      "@id": "instaclustr:dataCentres",
+      "@container": "@list"
+    },
+    "currentClusterOperationStatus": {
+      "@id": "instaclustr:currentClusterOperationStatus",
+      "@type": "@id"
+    },
+    "zookeeperVersion": {
+      "@id": "instaclustr:zookeeperVersion",
+      "@type": "xsd:string"
+    },
+    "privateNetworkCluster": {
+      "@id": "instaclustr:privateNetworkCluster",
+      "@type": "xsd:boolean"
+    },
+    "description": {
+      "@id": "instaclustr:description",
+      "@type": "xsd:string"
+    },
+    "twoFactorDelete": {
+      "@id": "instaclustr:twoFactorDelete",
+      "@container": "@list"
+    },
+    "slaTier": {
+      "@id": "instaclustr:slaTier",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "instaclustr:status",
+      "@type": "xsd:string"
+    },
+    "ApacheZookeeperDataCentreV2": "instaclustr:ApacheZookeeperDataCentreV2",
+    "deletedNodes": {
+      "@id": "instaclustr:deletedNodes",
+      "@container": "@list"
+    },
+    "tagManagementEnabled": {
+      "@id": "instaclustr:tagManagementEnabled",
+      "@type": "xsd:boolean"
+    },
+    "enforceAuthSchemes": {
+      "@id": "instaclustr:enforceAuthSchemes",
+      "@container": "@list"
+    },
+    "numberOfNodes": {
+      "@id": "instaclustr:numberOfNodes",
+      "@type": "xsd:integer"
+    },
+    "networks": {
+      "@id": "instaclustr:networks",
+      "@container": "@list"
+    },
+    "customSubjectAlternativeNames": {
+      "@id": "instaclustr:customSubjectAlternativeNames",
+      "@container": "@list"
+    },
+    "enforceAuthEnabled": {
+      "@id": "instaclustr:enforceAuthEnabled",
+      "@type": "xsd:boolean"
+    },
+    "network": {
+      "@id": "instaclustr:network",
+      "@type": "xsd:string"
+    },
+    "tags": {
+      "@id": "instaclustr:tags",
+      "@container": "@list"
+    },
+    "zeroInboundAccess": {
+      "@id": "instaclustr:zeroInboundAccess",
+      "@type": "xsd:boolean"
+    },
+    "nodeSize": {
+      "@id": "instaclustr:nodeSize",
+      "@type": "xsd:string"
+    },
+    "nodes": {
+      "@id": "instaclustr:nodes",
+      "@container": "@list"
+    },
+    "clientToServerEncryption": {
+      "@id": "instaclustr:clientToServerEncryption",
+      "@type": "xsd:boolean"
+    },
+    "cloudProvider": {
+      "@id": "instaclustr:cloudProvider",
+      "@type": "@id"
+    },
+    "region": {
+      "@id": "instaclustr:region",
+      "@type": "xsd:string"
+    },
+    "providerAccountName": {
+      "@id": "instaclustr:providerAccountName",
+      "@type": "xsd:string"
+    },
+    "ApacheZookeeperOptionsSchema": "instaclustr:ApacheZookeeperOptionsSchema",
+    "clientEncryption": {
+      "@id": "instaclustr:clientEncryption",
+      "@type": "xsd:boolean"
+    },
+    "zookeeperNodeCount": {
+      "@id": "instaclustr:zookeeperNodeCount",
+      "@type": "xsd:integer"
+    },
+    "ApiEncryptionKeyRequest": "instaclustr:ApiEncryptionKeyRequest",
+    "alias": {
+      "@id": "instaclustr:alias",
+      "@type": "xsd:string"
+    },
+    "arn": {
+      "@id": "instaclustr:arn",
+      "@type": "xsd:string"
+    },
+    "provider": {
+      "@id": "instaclustr:provider",
+      "@type": "xsd:string"
+    },
+    "providerAccount": {
+      "@id": "instaclustr:providerAccount",
+      "@type": "xsd:string"
+    },
+    "ApiKeyResponse": "instaclustr:ApiKeyResponse",
+    "username": {
+      "@id": "instaclustr:username",
+      "@type": "xsd:string"
+    },
+    "account": {
+      "@id": "instaclustr:account",
+      "@type": "xsd:string"
+    },
+    "apiKeyType": {
+      "@id": "instaclustr:apiKeyType",
+      "@type": "xsd:string"
+    },
+    "key": {
+      "@id": "instaclustr:key",
+      "@type": "xsd:string"
+    },
+    "isExpired": {
+      "@id": "instaclustr:isExpired",
+      "@type": "xsd:boolean"
+    },
+    "cidrAllowList": {
+      "@id": "instaclustr:cidrAllowList",
+      "@container": "@list"
+    },
+    "ApiKeyTypeResponse": "instaclustr:ApiKeyTypeResponse",
+    "displayName": {
+      "@id": "instaclustr:displayName",
+      "@type": "xsd:string"
+    },
+    "ApiKeyUpdateRequest": "instaclustr:ApiKeyUpdateRequest",
+    "ApiKeysResponse": "instaclustr:ApiKeysResponse",
+    "apiKeys": {
+      "@id": "instaclustr:apiKeys",
+      "@container": "@list"
+    },
+    "allowedApiKeyTypes": {
+      "@id": "instaclustr:allowedApiKeyTypes",
+      "@container": "@list"
+    },
+    "ApiRestoreRequest": "instaclustr:ApiRestoreRequest",
+    "pointInTime": {
+      "@id": "instaclustr:pointInTime",
+      "@type": "xsd:string"
+    },
+    "clusterNetwork": {
+      "@id": "instaclustr:clusterNetwork",
+      "@type": "xsd:string"
+    },
+    "keyspaceTables": {
+      "@id": "instaclustr:keyspaceTables",
+      "@type": "xsd:string"
+    },
+    "indexNames": {
+      "@id": "instaclustr:indexNames",
+      "@type": "xsd:string"
+    },
+    "clusterName": {
+      "@id": "instaclustr:clusterName",
+      "@type": "xsd:string"
+    },
+    "cdcInfos": {
+      "@id": "instaclustr:cdcInfos",
+      "@container": "@list"
+    },
+    "clusterNameOverride": {
+      "@id": "instaclustr:clusterNameOverride",
+      "@type": "xsd:string"
+    },
+    "ApiVpcPeeringConnectionRequest": "instaclustr:ApiVpcPeeringConnectionRequest",
+    "peerAccountId": {
+      "@id": "instaclustr:peerAccountId",
+      "@type": "xsd:string"
+    },
+    "peerVpcId": {
+      "@id": "instaclustr:peerVpcId",
+      "@type": "xsd:string"
+    },
+    "peerSubnet": {
+      "@id": "instaclustr:peerSubnet",
+      "@type": "xsd:string"
+    },
+    "peerSubnets": {
+      "@id": "instaclustr:peerSubnets",
+      "@container": "@list"
+    },
+    "peerRegion": {
+      "@id": "instaclustr:peerRegion",
+      "@type": "@id"
+    },
+    "addNetworkToFirewallRules": {
+      "@id": "instaclustr:addNetworkToFirewallRules",
+      "@type": "xsd:boolean"
+    },
+    "validationMessages": {
+      "@id": "instaclustr:validationMessages"
+    },
+    "ApplicationEnumV2": "instaclustr:ApplicationEnumV2",
+    "ApplicationGroupClusterV1": "instaclustr:ApplicationGroupClusterV1",
+    "applicationType": {
+      "@id": "instaclustr:applicationType",
+      "@type": "xsd:string"
+    },
+    "executionOrder": {
+      "@id": "instaclustr:executionOrder",
+      "@type": "xsd:integer"
+    },
+    "ApplicationGroupV1": "instaclustr:ApplicationGroupV1",
+    "organisationVisibility": {
+      "@id": "instaclustr:organisationVisibility",
+      "@type": "xsd:boolean"
+    },
+    "executionMode": {
+      "@id": "instaclustr:executionMode",
+      "@type": "xsd:string"
+    },
+    "maxConcurrency": {
+      "@id": "instaclustr:maxConcurrency",
+      "@type": "xsd:integer"
+    },
+    "prerequisiteGroupId": {
+      "@id": "instaclustr:prerequisiteGroupId",
+      "@type": "xsd:string"
+    },
+    "ApplicationGroupsV1": "instaclustr:ApplicationGroupsV1",
+    "accountName": {
+      "@id": "instaclustr:accountName",
+      "@type": "xsd:string"
+    },
+    "applicationGroups": {
+      "@id": "instaclustr:applicationGroups",
+      "@container": "@list"
+    },
+    "ApplicationVersionListV2": "instaclustr:ApplicationVersionListV2",
+    "applicationVersions": {
+      "@id": "instaclustr:applicationVersions",
+      "@container": "@list"
+    },
+    "ApplicationVersionsV2": "instaclustr:ApplicationVersionsV2",
+    "application": {
+      "@id": "instaclustr:application",
+      "@type": "@id"
+    },
+    "versions": {
+      "@id": "instaclustr:versions",
+      "@container": "@list"
+    },
+    "AuthenticationSaslPlainV1": "instaclustr:AuthenticationSaslPlainV1",
+    "password": {
+      "@id": "instaclustr:password",
+      "@type": "xsd:string"
+    },
+    "AwsArchivalV2": "instaclustr:AwsArchivalV2",
+    "archivalS3Region": {
+      "@id": "instaclustr:archivalS3Region",
+      "@type": "xsd:string"
+    },
+    "awsAccessKeyId": {
+      "@id": "instaclustr:awsAccessKeyId",
+      "@type": "xsd:string"
+    },
+    "archivalS3Uri": {
+      "@id": "instaclustr:archivalS3Uri",
+      "@type": "xsd:string"
+    },
+    "awsSecretAccessKey": {
+      "@id": "instaclustr:awsSecretAccessKey",
+      "@type": "xsd:string"
+    },
+    "AwsByocTemplate": "instaclustr:AwsByocTemplate",
+    "template": {
+      "@id": "instaclustr:template",
+      "@type": "xsd:string"
+    },
+    "AwsByocTemplateListV1": "instaclustr:AwsByocTemplateListV1",
+    "templates": {
+      "@id": "instaclustr:templates",
+      "@container": "@list"
+    },
+    "AwsEncryptionKeyV2": "instaclustr:AwsEncryptionKeyV2",
+    "regions": {
+      "@id": "instaclustr:regions",
+      "@container": "@list"
+    },
+    "inUse": {
+      "@id": "instaclustr:inUse",
+      "@type": "xsd:boolean"
+    },
+    "AwsEndpointDnsNamesV2": "instaclustr:AwsEndpointDnsNamesV2",
+    "clusterDataCenterId": {
+      "@id": "instaclustr:clusterDataCenterId",
+      "@type": "xsd:string"
+    },
+    "awsEndpointDnsNames": {
+      "@id": "instaclustr:awsEndpointDnsNames",
+      "@container": "@list"
+    },
+    "AwsEndpointServiceNameV2": "instaclustr:AwsEndpointServiceNameV2",
+    "endPointServiceId": {
+      "@id": "instaclustr:endPointServiceId",
+      "@type": "xsd:string"
+    },
+    "endPointServiceName": {
+      "@id": "instaclustr:endPointServiceName",
+      "@type": "xsd:string"
+    },
+    "AwsEndpointServiceNamesV2": "instaclustr:AwsEndpointServiceNamesV2",
+    "awsEndpointServiceNames": {
+      "@id": "instaclustr:awsEndpointServiceNames",
+      "@container": "@list"
+    },
+    "AwsEndpointServicePrincipalsRequest": "instaclustr:AwsEndpointServicePrincipalsRequest",
+    "iamPrincipalARNs": {
+      "@id": "instaclustr:iamPrincipalARNs",
+      "@container": "@list"
+    },
+    "AwsEndpointServicePrincipalsResponse": "instaclustr:AwsEndpointServicePrincipalsResponse",
+    "AwsFsxOntapFileSystemV2": "instaclustr:AwsFsxOntapFileSystemV2",
+    "fsxnId": {
+      "@id": "instaclustr:fsxnId",
+      "@type": "xsd:string"
+    },
+    "vpcId": {
+      "@id": "instaclustr:vpcId",
+      "@type": "xsd:string"
+    },
+    "clusterId": {
+      "@id": "instaclustr:clusterId",
+      "@type": "xsd:string"
+    },
+    "AwsFsxOntapFilesystemCredentialsRequestV2": "instaclustr:AwsFsxOntapFilesystemCredentialsRequestV2",
+    "filesystemId": {
+      "@id": "instaclustr:filesystemId",
+      "@type": "xsd:string"
+    },
+    "AwsFsxOntapFilesystemRegistrationV2": "instaclustr:AwsFsxOntapFilesystemRegistrationV2",
+    "AwsKmsArn": "instaclustr:AwsKmsArn",
+    "awsAccountId": {
+      "@id": "instaclustr:awsAccountId",
+      "@type": "xsd:string"
+    },
+    "kmsId": {
+      "@id": "instaclustr:kmsId",
+      "@type": "xsd:string"
+    },
+    "isValid": {
+      "@id": "instaclustr:isValid",
+      "@type": "xsd:boolean"
+    },
+    "multiRegionARNs": {
+      "@id": "instaclustr:multiRegionARNs",
+      "@container": "@list"
+    },
+    "AwsPrefixListFirewallRuleV1": "instaclustr:AwsPrefixListFirewallRuleV1",
+    "clusterDataCentreId": {
+      "@id": "instaclustr:clusterDataCentreId",
+      "@type": "xsd:string"
+    },
+    "deferredReason": {
+      "@id": "instaclustr:deferredReason",
+      "@type": "xsd:string"
+    },
+    "prefixListId": {
+      "@id": "instaclustr:prefixListId",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "instaclustr:type",
+      "@type": "@id"
+    },
+    "AwsPrefixListFirewallRulesV1": "instaclustr:AwsPrefixListFirewallRulesV1",
+    "firewallRules": {
+      "@id": "instaclustr:firewallRules",
+      "@container": "@list"
+    },
+    "AwsProviderEncryptionKey": "instaclustr:AwsProviderEncryptionKey",
+    "accountPrimaryKey": {
+      "@id": "instaclustr:accountPrimaryKey",
+      "@type": "xsd:string"
+    },
+    "AwsRegionV2": "instaclustr:AwsRegionV2",
+    "AwsSecurityGroupFirewallRuleV2": "instaclustr:AwsSecurityGroupFirewallRuleV2",
+    "securityGroupId": {
+      "@id": "instaclustr:securityGroupId",
+      "@type": "xsd:string"
+    },
+    "AwsSecurityGroupFirewallRulesV2": "instaclustr:AwsSecurityGroupFirewallRulesV2",
+    "AwsVpcPeerSummaryV2": "instaclustr:AwsVpcPeerSummaryV2",
+    "peerAwsAccountId": {
+      "@id": "instaclustr:peerAwsAccountId",
+      "@type": "xsd:string"
+    },
+    "peerPrefixLists": {
+      "@id": "instaclustr:peerPrefixLists",
+      "@container": "@list"
+    },
+    "isManagedByInstaclustr": {
+      "@id": "instaclustr:isManagedByInstaclustr",
+      "@type": "xsd:boolean"
+    },
+    "dataCentreVpcId": {
+      "@id": "instaclustr:dataCentreVpcId",
+      "@type": "xsd:string"
+    },
+    "cdcId": {
+      "@id": "instaclustr:cdcId",
+      "@type": "xsd:string"
+    },
+    "AwsVpcPeerUpdateV2": "instaclustr:AwsVpcPeerUpdateV2",
+    "AwsVpcPeerV2": "instaclustr:AwsVpcPeerV2",
+    "statusCode": {
+      "@id": "instaclustr:statusCode",
+      "@type": "xsd:string"
+    },
+    "AwsVpcPeeringConnection": "instaclustr:AwsVpcPeeringConnection",
+    "aws_vpc_connection_id": {
+      "@id": "instaclustr:aws_vpc_connection_id",
+      "@type": "xsd:string"
+    },
+    "clusterDataCentre": {
+      "@id": "instaclustr:clusterDataCentre",
+      "@type": "xsd:string"
+    },
+    "AzureApiPeeringConnection": "instaclustr:AzureApiPeeringConnection",
+    "peerSubscriptionId": {
+      "@id": "instaclustr:peerSubscriptionId",
+      "@type": "xsd:string"
+    },
+    "peerAdObjectId": {
+      "@id": "instaclustr:peerAdObjectId",
+      "@type": "xsd:string"
+    },
+    "peerResourceGroup": {
+      "@id": "instaclustr:peerResourceGroup",
+      "@type": "xsd:string"
+    },
+    "peerVNet": {
+      "@id": "instaclustr:peerVNet",
+      "@type": "xsd:string"
+    },
+    "subscriptionId": {
+      "@id": "instaclustr:subscriptionId",
+      "@type": "xsd:string"
+    },
+    "resourceGroup": {
+      "@id": "instaclustr:resourceGroup",
+      "@type": "xsd:string"
+    },
+    "vNet": {
+      "@id": "instaclustr:vNet",
+      "@type": "xsd:string"
+    },
+    "failureReason": {
+      "@id": "instaclustr:failureReason",
+      "@type": "xsd:string"
+    },
+    "AzurePrivateLinkServiceSubscription": "instaclustr:AzurePrivateLinkServiceSubscription",
+    "reason": {
+      "@id": "instaclustr:reason",
+      "@type": "xsd:string"
+    },
+    "azureSubscriptionId": {
+      "@id": "instaclustr:azureSubscriptionId",
+      "@type": "xsd:string"
+    },
+    "AzurePrivateLinkSettingsV2": "instaclustr:AzurePrivateLinkSettingsV2",
+    "useAzurePrivateLink": {
+      "@id": "instaclustr:useAzurePrivateLink",
+      "@type": "xsd:boolean"
+    },
+    "AzureSubscriptionName": "instaclustr:AzureSubscriptionName",
+    "subscriptionName": {
+      "@id": "instaclustr:subscriptionName",
+      "@type": "xsd:string"
+    },
+    "AzureVNetPeeringConnectionRequest": "instaclustr:AzureVNetPeeringConnectionRequest",
+    "peerVNetNetworkName": {
+      "@id": "instaclustr:peerVNetNetworkName",
+      "@type": "xsd:string"
+    },
+    "AzureVnetPeerSummaryV2": "instaclustr:AzureVnetPeerSummaryV2",
+    "dataCentreResourceGroup": {
+      "@id": "instaclustr:dataCentreResourceGroup",
+      "@type": "xsd:string"
+    },
+    "peerVirtualNetworkName": {
+      "@id": "instaclustr:peerVirtualNetworkName",
+      "@type": "xsd:string"
+    },
+    "dataCentreSubscriptionId": {
+      "@id": "instaclustr:dataCentreSubscriptionId",
+      "@type": "xsd:string"
+    },
+    "dataCentreVirtualNetworkName": {
+      "@id": "instaclustr:dataCentreVirtualNetworkName",
+      "@type": "xsd:string"
+    },
+    "AzureVnetPeerV2": "instaclustr:AzureVnetPeerV2",
+    "BackupBucketV2": "instaclustr:BackupBucketV2",
+    "withoutAutoExpiration": {
+      "@id": "instaclustr:withoutAutoExpiration",
+      "@type": "xsd:boolean"
+    },
+    "BackupCompatibleAllProviderSpecificSettingsV2": "instaclustr:BackupCompatibleAllProviderSpecificSettingsV2",
+    "BackupCompatibleProviderAwsSettingsV2": "instaclustr:BackupCompatibleProviderAwsSettingsV2",
+    "backupBucket": {
+      "@id": "instaclustr:backupBucket",
+      "@type": "xsd:string"
+    },
+    "ebsEncryptionKey": {
+      "@id": "instaclustr:ebsEncryptionKey",
+      "@type": "xsd:string"
+    },
+    "customVirtualNetworkId": {
+      "@id": "instaclustr:customVirtualNetworkId",
+      "@type": "xsd:string"
+    },
+    "storageNetwork": {
+      "@id": "instaclustr:storageNetwork",
+      "@type": "xsd:string"
+    },
+    "BackupCompatibleProviderAzureSettingsV2": "instaclustr:BackupCompatibleProviderAzureSettingsV2",
+    "backupStorageAccount": {
+      "@id": "instaclustr:backupStorageAccount",
+      "@type": "xsd:string"
+    },
+    "BackupCompatibleProviderGcpSettingsV2": "instaclustr:BackupCompatibleProviderGcpSettingsV2",
+    "disableSnapshotAutoExpiry": {
+      "@id": "instaclustr:disableSnapshotAutoExpiry",
+      "@type": "xsd:boolean"
+    },
+    "BundleCompatibilityResponseSchema": "instaclustr:BundleCompatibilityResponseSchema",
+    "APACHE_CASSANDRA": {
+      "@id": "instaclustr:APACHE_CASSANDRA",
+      "@container": "@list"
+    },
+    "DEBEZIUM_CONNECTOR_CASSANDRA": {
+      "@id": "instaclustr:DEBEZIUM_CONNECTOR_CASSANDRA",
+      "@container": "@list"
+    },
+    "CASSANDRA_SHOTOVER_PROXY": {
+      "@id": "instaclustr:CASSANDRA_SHOTOVER_PROXY",
+      "@container": "@list"
+    },
+    "REDIS": {
+      "@id": "instaclustr:REDIS",
+      "@container": "@list"
+    },
+    "KAFKA": {
+      "@id": "instaclustr:KAFKA",
+      "@container": "@list"
+    },
+    "KAFKA_DISKLESS": {
+      "@id": "instaclustr:KAFKA_DISKLESS",
+      "@container": "@list"
+    },
+    "ELASTICSEARCH": {
+      "@id": "instaclustr:ELASTICSEARCH",
+      "@container": "@list"
+    },
+    "SPARK": {
+      "@id": "instaclustr:SPARK",
+      "@container": "@list"
+    },
+    "KAFKA_CONNECT": {
+      "@id": "instaclustr:KAFKA_CONNECT",
+      "@container": "@list"
+    },
+    "KAFKA_SCHEMA_REGISTRY": {
+      "@id": "instaclustr:KAFKA_SCHEMA_REGISTRY",
+      "@container": "@list"
+    },
+    "KAFKA_REST_PROXY": {
+      "@id": "instaclustr:KAFKA_REST_PROXY",
+      "@container": "@list"
+    },
+    "KAFKA_SHOTOVER_PROXY": {
+      "@id": "instaclustr:KAFKA_SHOTOVER_PROXY",
+      "@container": "@list"
+    },
+    "APACHE_ZOOKEEPER": {
+      "@id": "instaclustr:APACHE_ZOOKEEPER",
+      "@container": "@list"
+    },
+    "POSTGRESQL": {
+      "@id": "instaclustr:POSTGRESQL",
+      "@container": "@list"
+    },
+    "KARAPACE_REST_PROXY": {
+      "@id": "instaclustr:KARAPACE_REST_PROXY",
+      "@container": "@list"
+    },
+    "KARAPACE_SCHEMA_REGISTRY": {
+      "@id": "instaclustr:KARAPACE_SCHEMA_REGISTRY",
+      "@container": "@list"
+    },
+    "MCP_GATEWAY": {
+      "@id": "instaclustr:MCP_GATEWAY",
+      "@container": "@list"
+    },
+    "BundleConfigResponse": "instaclustr:BundleConfigResponse",
+    "parameterName": {
+      "@id": "instaclustr:parameterName",
+      "@type": "xsd:string"
+    },
+    "parameterValue": {
+      "@id": "instaclustr:parameterValue",
+      "@type": "xsd:string"
+    },
+    "BundleConfigUpdateRequest": "instaclustr:BundleConfigUpdateRequest",
+    "BundleOption": "instaclustr:BundleOption",
+    "required": {
+      "@id": "instaclustr:required",
+      "@type": "xsd:boolean"
+    },
+    "default": {
+      "@id": "instaclustr:default",
+      "@type": "xsd:boolean"
+    },
+    "BundleRequest": "instaclustr:BundleRequest",
+    "BundleUserCreateRequest": "instaclustr:BundleUserCreateRequest",
+    "initial-permissions": {
+      "@id": "instaclustr:initial-permissions",
+      "@type": "xsd:string"
+    },
+    "BundleUserDeleteRequest": "instaclustr:BundleUserDeleteRequest",
+    "BundleUserResetPasswordRequest": "instaclustr:BundleUserResetPasswordRequest",
+    "BundleVersionCompatibilityResponseSchema": "instaclustr:BundleVersionCompatibilityResponseSchema",
+    "requires_bundle": {
+      "@id": "instaclustr:requires_bundle",
+      "@type": "xsd:string"
+    },
+    "bundle_options": {
+      "@id": "instaclustr:bundle_options"
+    },
+    "ByocAwsDataCentreBackupBucketV1": "instaclustr:ByocAwsDataCentreBackupBucketV1",
+    "backupBucketName": {
+      "@id": "instaclustr:backupBucketName",
+      "@type": "xsd:string"
+    },
+    "dataCentre": {
+      "@id": "instaclustr:dataCentre",
+      "@type": "xsd:string"
+    },
+    "ByocAwsPendingDataCentreBackupBucketUpdateV1": "instaclustr:ByocAwsPendingDataCentreBackupBucketUpdateV1",
+    "ByocAwsPendingDataCentreBackupBucketV1": "instaclustr:ByocAwsPendingDataCentreBackupBucketV1",
+    "ByocAwsProviderAccountSetupV1": "instaclustr:ByocAwsProviderAccountSetupV1",
+    "selfServiceByoc": {
+      "@id": "instaclustr:selfServiceByoc",
+      "@type": "xsd:boolean"
+    },
+    "providerAccountId": {
+      "@id": "instaclustr:providerAccountId",
+      "@type": "xsd:string"
+    },
+    "cloudProviderAccountId": {
+      "@id": "instaclustr:cloudProviderAccountId",
+      "@type": "xsd:string"
+    },
+    "dataCentreBackupBuckets": {
+      "@id": "instaclustr:dataCentreBackupBuckets",
+      "@container": "@list"
+    },
+    "existingKeyPairProviderAccountNames": {
+      "@id": "instaclustr:existingKeyPairProviderAccountNames",
+      "@container": "@list"
+    },
+    "iamRoleName": {
+      "@id": "instaclustr:iamRoleName",
+      "@type": "xsd:string"
+    },
+    "skipKeyPairCreation": {
+      "@id": "instaclustr:skipKeyPairCreation",
+      "@type": "xsd:boolean"
+    },
+    "CadenceAdvancedVisibilityV2": "instaclustr:CadenceAdvancedVisibilityV2",
+    "targetKafka": {
+      "@id": "instaclustr:targetKafka",
+      "@type": "@id"
+    },
+    "targetOpenSearch": {
+      "@id": "instaclustr:targetOpenSearch",
+      "@type": "@id"
+    },
+    "CadenceClusterUpdateV2": "instaclustr:CadenceClusterUpdateV2",
+    "resizeSettings": {
+      "@id": "instaclustr:resizeSettings",
+      "@container": "@list"
+    },
+    "CadenceClusterV2": "instaclustr:CadenceClusterV2",
+    "pciComplianceMode": {
+      "@id": "instaclustr:pciComplianceMode",
+      "@type": "xsd:boolean"
+    },
+    "targetPrimaryCadence": {
+      "@id": "instaclustr:targetPrimaryCadence",
+      "@container": "@list"
+    },
+    "sharedProvisioning": {
+      "@id": "instaclustr:sharedProvisioning",
+      "@container": "@list"
+    },
+    "useHttpApi": {
+      "@id": "instaclustr:useHttpApi",
+      "@type": "xsd:boolean"
+    },
+    "targetSecondaryCadence": {
+      "@id": "instaclustr:targetSecondaryCadence",
+      "@container": "@list"
+    },
+    "useCadenceWebAuth": {
+      "@id": "instaclustr:useCadenceWebAuth",
+      "@type": "xsd:boolean"
+    },
+    "cadenceVersion": {
+      "@id": "instaclustr:cadenceVersion",
+      "@type": "xsd:string"
+    },
+    "standardProvisioning": {
+      "@id": "instaclustr:standardProvisioning",
+      "@container": "@list"
+    },
+    "awsArchival": {
+      "@id": "instaclustr:awsArchival",
+      "@container": "@list"
+    },
+    "CadenceDataCentreV2": "instaclustr:CadenceDataCentreV2",
+    "currentOperations": {
+      "@id": "instaclustr:currentOperations",
+      "@container": "@list"
+    },
+    "clientToClusterEncryption": {
+      "@id": "instaclustr:clientToClusterEncryption",
+      "@type": "xsd:boolean"
+    },
+    "privateLink": {
+      "@id": "instaclustr:privateLink",
+      "@container": "@list"
+    },
+    "CadenceDependencyV2": "instaclustr:CadenceDependencyV2",
+    "dependencyCdcId": {
+      "@id": "instaclustr:dependencyCdcId",
+      "@type": "xsd:string"
+    },
+    "dependencyVpcType": {
+      "@id": "instaclustr:dependencyVpcType",
+      "@type": "@id"
+    },
+    "CadenceDomainRateLimitSummaryV2": "instaclustr:CadenceDomainRateLimitSummaryV2",
+    "domainName": {
+      "@id": "instaclustr:domainName",
+      "@type": "xsd:string"
+    },
+    "requestsPerSecond": {
+      "@id": "instaclustr:requestsPerSecond",
+      "@type": "xsd:integer"
+    },
+    "CadenceDomainRateLimitsUpdateV2": "instaclustr:CadenceDomainRateLimitsUpdateV2",
+    "defaultRequestsPerSecond": {
+      "@id": "instaclustr:defaultRequestsPerSecond",
+      "@type": "xsd:integer"
+    },
+    "domainRateLimits": {
+      "@id": "instaclustr:domainRateLimits",
+      "@container": "@list"
+    },
+    "CadenceDomainRateLimitsV2": "instaclustr:CadenceDomainRateLimitsV2",
+    "CadenceFrontendDomainRateLimitsUpdateV2": "instaclustr:CadenceFrontendDomainRateLimitsUpdateV2",
+    "CadenceFrontendDomainRateLimitsV2": "instaclustr:CadenceFrontendDomainRateLimitsV2",
+    "CadenceOptionsSchema": "instaclustr:CadenceOptionsSchema",
+    "useAdvancedVisibility": {
+      "@id": "instaclustr:useAdvancedVisibility",
+      "@type": "xsd:boolean"
+    },
+    "targetCassandraCdcId": {
+      "@id": "instaclustr:targetCassandraCdcId",
+      "@type": "xsd:string"
+    },
+    "targetCassandraVpcType": {
+      "@id": "instaclustr:targetCassandraVpcType",
+      "@type": "xsd:string"
+    },
+    "targetKafkaCdcId": {
+      "@id": "instaclustr:targetKafkaCdcId",
+      "@type": "xsd:string"
+    },
+    "targetKafkaVpcType": {
+      "@id": "instaclustr:targetKafkaVpcType",
+      "@type": "xsd:string"
+    },
+    "targetOpenSearchCdcId": {
+      "@id": "instaclustr:targetOpenSearchCdcId",
+      "@type": "xsd:string"
+    },
+    "targetOpenSearchVpcType": {
+      "@id": "instaclustr:targetOpenSearchVpcType",
+      "@type": "xsd:string"
+    },
+    "enableArchival": {
+      "@id": "instaclustr:enableArchival",
+      "@type": "xsd:boolean"
+    },
+    "provisioningType": {
+      "@id": "instaclustr:provisioningType",
+      "@type": "xsd:string"
+    },
+    "advertisedHostName": {
+      "@id": "instaclustr:advertisedHostName",
+      "@type": "xsd:string"
+    },
+    "CadenceSharedProvisioningV2": "instaclustr:CadenceSharedProvisioningV2",
+    "CadenceStandardProvisioningV2": "instaclustr:CadenceStandardProvisioningV2",
+    "advancedVisibility": {
+      "@id": "instaclustr:advancedVisibility",
+      "@container": "@list"
+    },
+    "targetCassandra": {
+      "@id": "instaclustr:targetCassandra",
+      "@type": "@id"
+    },
+    "CassandraClusterRestoreV2": "instaclustr:CassandraClusterRestoreV2",
+    "cdcConfigs": {
+      "@id": "instaclustr:cdcConfigs",
+      "@container": "@list"
+    },
+    "restoredClusterName": {
+      "@id": "instaclustr:restoredClusterName",
+      "@type": "xsd:string"
+    },
+    "restoredClusterId": {
+      "@id": "instaclustr:restoredClusterId",
+      "@type": "xsd:string"
+    },
+    "CassandraClusterUpdateV2": "instaclustr:CassandraClusterUpdateV2",
+    "CassandraClusterV2": "instaclustr:CassandraClusterV2",
+    "defaultUserPassword": {
+      "@id": "instaclustr:defaultUserPassword",
+      "@type": "xsd:string"
+    },
+    "spark": {
+      "@id": "instaclustr:spark",
+      "@container": "@list"
+    },
+    "cassandraVersion": {
+      "@id": "instaclustr:cassandraVersion",
+      "@type": "xsd:string"
+    },
+    "luceneEnabled": {
+      "@id": "instaclustr:luceneEnabled",
+      "@type": "xsd:boolean"
+    },
+    "passwordAndUserAuth": {
+      "@id": "instaclustr:passwordAndUserAuth",
+      "@type": "xsd:boolean"
+    },
+    "bundledUseOnly": {
+      "@id": "instaclustr:bundledUseOnly",
+      "@type": "xsd:boolean"
+    },
+    "CassandraDataCentreV2": "instaclustr:CassandraDataCentreV2",
+    "replicationFactor": {
+      "@id": "instaclustr:replicationFactor",
+      "@type": "xsd:integer"
+    },
+    "pscNetwork": {
+      "@id": "instaclustr:pscNetwork",
+      "@type": "xsd:string"
+    },
+    "debezium": {
+      "@id": "instaclustr:debezium",
+      "@container": "@list"
+    },
+    "privateServiceConnectV2": {
+      "@id": "instaclustr:privateServiceConnectV2",
+      "@type": "xsd:boolean"
+    },
+    "clusterDns": {
+      "@id": "instaclustr:clusterDns",
+      "@type": "xsd:boolean"
+    },
+    "continuousBackup": {
+      "@id": "instaclustr:continuousBackup",
+      "@type": "xsd:boolean"
+    },
+    "clusterDnsZones": {
+      "@id": "instaclustr:clusterDnsZones",
+      "@container": "@list"
+    },
+    "shotoverProxy": {
+      "@id": "instaclustr:shotoverProxy",
+      "@container": "@list"
+    },
+    "privateIpBroadcastForDiscovery": {
+      "@id": "instaclustr:privateIpBroadcastForDiscovery",
+      "@type": "xsd:boolean"
+    },
+    "privateConnectivity": {
+      "@id": "instaclustr:privateConnectivity",
+      "@container": "@list"
+    },
+    "CassandraOptionsSchema": "instaclustr:CassandraOptionsSchema",
+    "authnAuthz": {
+      "@id": "instaclustr:authnAuthz",
+      "@type": "xsd:boolean"
+    },
+    "usePrivateBroadcastRPCAddress": {
+      "@id": "instaclustr:usePrivateBroadcastRPCAddress",
+      "@type": "xsd:boolean"
+    },
+    "continuousBackupEnabled": {
+      "@id": "instaclustr:continuousBackupEnabled",
+      "@type": "xsd:boolean"
+    },
+    "shotoverProxyNodeSize": {
+      "@id": "instaclustr:shotoverProxyNodeSize",
+      "@type": "xsd:string"
+    },
+    "CassandraPrivateConnectivityEndpointAddresses": "instaclustr:CassandraPrivateConnectivityEndpointAddresses",
+    "rack": {
+      "@id": "instaclustr:rack",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "instaclustr:address",
+      "@container": "@list"
+    },
+    "CassandraPrivateConnectivitySettingsV2": "instaclustr:CassandraPrivateConnectivitySettingsV2",
+    "endpointAddresses": {
+      "@id": "instaclustr:endpointAddresses",
+      "@container": "@list"
+    },
+    "CassandraPrivateServiceConnectRackInfoByDataCenterV2": "instaclustr:CassandraPrivateServiceConnectRackInfoByDataCenterV2",
+    "dataCenterName": {
+      "@id": "instaclustr:dataCenterName",
+      "@type": "xsd:string"
+    },
+    "rackInfo": {
+      "@id": "instaclustr:rackInfo",
+      "@container": "@list"
+    },
+    "CassandraPrivateServiceConnectRackInfoV2": "instaclustr:CassandraPrivateServiceConnectRackInfoV2",
+    "advertisedIps": {
+      "@id": "instaclustr:advertisedIps",
+      "@container": "@list"
+    },
+    "rackName": {
+      "@id": "instaclustr:rackName",
+      "@type": "xsd:string"
+    },
+    "serviceAttachmentNetwork": {
+      "@id": "instaclustr:serviceAttachmentNetwork",
+      "@type": "xsd:string"
+    },
+    "serviceAttachmentId": {
+      "@id": "instaclustr:serviceAttachmentId",
+      "@type": "xsd:string"
+    },
+    "serviceAttachmentName": {
+      "@id": "instaclustr:serviceAttachmentName",
+      "@type": "xsd:string"
+    },
+    "CassandraTopPartitionsV2": "instaclustr:CassandraTopPartitionsV2",
+    "duration": {
+      "@id": "instaclustr:duration",
+      "@type": "xsd:integer"
+    },
+    "keySpace": {
+      "@id": "instaclustr:keySpace",
+      "@type": "xsd:string"
+    },
+    "topCount": {
+      "@id": "instaclustr:topCount",
+      "@type": "xsd:integer"
+    },
+    "operationId": {
+      "@id": "instaclustr:operationId",
+      "@type": "xsd:string"
+    },
+    "nodeId": {
+      "@id": "instaclustr:nodeId",
+      "@type": "xsd:string"
+    },
+    "table": {
+      "@id": "instaclustr:table",
+      "@type": "xsd:string"
+    },
+    "capacity": {
+      "@id": "instaclustr:capacity",
+      "@type": "xsd:integer"
+    },
+    "sampler": {
+      "@id": "instaclustr:sampler",
+      "@type": "xsd:integer"
+    },
+    "CdcNetworkDetailsV2": "instaclustr:CdcNetworkDetailsV2",
+    "cidr": {
+      "@id": "instaclustr:cidr",
+      "@type": "xsd:string"
+    },
+    "primary": {
+      "@id": "instaclustr:primary",
+      "@type": "xsd:boolean"
+    },
+    "CdcPgbouncerPoolSchema": "instaclustr:CdcPgbouncerPoolSchema",
+    "CidrSchema": "instaclustr:CidrSchema",
+    "prefixLength": {
+      "@id": "instaclustr:prefixLength",
+      "@type": "xsd:integer"
+    },
+    "CidrSetSchema": "instaclustr:CidrSetSchema",
+    "cidrs": {
+      "@id": "instaclustr:cidrs",
+      "@container": "@list"
+    },
+    "ClickHouseAwsPrivateLinkSettingsV2": "instaclustr:ClickHouseAwsPrivateLinkSettingsV2",
+    "endpointServiceName": {
+      "@id": "instaclustr:endpointServiceName",
+      "@type": "xsd:string"
+    },
+    "useAwsPrivateLink": {
+      "@id": "instaclustr:useAwsPrivateLink",
+      "@type": "xsd:boolean"
+    },
+    "ClickHouseClusterUpdateV2": "instaclustr:ClickHouseClusterUpdateV2",
+    "ClickHouseClusterV2": "instaclustr:ClickHouseClusterV2",
+    "clickhouseVersion": {
+      "@id": "instaclustr:clickhouseVersion",
+      "@type": "xsd:string"
+    },
+    "ClickHouseConfigurationV2": "instaclustr:ClickHouseConfigurationV2",
+    "configurationOverrides": {
+      "@id": "instaclustr:configurationOverrides",
+      "@container": "@list"
+    },
+    "ClickHouseDataCentreV2": "instaclustr:ClickHouseDataCentreV2",
+    "dedicatedClickHouseKeeper": {
+      "@id": "instaclustr:dedicatedClickHouseKeeper",
+      "@container": "@list"
+    },
+    "loadBalancerDomain": {
+      "@id": "instaclustr:loadBalancerDomain",
+      "@type": "xsd:string"
+    },
+    "loadBalancerEnabled": {
+      "@id": "instaclustr:loadBalancerEnabled",
+      "@type": "xsd:boolean"
+    },
+    "replicas": {
+      "@id": "instaclustr:replicas",
+      "@type": "xsd:integer"
+    },
+    "shards": {
+      "@id": "instaclustr:shards",
+      "@type": "xsd:integer"
+    },
+    "tieredStorage": {
+      "@id": "instaclustr:tieredStorage",
+      "@container": "@list"
+    },
+    "ClickHouseIntegrationDomain": "instaclustr:ClickHouseIntegrationDomain",
+    "domains": {
+      "@id": "instaclustr:domains",
+      "@container": "@list"
+    },
+    "ClickHouseIntegrationKafka": "instaclustr:ClickHouseIntegrationKafka",
+    "namedCollection": {
+      "@id": "instaclustr:namedCollection",
+      "@type": "xsd:string"
+    },
+    "kafkaCluster": {
+      "@id": "instaclustr:kafkaCluster"
+    },
+    "ClickHouseIntegrationKafkaList": "instaclustr:ClickHouseIntegrationKafkaList",
+    "integrations": {
+      "@id": "instaclustr:integrations",
+      "@container": "@list"
+    },
+    "ClickHouseIntegrationS3": "instaclustr:ClickHouseIntegrationS3",
+    "ClickHouseIntegrationS3Fsxn": "instaclustr:ClickHouseIntegrationS3Fsxn",
+    "fsxnFilesystem": {
+      "@id": "instaclustr:fsxnFilesystem"
+    },
+    "ClickHouseIntegrationS3FsxnList": "instaclustr:ClickHouseIntegrationS3FsxnList",
+    "ClickHouseIntegrationS3Private": "instaclustr:ClickHouseIntegrationS3Private",
+    "kmsKeyArns": {
+      "@id": "instaclustr:kmsKeyArns",
+      "@container": "@list"
+    },
+    "buckets": {
+      "@id": "instaclustr:buckets",
+      "@container": "@list"
+    },
+    "ClickHousePrivateConnectivitySettingsV2": "instaclustr:ClickHousePrivateConnectivitySettingsV2",
+    "awsPrivateLink": {
+      "@id": "instaclustr:awsPrivateLink",
+      "@container": "@list"
+    },
+    "ClickHouseReloadOperation": "instaclustr:ClickHouseReloadOperation",
+    "timeCreated": {
+      "@id": "instaclustr:timeCreated",
+      "@type": "xsd:string"
+    },
+    "timeModified": {
+      "@id": "instaclustr:timeModified",
+      "@type": "xsd:string"
+    },
+    "ClickHouseTieredStorageAzureBlobStorageSettingsV2": "instaclustr:ClickHouseTieredStorageAzureBlobStorageSettingsV2",
+    "containerName": {
+      "@id": "instaclustr:containerName",
+      "@type": "xsd:string"
+    },
+    "ClickHouseTieredStorageS3SettingsV2": "instaclustr:ClickHouseTieredStorageS3SettingsV2",
+    "prefix": {
+      "@id": "instaclustr:prefix",
+      "@type": "xsd:string"
+    },
+    "s3BucketName": {
+      "@id": "instaclustr:s3BucketName",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Instaclustr API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Instaclustr's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-13) from openapi/instaclustr-deprecated-openapi.yml, openapi/instaclustr-openapi.yml.",
+  "dcterms:created": "2026-10-13",
+  "dcterms:source": [
+    "openapi/instaclustr-deprecated-openapi.yml",
+    "openapi/instaclustr-openapi.yml"
+  ]
+}

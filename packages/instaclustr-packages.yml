@@ -1,0 +1,21 @@
+generated: '2026-10-13'
+method: searched
+source:
+- https://registry.terraform.io/v1/providers/instaclustr/instaclustr
+- https://api.github.com/repos/instaclustr/terraform-provider-instaclustr/releases/latest
+packages:
+- name: instaclustr/instaclustr
+  registry: terraform
+  url: https://registry.terraform.io/providers/instaclustr/instaclustr
+  language: HCL/Go
+  official: true
+  version: 2.1.117
+  published: '2026-10-08'
+  source_code: https://github.com/instaclustr/terraform-provider-instaclustr
+checked_absent:
+- registry: pypi
+  url: https://pypi.org/pypi/instaclustr/json
+  status: 404
+- registry: npm
+  url: https://registry.npmjs.org/instaclustr
+  status: 404

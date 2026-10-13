@@ -1,23 +1,177 @@
 aid: instaclustr
+
 name: Instaclustr
-description: 'Instaclustr is a company surfaced via the API Evangelist harvest backlog (source: market-gap:streaming-kafka)
-  and added to the network as a stub for full-pipeline profiling.'
+
+image: https://www.instaclustr.com/wp-content/uploads/Insta_Website_Social-Share-Thumbnail_rebrand.png
+
+description: NetApp Instaclustr is a managed platform for open source data infrastructure, running and supporting Apache Kafka, Kafka Connect,
+  Apache Cassandra, PostgreSQL, OpenSearch, ClickHouse, Valkey and Cadence clusters in its own cloud accounts or in a customer's cloud (Bring
+  Your Own Cloud). Its public Instaclustr API at api.instaclustr.com provides cluster management (provisioning, firewall rules, peering, users,
+  backups, maintenance events), monitoring metrics, user/organization management with SCIM 2.0, and an MCP Gateway product for AI agents. Instaclustr
+  is part of NetApp.
+
 url: https://raw.githubusercontent.com/api-evangelist/instaclustr/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:market-gap:streaming-kafka
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+
+x-tier-reason: enrichment pass 2026-10-13 (local-v5; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-13'
+
 modified: '2026-10-13'
+
 tags:
 - Company
-apis: []
+- Apache Kafka
+- Apache Cassandra
+- PostgreSQL
+- OpenSearch
+- ClickHouse
+- Managed Databases
+- Data Streaming
+- MCP
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/instaclustr-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/instaclustr-rate-limits.yml
+- type: Spectral
+  url: rules/instaclustr-rules.yml
+- type: JSONLD
+  url: json-ld/instaclustr-context.jsonld
+- type: Vocabulary
+  url: vocabulary/instaclustr-vocabulary.yml
+- type: DataModel
+  url: data-model/instaclustr-data-model.yml
+- type: Conventions
+  url: conventions/instaclustr-conventions.yml
+- type: Deprecation
+  url: https://instaclustr.redoc.ly/Deprecated/
+- type: Lifecycle
+  url: lifecycle/instaclustr-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/instaclustr-problem-types.yml
+- type: Conformance
+  url: conformance/instaclustr-conformance.yml
+- type: LLMsTxt
+  url: llms/instaclustr-llms.txt
+- type: SecurityTxt
+  url: well-known/instaclustr-status-security.txt
+- type: WellKnown
+  url: well-known/instaclustr-well-known.yml
+- type: Hosts
+  url: hosts/instaclustr-hosts.yml
+- type: IntegrationEdges
+  url: integrations/instaclustr-integration-edges.yml
+- type: Vendors
+  url: vendors/instaclustr-vendors.yml
+- type: SDKs
+  url: packages/instaclustr-packages.yml
+- type: Packages
+  url: packages/instaclustr-packages.yml
+- type: StatusPage
+  url: https://status.instaclustr.com/
+- type: Authentication
+  url: authentication/instaclustr-authentication.yml
+- type: DomainSecurity
+  url: security/instaclustr-domain-security.yml
 - type: Website
   url: https://www.instaclustr.com
+- type: Documentation
+  url: https://www.instaclustr.com/support/documentation/
+- type: APIReference
+  url: https://docs.api.instaclustr.com/
+- type: Blog
+  url: https://www.instaclustr.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/instaclustr
+- type: Login
+  url: https://console2.instaclustr.com/login
+- type: SignUp
+  url: https://console2.instaclustr.com/signup
+- type: Pricing
+  url: https://www.instaclustr.com/pricing/
+- type: PrivacyPolicy
+  url: https://www.instaclustr.com/policies/
+- type: TermsOfService
+  url: https://www.instaclustr.com/policies/terms-of-service/
+- type: Support
+  url: https://support.instaclustr.com/hc/en-us
+
+apis:
+- aid: instaclustr:instaclustr-api
+  name: Instaclustr API
+  description: The current Instaclustr API (Cluster Management V2/V3, Monitoring, User Management and SCIM 2.0, Organization Management, MCP Gateway
+    and node pricing information), documented in Redocly at docs.api.instaclustr.com and authenticated with HTTP Basic (username plus API key).
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Management
+  - Monitoring
+  - SCIM
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://instaclustr.redoc.ly/Current/
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+- aid: instaclustr:instaclustr-deprecated-api
+  name: Instaclustr API (Deprecated endpoints)
+  description: Deprecated Instaclustr API endpoints still documented in the Redocly portal's Deprecated version, served from the same api.instaclustr.com
+    host.
+  humanURL: https://instaclustr.redoc.ly/Deprecated/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Deprecated
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-deprecated-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://instaclustr.redoc.ly/Deprecated/
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+x-enrichment:
+  date: '2026-10-13'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v5

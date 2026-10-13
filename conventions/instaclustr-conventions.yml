@@ -1,0 +1,18 @@
+generated: '2026-10-13'
+method: searched
+source:
+- openapi/instaclustr-openapi.yml
+- https://www.instaclustr.com/support/api-integrations/api-reference/rate-limits/instaclustr-api-rate-limits/
+auth: HTTP Basic (account username or service user with an API key); separate Provisioning and Monitoring API keys
+idempotency:
+  coverage: none
+  note: No Idempotency-Key header or replay-protection mechanism appears in the contract (the only matches are the Kafka ACL operation enum IDEMPOTENT_WRITE).
+versioning: version suffix per resource in the path (v2/v3)
+rate_limit_signaling: HTTP 429 with message "Rate Limit Exceeded"; sliding window, per account
+reversibility:
+  status: undocumented
+  note: The API has write surfaces (cluster create/delete, users, firewall rules, API key rotate/revoke) and DELETE operations, but no documented reversal window was found; none asserted.
+see_also:
+  rate_limits: rate-limits/instaclustr-rate-limits.yml
+  lifecycle: lifecycle/instaclustr-lifecycle.yml
+  authentication: authentication/instaclustr-authentication.yml

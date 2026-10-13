@@ -1,0 +1,423 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/instaclustr-deprecated-openapi.yml
+- openapi/instaclustr-openapi.yml
+vocabulary:
+  name: Instaclustr Domain Vocabulary
+  description: 'Terms declared by Instaclustr''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-13'
+  terms:
+  - term: Cluster Resource
+    definition: Operations related to provisioning clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Scale Cluster
+    definition: Operations related to scaling a cluster. Includes adding a new data centre and resizing a cluster.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: AWS Endpoint Service Principals
+    definition: Operations related to AWS endpoint service principals.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Backup & Restore
+    definition: Operations related to backing up and restoring a cluster
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Bundle Information
+    definition: Operations related to retrieving information on bundles.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Bundle User
+    definition: Operations related to users in a bundle.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Cluster Config
+    definition: Operations related to configurations of a cluster.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Encryption Key
+    definition: Operations related to encryption keys.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Firewall Rule
+    definition: Operations related to firewall rules of a cluster.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Kafka ACL
+    definition: Operations related to Kafka Access Control Lists.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Kafka Mirroring API
+    definition: Operations related to managing mirroring setups between Kafka and Kafka Connect clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Kafka Topic
+    definition: Operations related to Kafka topics.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Maintenance Events API
+    definition: Operations related to managing maintenance events on Instaclustr clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Node Reload
+    definition: Operation related to reloading nodes.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: VPC Peering
+    definition: Operations related to VPC Peering.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Provisioning V1 - Trait
+    definition: Operations related to provisioning clusters.Authentication - These requests require either a Provisioning API Key or Read Only
+      Provisioning API Key. The Provisioning API Key has full access to all endpoints listed in this category while the Read Only Provision API
+      Key can only perform GET requests to endpoints.Account API keys can be retrieved any time from the console by going to gear icon to the
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Cluster Management V2 - Trait
+    definition: Operations related to managing clusters.Authentication - These requests require either a Provisioning API Key or Read Only Provisioning
+      API Key. The Provisioning API Key has full access to all endpoints listed in this category while the Read Only Provision API Key can only
+      perform GET requests to endpoints.Account API keys can be retrieved any time from the console by going to gear icon to the top
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-deprecated-openapi.yml
+  - term: Monitoring API
+    definition: Operation to retrieve metric definitions.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Service User Management API
+    definition: Operations related to service user management.Service Users are API-only users. Service Users are created in, and have access
+      to, a single account. This account is the account associated with the API key that was used to create the Service User via the API. Owner
+      and Cluster Admin level users in an account can create Service Users. The user who creates a Service User automatically becomes an Admin
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Endpoint DNS Names V2
+    definition: Operations related to AWS endpoint dns names.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Endpoint Service Names V2
+    definition: Operations related to AWS endpoint service names.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Endpoint Service Principals V2
+    definition: Operations related to AWS endpoint service principals.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS FSx ONTAP File Systems
+    definition: Operations related to AWS FSx ONTAP file system provisioning
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS FSx ONTAP Filesystem Credentials V2
+    definition: Operations related to BYO AWS FSx ONTAP filesystem credentials
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Prefix List Firewall Rule V1
+    definition: Operations related to AWS prefix list firewall rule
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Prefix List Firewall Rules V1
+    definition: Operations related to bulk AWS prefix list firewall rule operations for a cluster data centre
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Security Group Firewall Rule V2
+    definition: Operations related to AWS security group firewall rule
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS Security Group Firewall Rules V2
+    definition: Operations related to perform bulk operation on Cluster AWS security group firewall rules
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AWS VPC Peer V2
+    definition: Operations related to AWS VPC Peering with Cluster Data Centers.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Apache Kafka Connect Mirror V2
+    definition: Operations related to Apache Kafka Connect Mirror.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Apache Kafka Provisioning V3
+    definition: Operations relating to the Apache Kafka Rest Proxy user.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Apache Kafka Rest Proxy User
+    definition: Operations relating to the Apache Kafka Rest Proxy user.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Apache Kafka Schema Registry User
+    definition: Operations relating to the Apache Schema Registry user.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Azure Private Link Service Subscriptions
+    definition: Azure Private Link Service allowed subscriptions
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Azure Vnet Peer V2
+    definition: Operations related to Azure Vnet Peering with Cluster Data Centers.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: BYOC AWS CloudFormation
+    definition: Operations related to Bring-Your-Own-Cloud (BYOC) AWS CloudFormation template.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: BYOC AWS Provider Account Setup V1
+    definition: Operations related to BYOC provider account setup records.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cadence Domain Rate Limits V2
+    definition: Operations related to Cadence per-frontend-instance domain request-rate limits.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cadence Global Domain Rate Limits V2
+    definition: Operations related to Cadence cluster-wide domain request-rate limits.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: ClickHouse Configurations
+    definition: Operations related to ClickHouse configuration properties.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: ClickHouse Integrations
+    definition: Operations related to ClickHouse integrations.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: ClickHouse Provisioning
+    definition: Operations related to ClickHouse provisioning.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cloud Provider Details V2
+    definition: Cloud provider information.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Exclusion Window V2
+    definition: Cluster exclusion window
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Maintenance Events V2
+    definition: Operations related to cluster maintenance events
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Network Firewall Rule V2
+    definition: Operations related to cluster network firewall rule, not supported for on-premises clusters
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Network Firewall Rules V2
+    definition: Operations related to perform bulk operation on Cluster network firewall rules, not supported for on-premises clusters
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Non Recurring Exclusion Window V2
+    definition: Cluster non-recurring exclusion window
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Cluster Suspend Resume V2
+    definition: Operations related to suspending and resuming clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Custom Tags V2
+    definition: Operations related to managing custom tags
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: GCP PSC Service Attachments Accept List V2
+    definition: Operations related to GCP PSC Service Attachments Accept List
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: GCP VPC Peer V2
+    definition: Operations related to GCP VPC Peering with Cluster Data Centers.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Horizontal Scaling Operations
+    definition: Operations related to horizontal scaling of Cluster Data Centres.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Karapace Rest Proxy User
+    definition: Operations relating to the Karapace Rest Proxy user.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Karapace Schema Registry User
+    definition: Operations relating to the Karapace Schema Registry user.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: MCP Gateway Backend V1
+    definition: Operations related to MCP Gateway backends.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: MCP Gateway Persona Access Control V1
+    definition: Operations related to MCP Gateway persona access control.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: MCP Gateway Provisioning V1
+    definition: Operations related to MCP Gateway provisioning
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: MCP Gateway Tool V1
+    definition: Operations related to MCP Gateway tools
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: MCP Gateway Virtual Server V1
+    definition: Operations related to MCP Gateway virtual servers.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Management Units Usage
+    definition: Account Management Units Usage Information
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Monitoring API - Cluster
+    definition: Operations related to monitoring provisioned clusters
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Monitoring API - Data Centre
+    definition: Operations related to monitoring data centres of provisioned clusters
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Monitoring API - Node
+    definition: Operations related to monitoring nodes of provisioned clusters
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: OpenSearch External S3 Bucket V2
+    definition: Operations related to managing external S3 buckets with read-only access for OpenSearch clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Organization Management API
+    definition: Operations related to Organization Management.These endpoints require an Organization Management API key. Organization API keys
+      can be retrieved any time from the console by going to the Organization Management page > API Keys.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: PostgreSQL Configuration V2
+    definition: Operations related to PostgreSQL configuration properties.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: PostgreSQL Operations
+    definition: Operations related to PostgreSQL.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: PostgreSQL Provisioning V2
+    definition: Operations related to managing a Postgresql cluster
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Pricing information - Node sizes
+    definition: Operation to fetch pricing information. These endpoints do not require any API keys to access. These are publicly available information.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Private Link Private Service Connect Endpoint Addresses V2
+    definition: Operations related to Private Link / Private Service Connect Endpoint addresses
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Resize Operations V2
+    definition: Operations and information related to resizing clusters.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: User Actions V3
+    definition: Operations related to the user actions
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: User Management and SCIM 2.0 API
+    definition: Operations related to user management. Several operations implement the SCIM 2.0 protocol.
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: Monitoring - Trait
+    definition: Operations related to monitoring clusters, data centres and nodes. Authentication - These requests require the Monitoring API
+      Key.Account API keys can be retrieved any time from the console by going to gear icon to the top right > Account Settings > API Keys.Rate
+      Limit - Requests to the Monitoring are rate limited. Exceeding this rate will return a 429 error code until that user’s request threshol
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: User Management and SCIM 2.0 API - Trait
+    definition: Operations related to user management. Several operations implement the SCIM 2.0 protocol.Authentication - These requests require
+      the User Management API Key. Moreover, User Management and SCIM 2.0 API requests require a key generated by an Account Owner user. Account
+      API keys can be retrieved any time from the console by going to gear icon to the top right > Account Settings > API Keys.Rate Limit
+    tags:
+    - Resource Group
+    source: openapi/instaclustr-openapi.yml
+  - term: AccountAwsEncryptionKeysV2
+    definition: A listable data source of all AWS Encryption Keys in an Instaclustr Account.
+    tags:
+    - Object
+    source: openapi/instaclustr-deprecated-openapi.yml#/components/schemas/AccountAwsEncryptionKeysV2
+  - term: AccountAwsVpcPeersV2
+    definition: A listable data source of all AWS VPC Peering requests in an Instaclustr Account.
+    tags:
+    - Object
+    source: openapi/instaclustr-deprecated-openapi.yml#/components/schemas/AccountAwsVpcPeersV2
+  - term: AccountAzureVnetPeersV2
+    definition: A listable data source of all Azure Virtual Network Peering requests in an Instaclustr Account.
+    tags:
+    - Object
+    source: openapi/instaclustr-deprecated-openapi.yml#/components/schemas/AccountAzureVnetPeersV2
+  - term: AccountClustersV2
+    definition: A listable data source of all cluster IDs in an Instaclustr Account.
+    tags:
+    - Object
+    source: openapi/instaclustr-deprecated-openapi.yml#/components/schemas/AccountClustersV2

@@ -1,0 +1,163 @@
+generated: '2026-10-13'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 11
+  own: 7
+  other_domain: 3
+  platform: 1
+  roles:
+  - api
+  - docs
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.instaclustr.com
+  found_by:
+  - apis[]
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: instaclustr.com
+  role: api
+  relation: own
+- host: console2.instaclustr.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Login
+  - SignUp
+  serves: []
+  registrable_domain: instaclustr.com
+  role: identity
+  relation: own
+- host: developer.instaclustr.com
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves: []
+  status: 200
+  registrable_domain: instaclustr.com
+  role: portal
+  relation: own
+- host: docs.api.instaclustr.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types:
+  - APIReference
+  serves: []
+  status: 200
+  registrable_domain: instaclustr.com
+  role: docs
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: instaclustr.redoc.ly
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Deprecation
+  serves:
+  - docs
+  registrable_domain: redoc.ly
+  role: other
+  relation: other-domain
+- host: instaclustr.redoc.ly:443
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: redoc.ly:443
+  role: other
+  relation: other-domain
+- host: status.instaclustr.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: instaclustr.com
+  role: status
+  relation: own
+- host: support.instaclustr.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - support
+  vendor: zendesk
+  registrable_domain: instaclustr.com
+  role: support
+  relation: own
+- host: www.instaclustr.com
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Documentation
+  - Blog
+  - Pricing
+  - PrivacyPolicy
+  - TermsOfService
+  serves:
+  - docs
+  - cdn
+  - hosting
+  vendor: cloudflare
+  registrable_domain: instaclustr.com
+  role: website
+  relation: own
+- host: www.instaclustr.com.md
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: instaclustr.com.md
+  role: other
+  relation: other-domain

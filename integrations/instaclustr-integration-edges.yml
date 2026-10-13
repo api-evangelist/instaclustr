@@ -1,0 +1,60 @@
+generated: '2026-10-13'
+method: searched
+source:
+- https://zapier.com/apps/instaclustr/integrations
+- https://n8n.io/integrations/instaclustr/
+- https://composio.dev/toolkits/instaclustr
+- https://monid.ai/tools/instaclustr
+checked:
+- https://composio.dev/toolkits/instaclustr
+- https://monid.ai/tools/instaclustr
+- https://n8n.io/integrations/instaclustr/
+- https://www.instaclustr.com/support/api-integrations/api-reference/rate-limits/instaclustr-api-rate-limits/
+- https://zapier.com/apps/instaclustr/integrations
+summary: Instaclustr documents provider-written integration guides under support/api-integrations/integrations/
+  (Prometheus, New Relic, Heroku, Kong, Datadog, Terraform); no Zapier/n8n marketplace app found.
+marketplace_apps: []
+edges:
+- partner_name: Prometheus
+  partner: null
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/instaclustr-monitoring-with-prometheus/
+  direction: provider-built
+  category: monitoring
+  partner_match: null
+- partner_name: New Relic
+  partner: new-relic
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/sending-instaclustr-metrics-to-new-relic-via-prometheus/
+  direction: provider-built
+  category: monitoring
+  partner_match: domain
+- partner_name: Heroku
+  partner: heroku
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/using-instaclustr-from-heroku/
+  direction: provider-built
+  category: hosting
+  partner_match: domain
+- partner_name: Kong
+  partner: kong
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/using-instaclustr-with-kong/
+  direction: provider-built
+  category: api-gateway
+  partner_match: domain
+- partner_name: Datadog
+  partner: datadog
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/using-the-instaclustr-monitoring-api-with-datadog/
+  direction: provider-built
+  category: monitoring
+  partner_match: domain
+- partner_name: Terraform
+  partner: null
+  type: claimed
+  evidence: https://www.instaclustr.com/support/api-integrations/integrations/using-the-instaclustr-terraform-provider/
+  direction: provider-built
+  category: infrastructure-as-code
+  partner_match: null
+templates: []

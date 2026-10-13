@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instaclustr/main/json-schema/instaclustr-kafka-topic-v2-schema.json",
+  "title": "KafkaTopicV2",
+  "description": "Definition of a Kafka Topic to be applied to a Kafka cluster.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/instaclustr-deprecated-openapi.yml#/components/schemas/KafkaTopicV2",
+  "required": [
+    "clusterId",
+    "partitions",
+    "replicationFactor",
+    "topic"
+  ],
+  "type": "object",
+  "properties": {
+    "partitions": {
+      "type": "integer",
+      "description": "Topic partition count",
+      "x-terraform-force-new": true
+    },
+    "configs": {
+      "type": "array",
+      "description": "List of Kafka topic configs which have non-default values. These could be set by terraform or other methods like kafka cli etc.",
+      "items": {
+        "$ref": "#/$defs/KafkaTopicConfigV2"
+      },
+      "x-terraform-ignore-order": true
+    },
+    "replicationFactor": {
+      "type": "integer",
+      "description": "Replication factor for Topic",
+      "x-terraform-force-new": true
+    },
+    "topic": {
+      "type": "string",
+      "description": "Kafka Topic name",
+      "x-terraform-force-new": true
+    },
+    "clusterId": {
+      "type": "string",
+      "description": "ID of the Kafka cluster",
+      "format": "uuid",
+      "x-terraform-force-new": true
+    },
+    "id": {
+      "type": "string",
+      "description": "Instaclustr identifier for the Kafka topic. The value of this property has the form: [cluster-id]_[kafka-topic]",
+      "readOnly": true
+    }
+  },
+  "$defs": {
+    "KafkaTopicConfigV2": {
+      "required": [
+        "key",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Kafka Topic config value"
+        },
+        "key": {
+          "type": "string",
+          "description": "Kafka Topic config key"
+        }
+      },
+      "description": "Definition of a Kafka Topic Config to be applied to a Kafka topic of a cluster"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+generated: '2026-10-13'
+method: derived
+source: openapi/instaclustr-deprecated-openapi.yml, openapi/instaclustr-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: Basic Authentication
+  type: http
+  scheme: basic
+  description: Most requests to the API must use Basic Authentication and contain a valid username
+    and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from
+    the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the
+    API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the
+    endpoint or the group of the endpoint.
+  sources:
+  - openapi/instaclustr-deprecated-openapi.yml
+  - openapi/instaclustr-openapi.yml
+- name: No Authentication
+  type: http
+  scheme: none
+  description: Certain endpoints are publicly available and does not need any authentication
+    to access.
+  sources:
+  - openapi/instaclustr-deprecated-openapi.yml
+  - openapi/instaclustr-openapi.yml

@@ -1,0 +1,896 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instaclustr/main/json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json",
+  "title": "ClusterDetailsResponseForTerraformImport",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/instaclustr-deprecated-openapi.yml#/components/schemas/ClusterDetailsResponseForTerraformImport",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Cluster ID",
+      "format": "uuid"
+    },
+    "clusterName": {
+      "type": "string",
+      "description": "Cluster name"
+    },
+    "clusterStatus": {
+      "type": "string",
+      "description": "Cluster status",
+      "enum": [
+        "GENESIS",
+        "PROVISIONING",
+        "PROVISIONED",
+        "JOINING",
+        "RESTORING",
+        "DEFERRED",
+        "RUNNING",
+        "SUSPENDING",
+        "SUSPENDED",
+        "RESUMING",
+        "DELETING",
+        "DELETED",
+        "DEGRADED",
+        "FAILED"
+      ]
+    },
+    "bundleType": {
+      "type": "string",
+      "enum": [
+        "APACHE_CASSANDRA",
+        "SPARK",
+        "KAFKA",
+        "KAFKA_REST_PROXY",
+        "KAFKA_SCHEMA_REGISTRY",
+        "ELASTICSEARCH",
+        "KAFKA_CONNECT",
+        "REDIS",
+        "VALKEY",
+        "APACHE_ZOOKEEPER",
+        "POSTGRESQL",
+        "CADENCE",
+        "KARAPACE_SCHEMA_REGISTRY",
+        "KARAPACE_REST_PROXY"
+      ]
+    },
+    "bundleVersion": {
+      "type": "string",
+      "description": "Bundle Version"
+    },
+    "bundleOptions": {
+      "type": "object",
+      "description": "Bundle options - the required schema differs depending on the bundle type.\n\n<b>Note:</b> the bundle options for KafkaConnect supports the following properties (in addition to those documented in the schema):<table>\n  <tbody>\n    <tr>\n      <td><b>Field</b></td>\n      <td><b>Allowed Values</b></td>\n    </tr>\n    <tr>\n      <td>\n        <span style=\"font-weight: 400;\">options.bootstrap.servers</span>\n        <p></p>\n        <p>options.sasl.*</p>\n        <p>options.ssl.*</p>\n        <p>options.security.*</p>\n      </td>\n      <td>\n        <b>Optional</b>\n        <p></p>\n        <p>\n          <span style=\"font-weight: 400;\"\n            >Connection information for your Kafka Cluster. These options are\n            analogous to the similarly named options that you would place in\n            your Kafka Connect worker.properties file. Only required if\n            connecting to a Non-Instaclustr managed Kafka Cluster</span\n          >\n        </p>\n        <p><b>&nbsp;</b></p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CassandraOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/KafkaOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/KafkaRestProxyOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/KarapaceRestProxyOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/KafkaConnectOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/OpenSearchOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/ElasticSearchOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/RedisBundleOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/ValkeyBundleOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/SparkBundleOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/ApacheZookeeperOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/PostgresqlOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/PgBouncerOptionsSchema"
+        },
+        {
+          "$ref": "#/$defs/CadenceOptionsSchema"
+        }
+      ]
+    },
+    "addonBundles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AddonBundles"
+      }
+    },
+    "clusterProvider": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      }
+    },
+    "username": {
+      "type": "string",
+      "description": "Cluster username"
+    },
+    "instaclustrUserPassword": {
+      "type": "string",
+      "description": "Cluster user password"
+    },
+    "slaTier": {
+      "type": "string",
+      "description": "Cluster SLA tier"
+    },
+    "clusterCertificateDownload": {
+      "type": "string",
+      "description": "Cluster certificate download"
+    },
+    "pciCompliance": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED",
+        "PENDING"
+      ]
+    },
+    "dataCentres": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DataCentre"
+      }
+    },
+    "twoFactorDelete": {
+      "type": "boolean",
+      "description": "Enable two factor delete"
+    },
+    "oidcId": {
+      "type": "string",
+      "description": "Open Authentication ID"
+    },
+    "cdcid": {
+      "type": "string",
+      "description": "CDC ID",
+      "format": "uuid"
+    }
+  },
+  "$defs": {
+    "AddonBundles": {
+      "type": "object",
+      "properties": {
+        "bundle": {
+          "type": "string",
+          "description": "Bundle"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version"
+        },
+        "options": {
+          "type": "object",
+          "description": "Options",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CassandraOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/KafkaOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/KafkaRestProxyOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/KarapaceRestProxyOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/KafkaConnectOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/OpenSearchOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/ElasticSearchOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/RedisBundleOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/ValkeyBundleOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/SparkBundleOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/ApacheZookeeperOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/PostgresqlOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/PgBouncerOptionsSchema"
+            },
+            {
+              "$ref": "#/$defs/CadenceOptionsSchema"
+            }
+          ]
+        }
+      }
+    },
+    "ApacheZookeeperOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Server Encryption",
+          "default": false
+        },
+        "zookeeperNodeCount": {
+          "type": "integer",
+          "description": "Number of Zookeeper nodes; must be 3 or 5.",
+          "format": "int32",
+          "default": 3
+        }
+      }
+    },
+    "CadenceOptionsSchema": {
+      "required": [
+        "targetCassandraCdcId"
+      ],
+      "type": "object",
+      "properties": {
+        "useAdvancedVisibility": {
+          "type": "boolean",
+          "description": "Use Advanced Visibility.",
+          "default": false
+        },
+        "targetCassandraCdcId": {
+          "type": "string",
+          "description": "UUID of a Data Centre of an Instaclustr managed Cassandra Cluster, to be used by Cadence. Must be in the same Instaclustr account.",
+          "format": "uuid"
+        },
+        "targetCassandraVpcType": {
+          "type": "string",
+          "description": "Target Cassandra VPC Type",
+          "default": "TARGET_VPC",
+          "enum": [
+            "TARGET_VPC",
+            "VPC_PEERED",
+            "SEPARATE_VPC"
+          ]
+        },
+        "targetKafkaCdcId": {
+          "type": "string",
+          "description": "UUID of a Data Centre of an Instaclustr managed Kafka Cluster, to be used by Cadence. Must be in the same Instaclustr account.",
+          "format": "uuid"
+        },
+        "targetKafkaVpcType": {
+          "type": "string",
+          "description": "Target Kafka VPC Type",
+          "default": "VPC_PEERED",
+          "enum": [
+            "TARGET_VPC",
+            "VPC_PEERED",
+            "SEPARATE_VPC"
+          ]
+        },
+        "targetOpenSearchCdcId": {
+          "type": "string",
+          "description": "UUID of a Data Centre of an Instaclustr managed OpenSearch Cluster, to be used by Cadence. Must be in the same Instaclustr account.",
+          "format": "uuid"
+        },
+        "targetOpenSearchVpcType": {
+          "type": "string",
+          "description": "Target OpenSearch VPC Type",
+          "default": "VPC_PEERED",
+          "enum": [
+            "TARGET_VPC",
+            "VPC_PEERED",
+            "SEPARATE_VPC"
+          ]
+        },
+        "enableArchival": {
+          "type": "boolean",
+          "description": "Use Cadence Archival",
+          "default": false
+        },
+        "archivalS3Uri": {
+          "type": "string",
+          "description": "URI of S3 resource for Cadence Archival e.g. 's3://my-bucket'"
+        },
+        "archivalS3Region": {
+          "type": "string",
+          "description": "Region of S3 resource for Cadence Archival e.g. 'us-east-1'"
+        },
+        "awsAccessKeyId": {
+          "type": "string",
+          "description": "Access Key ID for IAM user with Archival bucket access"
+        },
+        "awsSecretAccessKey": {
+          "type": "string",
+          "description": "Secret Access Key for IAM user with Archival bucket access"
+        },
+        "provisioningType": {
+          "type": "string",
+          "description": "Provisioning Type used for the Cadence cluster. If SHARED is used, then the dependant clusters will be set to the Shared Infrastructure clusters.",
+          "default": "STANDARD",
+          "enum": [
+            "STANDARD",
+            "SIMPLE",
+            "MICRO",
+            "PACKAGED",
+            "SHARED"
+          ]
+        },
+        "advertisedHostName": {
+          "type": "string",
+          "description": "Advertised HostName is required for PrivateLink."
+        }
+      }
+    },
+    "CassandraOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "authnAuthz": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Password Authentication and User Authorization.",
+          "default": false
+        },
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "usePrivateBroadcastRPCAddress": {
+          "type": "boolean",
+          "description": "Enables broadcast of private IPs for auto-discovery.",
+          "default": false
+        },
+        "luceneEnabled": {
+          "type": "boolean",
+          "description": "Enables broadcast of private IPs for auto-discovery.",
+          "default": false
+        },
+        "continuousBackupEnabled": {
+          "type": "boolean",
+          "description": "Enables commitlog backups and increases the frequency of the default snapshot backups. This option replaces options.backupEnabled.",
+          "default": false
+        },
+        "shotoverProxyNodeSize": {
+          "type": "string",
+          "description": "Shotover Proxy Node Size. This option is applicable only for PrivateLink Cassandra Clusters"
+        }
+      }
+    },
+    "DataCentre": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Data centre id",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Data centre region"
+        },
+        "cdcName": {
+          "type": "string",
+          "description": "User-provided cluster data centre name, default to be the data centre region if nothing provided"
+        },
+        "provider": {
+          "type": "string",
+          "description": "Data centre provider",
+          "enum": [
+            "AWS_VPC",
+            "AZURE",
+            "GCP"
+          ]
+        },
+        "cdcStatus": {
+          "type": "string",
+          "description": "Cluster Data Centre status",
+          "enum": [
+            "GENESIS",
+            "PROVISIONING",
+            "PROVISIONED",
+            "JOINING",
+            "RESTORING",
+            "DEFERRED",
+            "RUNNING",
+            "SUSPENDING",
+            "SUSPENDED",
+            "RESUMING",
+            "DELETING",
+            "DELETED",
+            "DEGRADED",
+            "FAILED"
+          ]
+        },
+        "cdcNetwork": {
+          "type": "string",
+          "description": "Cluster data centre network"
+        },
+        "bundles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "SPARK"
+            ]
+          }
+        },
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Client TLS Encryption"
+        },
+        "passwordAuthentication": {
+          "type": "boolean",
+          "description": "Password authenticaiton"
+        },
+        "userAuthorization": {
+          "type": "boolean",
+          "description": "User authorization"
+        },
+        "usePrivateBroadcastRPCAddress": {
+          "type": "boolean",
+          "description": "Private broadcast RPC address used"
+        },
+        "privateIPOnly": {
+          "type": "boolean",
+          "description": "Private IP address"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Node"
+          }
+        },
+        "nodeCount": {
+          "type": "integer",
+          "description": "Number of nodes in cluster",
+          "format": "int32"
+        },
+        "encryptionKeyId": {
+          "type": "string",
+          "description": "Encryption key id",
+          "format": "uuid"
+        },
+        "resizeTargetNodeSize": {
+          "type": "string",
+          "description": "Resize target node size"
+        },
+        "privateLink": {
+          "$ref": "#/$defs/PrivateLink"
+        }
+      }
+    },
+    "ElasticSearchOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "dedicatedMasterNodes": {
+          "type": "boolean",
+          "description": "This is an optional boolean parameter used to scale the load of the data node by having 3 dedicated master nodes for a particular cluster. We recommend selecting this to true for clusters with 9 and above nodes.",
+          "default": false
+        },
+        "masterNodeSize": {
+          "type": "string",
+          "description": "Only to be included if the if dedicatedMasterNodes is set to true. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>"
+        },
+        "securityPlugin": {
+          "type": "boolean",
+          "description": "Enables Security Plugin. This option gives an extra layer of security to the cluster. This will automatically enable internode encryption.",
+          "default": false
+        },
+        "indexManagementPlugin": {
+          "type": "boolean",
+          "description": "Enables Index Management Plugin. This helps automate recurring index management activities.",
+          "default": false
+        }
+      }
+    },
+    "KafkaConnectOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "targetKafkaClusterId": {
+          "type": "string",
+          "description": "GUID of the Instaclustr managed Kafka Cluster Id you wish to connect to. Must be in the same Instaclustr account.",
+          "format": "uuid"
+        },
+        "vpcType": {
+          "type": "string",
+          "description": "Only required if targeting an Instaclustr managed cluster. If the target Kafka cluster does not have Private Network add-on, the endpoint only accepts vpcType of VPC_PEERED;  If the target Kafka cluster has the Private Network add-on, the endpoint accepts vpcTypes of VPC_PEERED and KAFKA_VPC.",
+          "default": "SEPARATE_VPC",
+          "enum": [
+            "KAFKA_VPC",
+            "TARGET_VPC",
+            "VPC_PEERED",
+            "SEPARATE_VPC"
+          ]
+        },
+        "truststore": {
+          "type": "string",
+          "description": "Base64 encoded version of the TLS trust store (in JKS format) used to connect to your Kafka Cluster. Only required if connecting to a Non-Instaclustr managed Kafka Cluster with TLS enabled.",
+          "format": "binary"
+        },
+        "aws.access.key.id": {
+          "type": "string",
+          "description": "<b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors."
+        },
+        "aws.secret.access.key": {
+          "type": "string",
+          "description": "<b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors."
+        },
+        "aws.s3.role.arn": {
+          "type": "string",
+          "description": "<b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors."
+        },
+        "s3.bucket.name": {
+          "type": "string",
+          "description": "<b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors."
+        },
+        "azure.storage.account.name": {
+          "type": "string",
+          "description": "<b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors."
+        },
+        "azure.storage.account.key": {
+          "type": "string",
+          "description": "<b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors."
+        },
+        "azure.storage.container.name": {
+          "type": "string",
+          "description": "<b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors."
+        }
+      }
+    },
+    "KafkaOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "numberPartitions": {
+          "type": "integer",
+          "description": "Default number of partitions to be assigned per topic.",
+          "format": "int32"
+        },
+        "autoCreateTopics": {
+          "type": "boolean",
+          "description": "Enable to allow brokers to automatically create a topic, if it does not already exist, when messages are published to it.",
+          "default": true
+        },
+        "deleteTopics": {
+          "type": "boolean",
+          "description": "Enable to allow topics to be deleted via the ic-kafka-topics tool.",
+          "default": true
+        },
+        "dedicatedZookeeper": {
+          "type": "boolean",
+          "description": "Enable to provision dedicated zookeeper nodes.",
+          "default": false
+        },
+        "zookeeperNodeSize": {
+          "type": "string",
+          "description": "Dedicated Zookeeper node size."
+        },
+        "zookeeperNodeCount": {
+          "type": "integer",
+          "description": "Number of dedicated Zookeeper node count, it must be 3 or 5.",
+          "format": "int32",
+          "default": 3
+        },
+        "advertisedHostName": {
+          "type": "string",
+          "description": "Advertised HostName is required for PrivateLink."
+        },
+        "kraftMode": {
+          "type": "string",
+          "description": "Create KRaft Mode with COLOCATED",
+          "enum": [
+            "NONE",
+            "COLOCATED",
+            "COLLOCATED_WITH_SEPARATE_PROCESSES",
+            "DEDICATED",
+            "NONE",
+            "COLOCATED"
+          ]
+        },
+        "kraftControllerNodeCount": {
+          "type": "string",
+          "description": "Number of KRaft Controller Node count"
+        }
+      }
+    },
+    "KafkaRestProxyOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "integrateRestProxyWithSchemaRegistry": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Integration of the REST proxy with a Schema registry",
+          "default": false
+        },
+        "useLocalSchemaRegistry": {
+          "type": "boolean",
+          "description": "Accepts true/false. Integrates the REST proxy with the Schema registry attached to this cluster. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true'",
+          "default": false
+        },
+        "schemaRegistryServerUrl": {
+          "type": "string",
+          "description": "URL of the Kafka schema registry to integrate with. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'"
+        },
+        "schemaRegistryUsername": {
+          "type": "string",
+          "description": "Username to use when connecting to the Kafka schema registry. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'"
+        },
+        "schemaRegistryPassword": {
+          "type": "string",
+          "description": "Password to use when connecting to the Kafka schema registry. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'"
+        }
+      }
+    },
+    "KarapaceRestProxyOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "integrateRestProxyWithSchemaRegistry": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Integration of the Karapace REST Proxy with the local Karapace Schema Registry",
+          "default": false
+        }
+      }
+    },
+    "Node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Node ID",
+          "format": "uuid"
+        },
+        "size": {
+          "type": "string",
+          "description": "Node size"
+        },
+        "rack": {
+          "type": "string",
+          "description": "Node rack"
+        },
+        "publicAddress": {
+          "type": "string",
+          "description": "Public IP address of the node",
+          "format": "ipv4"
+        },
+        "privateAddress": {
+          "type": "string",
+          "description": "Private IP address of the node",
+          "format": "ipv4"
+        },
+        "nodeStatus": {
+          "type": "string",
+          "description": "Node current status",
+          "enum": [
+            "GENESIS",
+            "PROVISIONING",
+            "PROVISIONED",
+            "JOINING",
+            "RESTORING",
+            "DEFERRED",
+            "RUNNING",
+            "SUSPENDING",
+            "SUSPENDED",
+            "RESUMING",
+            "DELETING",
+            "DELETED",
+            "DEGRADED",
+            "FAILED"
+          ]
+        },
+        "sparkMaster": {
+          "type": "boolean",
+          "description": "Spark master"
+        },
+        "sparkJobserver": {
+          "type": "boolean",
+          "description": "Spark jobserver"
+        }
+      }
+    },
+    "OpenSearchOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "dedicatedMasterNodes": {
+          "type": "boolean",
+          "description": "This is an optional boolean parameter used to scale the load of the data node by having 3 dedicated master nodes for a particular cluster. We recommend selecting this to true for clusters with 9 and above nodes.",
+          "default": false
+        },
+        "masterNodeSize": {
+          "type": "string",
+          "description": "Only to be included if the if dedicatedMasterNodes is set to true. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>"
+        },
+        "openSearchDashboardsNodeSize": {
+          "type": "string",
+          "description": "This is an optional string parameter to used to define the OpenSearch Dashboards node size. Only to be included if wish to add an OpenSearch Dashboards node to the cluster. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>"
+        },
+        "indexManagementPlugin": {
+          "type": "boolean",
+          "description": "Enables Index Management Plugin. This helps automate recurring index management activities.",
+          "default": false
+        },
+        "anomalyDetectionPlugin": {
+          "type": "boolean",
+          "description": "Enables the Anomaly Detection Plugin. This allows for the detection of unusual or anomalous data points in your time-series data. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions >= 1.3.7",
+          "default": false
+        },
+        "sqlPlugin": {
+          "type": "boolean",
+          "description": "Enables the SQL Plugin. This allows you to query you indices with SQL as an alternative to the OpenSearch Query DSL. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions >= 1.3.7",
+          "default": false
+        },
+        "asynchronousSearchPlugin": {
+          "type": "boolean",
+          "description": "Enables the Anomaly Detection Plugin. This allows you to submit queries to be completed asynchronously. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions 1.3.7",
+          "default": false
+        }
+      }
+    },
+    "PgBouncerOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "poolMode": {
+          "type": "string",
+          "description": "PgBouncer pooling mode",
+          "default": "TRANSACTION",
+          "enum": [
+            "TRANSACTION",
+            "SESSION"
+          ]
+        }
+      }
+    },
+    "PostgresqlOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "postgresqlNodeCount": {
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer",
+          "description": "The number of PostgreSQL server nodes created. One of which will be the primary while the rest will be replicas",
+          "format": "int32"
+        },
+        "replicationMode": {
+          "type": "string",
+          "description": "Default <a href=\"https://www.instaclustr.com/support/documentation/postgresql/options/replication-mode\">replication mode</a> for PostgreSQL transactions.",
+          "default": "SYNCHRONOUS",
+          "enum": [
+            "SYNCHRONOUS",
+            "ASYNCHRONOUS"
+          ]
+        },
+        "synchronousModeStrict": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables <a href=\"https://www.instaclustr.com/support/documentation/postgresql/options/synchronous-mode-strict/\">synchronous mode strict</a> for clusters with SYNCHRONOUS replication mode.",
+          "default": false
+        }
+      }
+    },
+    "PrivateLink": {
+      "type": "object",
+      "properties": {
+        "iamPrincipalARNs": {
+          "type": "array",
+          "description": "List of IAM Principal ARNs to add to the endpoint service.",
+          "items": {
+            "pattern": "arn:aws:iam::[0-9]{12}:(root$|user\\/[\\w+=,.@-]+|role\\/[\\w+=,.@-]+)$",
+            "type": "string",
+            "description": "List of IAM Principal ARNs to add to the endpoint service."
+          }
+        }
+      },
+      "description": "Creates a PrivateLink cluster, see <a href=\"https://www.instaclustr.com/support/documentation/useful-information/privatelink/\" target=\"_blank\">PrivateLink</a> \n\n PrivateLink can only be supported on AWS_VPC for Kafka."
+    },
+    "RedisBundleOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "passwordAuth": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Password Authentication and User Authorization.",
+          "default": false
+        },
+        "masterNodes": {
+          "maximum": 50,
+          "minimum": 3,
+          "type": "integer",
+          "description": "The number of Redis Master Nodes to be created.",
+          "format": "int32"
+        },
+        "replicaNodes": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "integer",
+          "description": "The number of Redis Replica Nodes to be created.",
+          "format": "int32"
+        },
+        "advertisedHostName": {
+          "type": "string",
+          "description": "Advertised HostName is required for PrivateLink."
+        }
+      }
+    },
+    "SparkBundleOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "clientEncryption",
+          "default": false
+        },
+        "passwordAuthentication": {
+          "type": "boolean",
+          "description": "Require clients to provide credentials — a username & API Key — to connect to the Spark Jobserver.",
+          "default": false
+        }
+      }
+    },
+    "ValkeyBundleOptionsSchema": {
+      "type": "object",
+      "properties": {
+        "clientEncryption": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Client ⇄ Node Encryption.",
+          "default": false
+        },
+        "passwordAuth": {
+          "type": "boolean",
+          "description": "Accepts true/false. Enables Password Authentication and User Authorization.",
+          "default": false
+        },
+        "masterNodes": {
+          "maximum": 50,
+          "minimum": 3,
+          "type": "integer",
+          "description": "The number of Valkey Master Nodes to be created.",
+          "format": "int32"
+        },
+        "replicaNodes": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "integer",
+          "description": "The number of Valkey Replica Nodes to be created.",
+          "format": "int32"
+        },
+        "advertisedHostName": {
+          "type": "string",
+          "description": "Advertised HostName is required for PrivateLink."
+        }
+      }
+    }
+  }
+}

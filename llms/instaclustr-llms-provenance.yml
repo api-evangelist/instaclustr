@@ -1,0 +1,6 @@
+generated: '2026-10-13'
+method: probed
+generator: harvest-llms.py
+source: https://www.instaclustr.com/llms.txt
+bytes: 145422
+note: saved verbatim; the provider's own document

@@ -1,0 +1,110 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/instaclustr-deprecated-openapi.yml
+- openapi/instaclustr-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: ErrorMessage
+coverage:
+  operations: 539
+  statuses_declared: 13
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 162
+  media_types:
+  - application/json
+  - application/scim+json
+  schema: ErrorMessage
+- status: 401
+  title: Unauthorized
+  description: Not Authorized
+  operations: 121
+  media_types:
+  - application/json
+  schema: ErrorResponseV2
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  operations: 142
+  media_types:
+  - application/json
+  - application/scim+json
+  - application/zip
+  schema: ErrorResponseV2
+- status: 404
+  title: Not Found
+  description: Resource not found
+  operations: 285
+  media_types:
+  - application/json
+  - application/scim+json
+  schema: ErrorListResponseV2
+- status: 409
+  title: Conflict
+  description: A duplicate or matching firewall rule exists for the prefix list in the cluster data centre.
+  operations: 14
+  media_types:
+  - application/json
+  schema: ErrorResponseV2
+- status: 412
+  title: Precondition Failed
+  description: Pre-condition failed
+  operations: 2
+  media_types:
+  - application/json
+  schema: RestoreBackupPreconditionFailureMessage
+- status: 415
+  title: Unsupported Media Type
+  description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+  operations: 111
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 422
+  title: Unprocessable Content
+  description: Subnet provided conflicts with Cluster Data Centre's subnet
+  operations: 3
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 429
+  title: Too Many Requests
+  description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+  operations: 107
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error
+  operations: 1
+  media_types:
+  - application/json
+  schema: ErrorResponseV2
+- status: 502
+  title: Bad Gateway
+  description: Bad Gateway
+  operations: 11
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 503
+  title: Service Unavailable
+  description: Service Unavailable
+  operations: 33
+  media_types:
+  - application/json
+  - application/scim+json
+  schema: ErrorResponse
+- status: 504
+  title: Gateway Timeout
+  description: Gateway Timeout
+  operations: 27
+  media_types:
+  - application/json
+  schema: ErrorResponseV2

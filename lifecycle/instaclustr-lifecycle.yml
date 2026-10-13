@@ -1,0 +1,9 @@
+generated: '2026-10-13'
+method: searched
+source:
+- https://instaclustr.redoc.ly/Deprecated/
+- https://status.instaclustr.com/
+versioning: Per-resource version suffixes in paths and operationIds (V1/V2/V3, e.g. getKafkaClusterV3); the Redocly portal publishes a Current and a Deprecated version of the API documentation.
+deprecation: https://instaclustr.redoc.ly/Deprecated/
+status_page: https://status.instaclustr.com/
+deprecated_spec: openapi/instaclustr-deprecated-openapi.yml

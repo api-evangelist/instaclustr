@@ -1,0 +1,26 @@
+generated: '2026-10-13'
+method: searched
+source: https://www.instaclustr.com/support/api-integrations/api-reference/rate-limits/instaclustr-api-rate-limits/
+name: Instaclustr API Rate Limits
+algorithm: sliding window
+scope: account
+exhaustion:
+  status: 429
+  message: Rate Limit Exceeded
+limits:
+- name: Metrics v2 Prometheus Monitoring Endpoints
+  endpoint: https://<node or cluster id>.api.instaclustr.com/metrics/v2/query
+  max: 2
+  window: 20 seconds
+  scope: per node/cluster id
+  limit_text: 'Prometheus: retrieves a node or cluster level metrics. Rate limit applies per node/cluster id'
+- name: Dynamic rate limit (example)
+  scope: account
+  limit_text: 'Fixed limit: 1 request/second'
+  note: 'Worked example on the page: dynamic limit 0.1 x clusters; the larger of fixed and dynamic applies.'
+- name: Terraform provider bursts
+  kind: burst
+  limit_text: 'Instaclustr Terraform Provider : A dditional bursts available to facilitate large infrastructure changes. If you still experience rate limits, wait 5 minutes before retrying .'
+notes:
+- The rate limit is imposed on each individual account, and may differ for API endpoints, depending on intended usage of the API endpoint.
+- All requests are exempted from rate limit restriction to ensure a smooth user experience on the Instaclustr Console .
