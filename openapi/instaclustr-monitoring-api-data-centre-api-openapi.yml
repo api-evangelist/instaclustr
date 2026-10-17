@@ -1,0 +1,3024 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Monitoring API - Data Centre API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Monitoring API - Data Centre across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Monitoring API - Data Centre
+  description: Operations related to monitoring data centres of provisioned clusters
+  x-insta-tag-group: Monitoring
+paths:
+  /monitoring/v1/datacentres/{clusterDataCentreId}:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Retrieve monitoring metrics
+      description: Metrics definitions for single or all nodes in a cluster or cluster data center.The set of available metrics will expand with changes to the monitoring API.
+      operationId: getDataCentreMetrics
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      - name: metrics
+        in: query
+        description: The metrics to return are specified as a comma-delimited query string parameter. Up to 20 metrics may be specified.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: n::cpuUtilization,n::networkout
+      - name: period
+        in: query
+        description: 'The period of time from which monitoring information is returned. It is also assigned a period type. Formatted as: <code>period=\<period\>&type=\<period type\></code>.<br>Allowable values: 1m, 15m, 1h, 3h, 1d, 7d, 30d'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 1m
+      - name: type
+        in: query
+        description: "The type of metrics value extracted from metrics values for a period of time.\n<ul>\n   <li>If specified as 'latest', then the latest metric will be returned regardless what 'period' query parameter is set.</li>\n   <li>If specified as 'aggregate', then the metric value returned will be the average of all metric values from the specific period to now.</li>\n   <li>If specified as 'range', then the metric values returned will be the series of all metric values from the specific period to end.</li>\n</ul>"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: latest
+      - name: reportNaN
+        in: query
+        description: If a metric value is NaN or null, reportNaN determines whether API should report it as NaN. The default behaviour is false and NaN and null will be reported as 0. Setting <code>reportNaN=true</code> will return NaN values in the API response.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: false
+      - name: end
+        in: query
+        description: This parameter can be used to specify the end time for the retrieved metric values. For example, if you set this to a timestamp which is 10 minutes prior to the current time, the metric values returned will be for that point of time. Please note that the format is milliseconds since Epoch.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 1597112465640
+      - name: format
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: "<ul>\n  <li>If set to DEFAULT, response will be returned in JSON format.</li>\n  <li>If set to PROMETHEUS, text response will be returned in Prometheus format.</li>\n  <li>If not provided, response will be returned in default format, i.e. JSON.</li>\n</ul>"
+          example: PROMETHEUS
+          enum:
+          - DEFAULT
+          - PROMETHEUS
+      responses:
+        '200':
+          description: Successfully retrieved monitoring results of metrics set.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonitoringResultMixedSchema'
+              examples:
+                Broker Level Per-Topic Metrics (Cluster):
+                  description: Broker Level Per-Topic Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: messagesInPerTopic
+                      topic: instaclustr-sla
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.5051724911338817'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: messagesInPerTopic
+                      topic: instaclustr-sla
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.4515722583651829'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: messagesInPerTopic
+                      topic: instaclustr-sla
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.4708695545998745'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Broker Level Per-User Metrics (Cluster):
+                  description: Broker Level Per-User Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: produceBandwidthQuotaPerUser
+                      type: throttle_time
+                      unit: '1'
+                      user: ickafka
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '150.50'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: produceBandwidthQuotaPerUser
+                      topic: ickafka
+                      type: throttle_time
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '250.50'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: produceBandwidthQuotaPerUser
+                      topic: ickafka
+                      type: throttle_time
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '200.00'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Cadence Summary Metrics (Cluster):
+                  description: Cadence Summary Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: historyV2MemoryAllocated
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '4029.0'
+                    - metric: frontendV2MeanCadenceRequestRate
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2.5'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: historyV2MemoryAllocated
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '8850.0'
+                    - metric: frontendV2MeanCadenceRequestRate
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5.25'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: historyV2MemoryAllocated
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5092.0'
+                    - metric: frontendV2MeanCadenceRequestRate
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Cadence Tag Level Metrics (Cluster):
+                  description: Cadence Tag Level Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: frontendV2CadenceRequestRate
+                      tag: domain=cadence_canary;operation=RespondActivityTaskCompleted
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.5'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: frontendV2CadenceRequestRate
+                      tag: domain=cadence_canary;operation=RespondActivityTaskCompleted
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '3.5'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: CAD-PRD-m6g.large-250
+                    payload:
+                    - metric: frontendV2CadenceRequestRate
+                      tag: domain=cadence_canary;operation=RespondActivityTaskCompleted
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '6.2'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Cassandra Metrics (Cluster):
+                  description: Cassandra Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: cpuUtilization
+                      type: percentage
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '7.639166'
+                    - metric: reads
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '3.80952380952381'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: cpuUtilization
+                      type: percentage
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '7.915636'
+                    - metric: reads
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5.571428571428571'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Cassandra Metrics (Shotover Proxy):
+                  description: Cassandra Metrics (Shotover Proxy)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverFailedRequestsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.1
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverFailedRequestsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2'
+                    privateIp: 10.0.0.2
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverFailedRequestsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2'
+                    privateIp: 10.0.0.3
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Elasticsearch Metrics (Cluster):
+                  description: Elasticsearch Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: ESH-PRD-r6g.large-250
+                    payload:
+                    - metric: docsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '4129.0'
+                    - metric: slasearchlatency
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2.3333332538604736'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: ESH-PRD-r6g.large-250
+                    payload:
+                    - metric: docsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '4120.0'
+                    - metric: slasearchlatency
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.3333333730697632'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: ESH-PRD-r6g.large-250
+                    payload:
+                    - metric: docsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '4092.0'
+                    - metric: slasearchlatency
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.6666666269302368'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                General Metrics (Node):
+                  description: General Metrics (Node)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: diskUtilization
+                      type: percentage
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '47.104115'
+                    - metric: cpuUtilization
+                      type: percentage
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '7.545443'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Hints Created Metrics (Node):
+                  description: Hints Created Metrics (Node)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: CAS-PRD-r6g.large-250
+                    payload:
+                    - metric: hints_created-123.123.123.123
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '45.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        customDCName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Connect Metrics (Cluster):
+                  description: Kafka Connect Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: timeSinceLastRebalanceMs
+                      type: ms
+                      unit: ms
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: 1.5731001E7
+                    - metric: rebalancing
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: timeSinceLastRebalanceMs
+                      type: ms
+                      unit: ms
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: 1.5730608E7
+                    - metric: rebalancing
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: timeSinceLastRebalanceMs
+                      type: ms
+                      unit: ms
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: 1.5743243E7
+                    - metric: rebalancing
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Metrics (Cluster):
+                  description: Kafka Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: partitionCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '51.0'
+                    - metric: leaderCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '17.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: partitionCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '50.0'
+                    - metric: leaderCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '17.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: partitionCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '50.0'
+                    - metric: leaderCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '17.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Metrics (Shotover Proxy):
+                  description: Kafka Metrics (Shotover Proxy)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverTransformFailuresCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.1
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverTransformFailuresCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2'
+                    privateIp: 10.0.0.2
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: shotoverTransformFailuresCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '2'
+                    privateIp: 10.0.0.3
+                    publicIp: null
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Queues Metrics (Cluster):
+                  description: Kafka Queues Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: queuesExpiresPerSec
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.5'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: queuesExpiresPerSec
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.2'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: queuesExpiresPerSec
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.3'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Queues Share Group Metrics (Cluster):
+                  description: Kafka Queues Share Group Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: requestTopicPartitionsFetchRatio
+                      shareGroup: example-share-group
+                      type: mean
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.75'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: requestTopicPartitionsFetchRatio
+                      shareGroup: example-share-group
+                      type: mean
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.80'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: requestTopicPartitionsFetchRatio
+                      shareGroup: example-share-group
+                      type: mean
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.70'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Kafka Queues Topic Metrics (Cluster):
+                  description: Kafka Queues Topic Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: failedShareFetchRequestsPerSec
+                      topic: test-topic
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: failedShareFetchRequestsPerSec
+                      topic: test-topic
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: failedShareFetchRequestsPerSec
+                      topic: test-topic
+                      type: mean_rate
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                MCP Gateway Connection Metrics (Cluster):
+                  description: MCP Gateway Connection Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: MCP-PRD-m8g.large-30
+                    payload:
+                    - metric: connectionsActive
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '10.3'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: MCP-PRD-m8g.large-30
+                    payload:
+                    - metric: connectionsActive
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '13.9'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                MCP Gateway Request Metrics (Cluster):
+                  description: MCP Gateway Request Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: MCP-PRD-m8g.large-30
+                    payload:
+                    - metric: requestsTotal
+                      type: value_per_second_max
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '41.8'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: MCP-PRD-m8g.large-30
+                    payload:
+                    - metric: requestsTotal
+                      type: value_per_second_max
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '37.4'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                PgBouncer Metrics (Availability):
+                  description: PgBouncer Metrics (Availability)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: isAvailable
+                      type: count
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: isAvailable
+                      type: count
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                PgBouncer Metrics (Connection Pool Level):
+                  description: PgBouncer Metrics (Connection Pool Level)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - dbName: example_db
+                      metric: clActive
+                      type: count
+                      unit: '1'
+                      userName: example_user
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - dbName: example_db
+                      metric: clActive
+                      type: count
+                      unit: '1'
+                      userName: example_user
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                PgBouncer Metrics (Database Level):
+                  description: PgBouncer Metrics (Database Level)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - dbName: example_db
+                      metric: avgSent
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '10'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - dbName: example_db
+                      metric: avgSent
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '10'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Cluster):
+                  description: Postgresql Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: locks
+                      type: count
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '10.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: locks
+                      type: count
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '10.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Database):
+                  description: Postgresql Metrics (Database)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - databaseName: example_db
+                      metric: rowsInsertedCountPerSecond
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - databaseName: example_db
+                      metric: rowsInsertedCountPerSecond
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Intra Data Centre Replication Lag):
+                  description: Postgresql Metrics (Intra Data Centre Replication Lag)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: replicationLagByte
+                      nodeId: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                      type: value
+                      unit: B
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: replicationLagByte
+                      nodeId: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                      type: value
+                      unit: B
+                      values: []
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Intra Data Centre Replication Slot):
+                  description: Postgresql Metrics (Intra Data Centre Replication Slot)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: lsnSent
+                      slot: 4d848f48_5e24_41d6_81f2_44c2f578895f
+                      type: count
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: lsnSent
+                      slot: 4d848f48_5e24_41d6_81f2_44c2f578895f
+                      type: count
+                      unit: '1'
+                      values: []
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Synthetic Transactions):
+                  description: Postgresql Metrics (Synthetic Transactions)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: avgWriteLatency
+                      type: ms
+                      unit: ms
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - metric: avgWriteLatency
+                      type: ms
+                      unit: ms
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Postgresql Metrics (Table):
+                  description: Postgresql Metrics (Table)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - databaseName: example_db
+                      metric: rowsInsertedCountPerSecond
+                      schemaName: schema
+                      tableName: table
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: KFK-PRD-r6g.large-250
+                    payload:
+                    - databaseName: example_db
+                      metric: rowsInsertedCountPerSecond
+                      schemaName: schema
+                      tableName: table
+                      type: count_per_second
+                      unit: 1/s
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Redis Metrics (Cluster):
+                  description: Redis Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: RDS-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5461.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: RDS-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5462.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: RDS-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5461.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                Valkey Metrics (Cluster):
+                  description: Valkey Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: VAL-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5461.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: VAL-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5462.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: VAL-PRD-r6g.large-250
+                    payload:
+                    - metric: masterSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '5461.0'
+                    - metric: clusterUnassignedSlotsCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    - metric: clusterSlotsNotOkCount
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '0.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                ZooKeeper Metrics (Cluster):
+                  description: ZooKeeper Metrics (Cluster)
+                  value:
+                  - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                    nodeSize: ZKR-PRD-m5d.large-75
+                    payload:
+                    - metric: numAliveConnections
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.1
+                    publicIp: 123.123.123.123
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1a
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                    nodeSize: ZKR-PRD-m5d.large-75
+                    payload:
+                    - metric: numAliveConnections
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.2
+                    publicIp: 123.123.123.124
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1b
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+                  - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                    nodeSize: ZKR-PRD-m5d.large-75
+                    payload:
+                    - metric: numAliveConnections
+                      type: value
+                      unit: '1'
+                      values:
+                      - time: '2017-01-04T04:19:28.000Z'
+                        value: '1.0'
+                    privateIp: 10.0.0.3
+                    publicIp: 123.123.123.125
+                    rack:
+                      dataCentre:
+                        displayName: AWS_VPC_US_EAST_1
+                        name: US_EAST_1
+                        provider: AWS_VPC
+                        uuid: null
+                      name: us-east-1c
+                      providerAccount:
+                        name: INSTACLUSTR
+                        provider: AWS_VPC
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Prometheus response ('format' query parameter specified as 'prometheus'):
+                  description: Prometheus response ('format' query parameter specified as 'prometheus')
+                  value: '# HELP ic_node_cpu_utilization Data type: percentage, Unit: 1
+
+                    # TYPE ic_node_cpu_utilization gauge
+
+                    ic_node_cpu_utilization{nodeID="6e46cece-15be-4a31-a540-37854e722959",type="percentage",} 1.480180632212745'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/cadence/domains:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Cadence - Retrieve list of domains
+      description: You can use this endpoint to list all the Cadence domains on the specified cluster.
+      operationId: getCadenceDomainList_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved the cluster's Cadence domains.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - cadence_canary
+              - sample_domain
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/cadence/tags:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Cadence - Retrieve list of tags
+      description: You can use this endpoint to list all the Cadence tags on the specified cluster.
+      operationId: getCadenceTagList_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved the cluster's Cadence tags.
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                historyV2TaskLatency:
+                - domain=cadence_canary;operation=TimerActiveTaskUserTimer
+                - domain=cadence_canary;operation=TransferActiveTaskCloseExecution
+                matchingV2CadenceLatency:
+                - operation=PollForDecisionTask
+                - operation=AddDecisionTask
+                - operation=AddActivityTask
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/columnFamilies:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Cassandra - Retrieve list of monitored tables
+      description: By making a GET request to this endpoint with cluster ID, you can get a list of monitored tables, grouped by keyspace.
+      operationId: getCFList_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: 'Successfully retrieved a list of monitored tables. Return type: Map&lt;String, List&lt;String&gt;&gt;'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                keyspace1:
+                - standard1
+                - counter1
+                - Counter3
+                keyspace2:
+                - table2
+                - table1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/elasticsearchIndexNames:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Elasticsearch - Retrieve list of index names (For Legacy Support Only)
+      description: By making a GET request to this endpoint with cluster ID, you can get a list of monitored indices.
+      operationId: getElasticsearchIndexNames_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved a list of monitored indices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - test_index_01
+              - test_index_02
+              - test_index_03
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/indicators:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Retrieve health indicators
+      description: 'Cluster Health Indicator API provides a summary of indicators on the long-term health of your cluster. A detailed description of cluster health indicators can be found in this support article:
+
+        https://www.instaclustr.com/support/documentation/monitoring-information/cluster-health-check/'
+      operationId: getIndicator_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      - name: format
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: "<ul>\n  <li>If set to DEFAULT, response will be returned in JSON format.</li>\n  <li>If set to PROMETHEUS, text response will be returned in Prometheus format.</li>\n  <li>If not provided, response will be returned in default format, i.e. JSON.</li>\n</ul>"
+          example: PROMETHEUS
+          enum:
+          - DEFAULT
+          - PROMETHEUS
+      responses:
+        '200':
+          description: Successfully retrieve cluster health indicators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Indicator'
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Prometheus response ('format' query parameter specified as 'prometheus'):
+                  description: Prometheus response ('format' query parameter specified as 'prometheus')
+                  value: '# HELP ic_indicator_disk_usage This is the indicator
+
+                    # TYPE ic_indicator_disk_usage gauge
+
+                    ic_indicator_disk_usage{state="PASS",} 1.0'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/openSearchIndexNames:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: OpenSearch - Retrieve list of index names
+      description: By making a GET request to this endpoint, you can get a list of monitored indices.
+      operationId: getOpenSearchIndexNames_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved a list of monitored indices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - test_index_01
+              - test_index_02
+              - test_index_03
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/pagedMetrics:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Retrieve paged monitoring metrics
+      description: Metrics information is provided with either for an individual node or for all nodes in a cluster and cluster data centre.
+      operationId: getPagedUserDefinedMetricsSet_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      - name: metrics
+        in: query
+        description: The metrics to return are specified as a comma-delimited query string parameter. Up to 20 metrics may be specified.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: n::cpuUtilization,kt::*::bytesInPerTopic::mean_rate
+      - name: period
+        in: query
+        description: 'The period of time from which monitoring information is returned. It is also assigned a period type. Formatted as: <code>period=\<period\>&type=\<period type\></code>.<br>Allowable values: 1m, 15m, 1h, 3h, 1d, 7d, 30d'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 1m
+      - name: type
+        in: query
+        description: "The type of metrics value extracted from metrics values for a period of time.\n<ul>\n   <li>If specified as 'latest', then the latest metric will be returned regardless what 'period' query parameter is set.</li>\n   <li>If specified as 'aggregate', then the metric value returned will be the average of all metric values from the specific period to now.</li>\n   <li>If specified as 'range', then the metric values returned will be the series of all metric values from the specific period to end.</li>\n</ul>"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: latest
+      - name: reportNaN
+        in: query
+        description: If a metric value is NaN or null, reportNaN determines whether API should report it as NaN. The default behaviour is false and NaN and null will be reported as 0. Setting <code>reportNaN=true</code> will return NaN values in the API response.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: false
+      - name: end
+        in: query
+        description: This parameter can be used to specify the end time for the retrieved metric values. For example, if you set this to a timestamp which is 10 minutes prior to the current time, the metric values returned will be for that point of time. Please note that the format is milliseconds since Epoch.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 1597112465640
+      - name: format
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: "<ul>\n  <li>If set to DEFAULT, response will be returned in JSON format.</li>\n  <li>If set to PROMETHEUS, text response will be returned in Prometheus format.</li>\n  <li>If not provided, response will be returned in default format, i.e. JSON.</li>\n</ul>"
+          example: PROMETHEUS
+          enum:
+          - DEFAULT
+          - PROMETHEUS
+      - name: startIndex
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+          default: 1
+      - name: count
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 60
+          minimum: 1
+          type: integer
+          format: int32
+          default: 20
+      responses:
+        '200':
+          description: Successfully retrieved monitoring results of metrics set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult'
+              examples:
+                Broker Level Per-Topic Metrics (Cluster) - Paged with Wildcard:
+                  description: Broker Level Per-Topic Metrics (Cluster) - Paged with Wildcard
+                  value:
+                    itemsPerPage: 5
+                    resources:
+                    - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                      nodeSize: KFK-PRD-r6g.large-250
+                      payload:
+                      - metric: messagesInPerTopic
+                        topic: instaclustr-sla
+                        type: mean_rate
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.5051724911338817'
+                      privateIp: 10.0.0.1
+                      publicIp: 123.123.123.123
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1a
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                      nodeSize: KFK-PRD-r6g.large-250
+                      payload:
+                      - metric: messagesInPerTopic
+                        topic: instaclustr-sla
+                        type: mean_rate
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.4515722583651829'
+                      privateIp: 10.0.0.2
+                      publicIp: 123.123.123.124
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1b
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                      nodeSize: KFK-PRD-r6g.large-250
+                      payload:
+                      - metric: messagesInPerTopic
+                        topic: instaclustr-sla
+                        type: mean_rate
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.4708695545998745'
+                      privateIp: 10.0.0.3
+                      publicIp: 123.123.123.125
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1c
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    - id: 694294d9-ea82-49c2-9f71-aacac81f0325
+                      nodeSize: KFK-PRD-r6g.large-250
+                      payload:
+                      - metric: messagesInPerTopic
+                        topic: test-topic
+                        type: mean_rate
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.0517249113388175'
+                      privateIp: 10.0.0.1
+                      publicIp: 123.123.123.123
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1a
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                      nodeSize: KFK-PRD-r6g.large-250
+                      payload:
+                      - metric: messagesInPerTopic
+                        topic: test-topic
+                        type: mean_rate
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.0515722583651829'
+                      privateIp: 10.0.0.2
+                      publicIp: 123.123.123.124
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1b
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    startIndex: 1
+                    totalResults: 9
+                Elasticsearch Metrics (Cluster) - Paged:
+                  description: Elasticsearch Metrics (Cluster) - Paged
+                  value:
+                    itemsPerPage: 2
+                    resources:
+                    - id: 4d848f48-5e24-41d6-81f2-44c2f578895f
+                      nodeSize: ESH-PRD-r6g.large-250
+                      payload:
+                      - metric: docsCount
+                        type: value
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '4120.0'
+                      - metric: slasearchlatency
+                        type: value
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.3333333730697632'
+                      privateIp: 10.0.0.2
+                      publicIp: 123.123.123.124
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1b
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    - id: 3bccad4b-087b-471d-8f24-0452edb86bf1
+                      nodeSize: ESH-PRD-r6g.large-250
+                      payload:
+                      - metric: docsCount
+                        type: value
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '4092.0'
+                      - metric: slasearchlatency
+                        type: value
+                        unit: '1'
+                        values:
+                        - time: '2017-01-04T04:19:28.000Z'
+                          value: '1.6666666269302368'
+                      privateIp: 10.0.0.3
+                      publicIp: 123.123.123.125
+                      rack:
+                        dataCentre:
+                          displayName: AWS_VPC_US_EAST_1
+                          name: US_EAST_1
+                          provider: AWS_VPC
+                          uuid: null
+                        name: us-east-1c
+                        providerAccount:
+                          name: INSTACLUSTR
+                          provider: AWS_VPC
+                    startIndex: 1
+                    totalResults: 3
+            text/plain:
+              schema:
+                type: string
+              examples:
+                Prometheus response ('format' query parameter specified as 'prometheus'):
+                  description: Prometheus response ('format' query parameter specified as 'prometheus')
+                  value: '# HELP ic_node_cpu_utilization Data type: percentage, Unit: 1
+
+                    # TYPE ic_node_cpu_utilization gauge
+
+                    ic_node_cpu_utilization{nodeID="6e46cece-15be-4a31-a540-37854e722959",type="percentage",} 1.480180632212745'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/postgresql/schema:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: PostgreSQL - Retrieve PostgreSQL schema definition
+      description: You can use this endpoint to retrieve the PostgreSQL schema definition
+      operationId: postgresqlSchema_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved PostgreSQL schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMapResponseSchema'
+              example:
+                db-1:
+                  schema-1:
+                  - table-1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /monitoring/v1/datacentres/{clusterDataCentreId}/topics:
+    get:
+      tags:
+      - Monitoring API - Data Centre
+      summary: Kafka - Retrieve list of topics
+      description: You can use this endpoint to list all the Kafka topics.
+      operationId: getKafkaTopicList_1
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved a list of all the Kafka topics.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - instaclustr-sla
+              - topic-1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    Indicator:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The name of the indicator being returned
+          example: DISK_USAGE
+          enum:
+          - REPLICATION_STRATEGY
+          - REPLICATION_FACTOR
+          - DISK_USAGE
+          - PARTITION_SIZE
+          - TOMBSTONE_LIVECELL
+        stateDetails:
+          type: object
+          description: 'The state details of the indicator type. Object structure:</br><pre>{</br>    "stateDetails": {</br>        State: [</br>            Details</br>        ]</br>    }</br>}</pre><code>State</code> enum: <code>PASS</code>, <code>WARN</code>, <code>WARN_MULTI</code>, <code>FAIL</code>, <code>FAIL_MULTI</code>, <code>UNKNOWN</code></br><code>Detail</code> fields: <code>message</code>, <code>publicIp</code>, <code>privateIp</code></br>'
+          example:
+            PASS:
+            - message: ''
+              privateIp: 10.224.145.126
+              publicIp: 52.5.37.217
+            - message: ''
+              privateIp: 10.224.80.183
+              publicIp: 34.232.115.13
+            - message: ''
+              privateIp: 10.224.9.122
+              publicIp: 34.233.151.239
+    DataCentrePrimaryKey:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of data centre
+          example: US_EAST_1
+        provider:
+          type: string
+          description: Provider name
+          example: AWS_VPC
+          enum:
+          - AWS
+          - AWS_VPC
+          - RACKSPACE
+          - AZURE_AZ
+          - VAGRANT
+          - GCP
+          - SOFTLAYER_BARE_METAL
+          - ONPREMISES
+      description: DataCentre of the rack
+    GenericMapResponseSchema:
+      type: object
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    RackPrimaryKey:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Rack name
+          example: us-east-1a
+        dataCentre:
+          $ref: '#/components/schemas/DataCentrePrimaryKey'
+        providerAccount:
+          $ref: '#/components/schemas/ProviderAccountPrimaryKey'
+      description: Node rack information
+    ProviderAccountPrimaryKey:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Provider account
+          example: INSTACLUSTR
+        provider:
+          type: string
+          description: Provider name
+          example: AWS_VPC
+          enum:
+          - AWS
+          - AWS_VPC
+          - RACKSPACE
+          - AZURE_AZ
+          - VAGRANT
+          - GCP
+          - SOFTLAYER_BARE_METAL
+          - ONPREMISES
+      description: Provider information including name and account
+    MonitoringResultMixedSchema:
+      type: object
+      properties:
+        publicIp:
+          type: string
+          description: Public IP of the node
+          example: 123.123.123.123
+        privateIp:
+          type: string
+          description: Private IP of the node
+          example: 10.0.0.1
+        rack:
+          $ref: '#/components/schemas/RackPrimaryKey'
+        nodeSize:
+          type: string
+          description: Node size
+          example: SRH-PRD-r6g.large-250
+    PaginatedResult:
+      type: object
+      properties:
+        totalResults:
+          type: integer
+          format: int32
+        startIndex:
+          type: integer
+          format: int32
+        itemsPerPage:
+          type: integer
+          format: int32
+        resources:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

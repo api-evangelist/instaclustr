@@ -1,0 +1,1242 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr MCP Gateway Backend V1 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged MCP Gateway Backend V1 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: MCP Gateway Backend V1
+  description: Operations related to MCP Gateway backends.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/backends/cassandra/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mcp_backend_cassandra_v1
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: List all Cassandra backends in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved Cassandra backends for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayMcpBackendCassandraV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdBackendsCassandraV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/backends/http-server/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mcp_backend_http_server_v1
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: List all HTTP Server backends in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved HTTP Server backends for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdBackendsHttpServerV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/backends/instaclustr-api/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mcp_backend_instaclustr_api_v1
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: List all Instaclustr API backends in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved Instaclustr API backends for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdBackendsInstaclustrApiV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/backends/kafka/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mcp_backend_kafka_v1
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: List all Kafka backends in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved Kafka backends for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayMcpBackendKafkaV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdBackendsKafkaV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/backends/opensearch/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mcp_backend_opensearch_v1
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: List all OpenSearch backends in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved OpenSearch backends for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdBackendsOpensearchV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/cassandra/v1:
+    x-terraform-resource-name: mcp_gateway_mcp_backend_cassandra_v1
+    post:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Create an MCP Gateway Cassandra backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendCassandraV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Cassandra backend creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendCassandraV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayBackendsCassandraV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/cassandra/v1/{backendId}:
+    parameters:
+    - name: backendId
+      in: path
+      description: ID of the MCP Gateway backend.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Get an MCP Gateway Cassandra backend
+      responses:
+        '200':
+          description: MCP Gateway Cassandra backend details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendCassandraV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayBackendsCassandraV1ByBackendId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Update an MCP Gateway Cassandra backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendCassandraUpdateV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Cassandra backend update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendCassandraV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayBackendsCassandraV1ByBackendId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Delete an MCP Gateway Cassandra backend
+      responses:
+        '204':
+          description: MCP Gateway Cassandra backend delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayBackendsCassandraV1ByBackendId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/http-server/v1:
+    x-terraform-resource-name: mcp_gateway_mcp_backend_http_server_v1
+    post:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Create an MCP Gateway HTTP Server backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway HTTP Server backend creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayBackendsHttpServerV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/http-server/v1/{backendId}:
+    parameters:
+    - name: backendId
+      in: path
+      description: ID of the MCP Gateway backend.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Get an MCP Gateway HTTP Server backend
+      responses:
+        '200':
+          description: MCP Gateway HTTP Server backend details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayBackendsHttpServerV1ByBackendId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Update an MCP Gateway HTTP Server backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerUpdateV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway HTTP Server backend update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendHttpServerV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayBackendsHttpServerV1ByBackendId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Delete an MCP Gateway HTTP Server backend
+      responses:
+        '204':
+          description: MCP Gateway HTTP Server backend delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayBackendsHttpServerV1ByBackendId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/instaclustr-api/v1:
+    x-terraform-resource-name: mcp_gateway_mcp_backend_instaclustr_api_v1
+    post:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Create an MCP Gateway Instaclustr API backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Instaclustr API backend creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayBackendsInstaclustrApiV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/instaclustr-api/v1/{backendId}:
+    parameters:
+    - name: backendId
+      in: path
+      description: ID of the MCP Gateway backend.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Get an MCP Gateway Instaclustr API backend
+      responses:
+        '200':
+          description: MCP Gateway Instaclustr API backend details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayBackendsInstaclustrApiV1ByBackendId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Update an MCP Gateway Instaclustr API backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiUpdateV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Instaclustr API backend update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayBackendsInstaclustrApiV1ByBackendId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Delete an MCP Gateway Instaclustr API backend
+      responses:
+        '204':
+          description: MCP Gateway Instaclustr API backend delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayBackendsInstaclustrApiV1ByBackendId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/kafka/v1:
+    x-terraform-resource-name: mcp_gateway_mcp_backend_kafka_v1
+    post:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Create an MCP Gateway Kafka backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendKafkaV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Kafka backend creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendKafkaV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayBackendsKafkaV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/kafka/v1/{backendId}:
+    parameters:
+    - name: backendId
+      in: path
+      description: ID of the MCP Gateway backend.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Get an MCP Gateway Kafka backend
+      responses:
+        '200':
+          description: MCP Gateway Kafka backend details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendKafkaV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayBackendsKafkaV1ByBackendId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Update an MCP Gateway Kafka backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendKafkaUpdateV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway Kafka backend update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendKafkaV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayBackendsKafkaV1ByBackendId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Delete an MCP Gateway Kafka backend
+      responses:
+        '204':
+          description: MCP Gateway Kafka backend delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayBackendsKafkaV1ByBackendId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/opensearch/v1:
+    x-terraform-resource-name: mcp_gateway_mcp_backend_opensearch_v1
+    post:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Create an MCP Gateway OpenSearch backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway OpenSearch backend creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayBackendsOpensearchV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/backends/opensearch/v1/{backendId}:
+    parameters:
+    - name: backendId
+      in: path
+      description: ID of the MCP Gateway backend.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Get an MCP Gateway OpenSearch backend
+      responses:
+        '200':
+          description: MCP Gateway OpenSearch backend details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayBackendsOpensearchV1ByBackendId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Update an MCP Gateway OpenSearch backend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchUpdateV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway OpenSearch backend update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayMcpBackendOpenSearchV1'
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayBackendsOpensearchV1ByBackendId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Backend V1
+      summary: Delete an MCP Gateway OpenSearch backend
+      responses:
+        '204':
+          description: MCP Gateway OpenSearch backend delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway backend not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayBackendsOpensearchV1ByBackendId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    McpGatewayMcpBackendHttpAuthenticationV1:
+      required:
+      - scheme
+      type: object
+      properties:
+        queryParameterName:
+          type: string
+          description: HTTP query parameter name for backend authentication.
+          example: key
+        scheme:
+          type: string
+          description: HTTP Authentication scheme for the backend.
+          example: KEY
+          enum:
+          - PASSTHROUGH
+          - KEY
+        header:
+          maxItems: 1
+          type: array
+          description: 'HTTP header configuration for backend authentication. Defaults to Authorization: Bearer {KEY}'
+          items:
+            required:
+            - keyPrefix
+            type: object
+            properties:
+              name:
+                type: string
+                description: HTTP header name for backend authentication. Defaults to Authorization.
+                example: Authorization
+              keyPrefix:
+                type: string
+                description: Key prefix, usually specifying authentication scheme.
+                example: 'Bearer '
+        cookieName:
+          type: string
+          description: HTTP cookie name for backend authentication.
+          example: key
+        key:
+          type: string
+          description: The authentication credentials for the backend.
+          example: my-secret-key
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+      description: HTTP auth for an MCP Backend.
+    McpGatewayMcpBackendCassandraV1:
+      required:
+      - cassandraDataCentreId
+      - name
+      - virtualServerId
+      type: object
+      properties:
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this backend belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        cassandraClusterId:
+          type: string
+          description: ID of the Cassandra Cluster
+          format: uuid
+          readOnly: true
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: ID of the backend.
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        cassandraDataCentreId:
+          type: string
+          description: ID of the Cassandra Data Centre
+          format: uuid
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Configuration for a Cassandra backend.
+      example:
+        cassandraClusterId: c3d4e5f6-a7b8-9012-cdef-123456789012
+        cassandraDataCentreId: d4e5f6a7-b8c9-0123-def0-234567890123
+        clusterId: 4650aa98-e894-4675-9614-558915d5837a
+        id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        name: my-cassandra-backend
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    McpGatewayMcpBackendOpenSearchUpdateV1:
+      required:
+      - name
+      - opensearchClusterId
+      type: object
+      properties:
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        opensearchClusterId:
+          type: string
+          format: uuid
+          x-terraform-force-new: true
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Request body for updating an OpenSearch backend.
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    AuthenticationSaslPlainV1:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        username:
+          type: string
+    McpGatewayMcpBackendInstaclustrApiComponentV1:
+      type: string
+      description: Component of Instaclustr API backend in MCP Gateway.
+      enum:
+      - CLUSTER_MANAGEMENT_API_CORE
+      - MONITORING_API_CORE
+    McpGatewayMcpBackendHttpServerUpdateV1:
+      required:
+      - name
+      - serverUrl
+      type: object
+      properties:
+        serverUrl:
+          type: string
+          description: Host URL of the HTTP Server backend.
+          example: https://api.example.com
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        authentication:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/McpGatewayMcpBackendHttpAuthenticationV1'
+      description: Request body for updating an HTTP Server backend.
+    McpGatewayMcpBackendCassandraUpdateV1:
+      required:
+      - cassandraDataCentreId
+      - name
+      type: object
+      properties:
+        cassandraClusterId:
+          type: string
+          description: ID of the Cassandra Cluster
+          format: uuid
+          readOnly: true
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        cassandraDataCentreId:
+          type: string
+          description: ID of the Cassandra Data Centre
+          format: uuid
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Request body for updating a Cassandra backend.
+    McpGatewayMcpBackendInstaclustrApiUpdateV1:
+      required:
+      - apiUser
+      - components
+      type: object
+      properties:
+        components:
+          minItems: 1
+          type: array
+          description: Instaclustr API groups to expose as MCP tools. At least one group is required. CLUSTER_MANAGEMENT_API_CORE covers cluster details and operational state. MONITORING_API_CORE covers metrics.
+          example:
+          - CLUSTER_MANAGEMENT_API_CORE
+          items:
+            $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiComponentV1'
+        apiUser:
+          type: string
+          description: Username of an account-linked user or Service User whose Instaclustr API keys this backend uses. A MONITORING key is required when MONITORING_API_CORE is selected, and a PROVISIONING_READONLY key is required when CLUSTER_MANAGEMENT_API_CORE is selected. After you rotate a key, call the Instaclustr API backend sync endpoint to update configuration
+          example: mcp-gateway-user
+      description: Request body for updating an Instaclustr API backend.
+    McpGatewayMcpBackendInstaclustrApiV1:
+      required:
+      - apiUser
+      - components
+      - virtualServerId
+      type: object
+      properties:
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this backend belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        components:
+          minItems: 1
+          type: array
+          description: Instaclustr API groups to expose as MCP tools. At least one group is required. CLUSTER_MANAGEMENT_API_CORE covers cluster details and operational state. MONITORING_API_CORE covers metrics.
+          example:
+          - CLUSTER_MANAGEMENT_API_CORE
+          items:
+            $ref: '#/components/schemas/McpGatewayMcpBackendInstaclustrApiComponentV1'
+        serverUrl:
+          type: string
+          description: Host URL of the Instaclustr API. Assigned by the platform.
+          readOnly: true
+          example: https://api.instaclustr.com
+        name:
+          type: string
+          readOnly: true
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: ID of the backend.
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        apiUser:
+          type: string
+          description: Username of an account-linked user or Service User whose Instaclustr API keys this backend uses. A MONITORING key is required when MONITORING_API_CORE is selected, and a PROVISIONING_READONLY key is required when CLUSTER_MANAGEMENT_API_CORE is selected. After you rotate a key, call the Instaclustr API backend sync endpoint to update configuration
+          example: mcp-gateway-user
+      description: Configuration for an Instaclustr API backend.
+      example:
+        clusterId: 4650aa98-e894-4675-9614-558915d5837a
+        components:
+        - CLUSTER_MANAGEMENT_API_CORE
+        - MONITORING_API_CORE
+        id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        name: instaclustr-api-backend
+        serverUrl: https://api.instaclustr.com
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    McpGatewayMcpBackendKafkaV1:
+      required:
+      - kafkaClusterId
+      - name
+      - virtualServerId
+      type: object
+      properties:
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this backend belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        kafkaClusterId:
+          type: string
+          format: uuid
+          x-terraform-force-new: true
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: ID of the backend.
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Configuration for a Kafka backend.
+      example:
+        clusterId: 4650aa98-e894-4675-9614-558915d5837a
+        id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        kafkaClusterId: c3d4e5f6-a7b8-9012-cdef-123456789012
+        name: my-kafka-backend
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    McpGatewayMcpBackendOpenSearchV1:
+      required:
+      - name
+      - opensearchClusterId
+      - virtualServerId
+      type: object
+      properties:
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this backend belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: ID of the backend.
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        opensearchClusterId:
+          type: string
+          format: uuid
+          x-terraform-force-new: true
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Configuration for an OpenSearch backend.
+      example:
+        clusterId: 4650aa98-e894-4675-9614-558915d5837a
+        id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        name: my-opensearch-backend
+        opensearchClusterId: c3d4e5f6-a7b8-9012-cdef-123456789012
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    McpGatewayMcpBackendHttpServerV1:
+      required:
+      - name
+      - serverUrl
+      - virtualServerId
+      type: object
+      properties:
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this backend belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: ID of the backend.
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        serverUrl:
+          type: string
+          description: Host URL of the HTTP Server backend.
+          example: https://api.example.com
+        authentication:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/McpGatewayMcpBackendHttpAuthenticationV1'
+      description: HTTP Server backend configuration.
+      example:
+        clusterId: 4650aa98-e894-4675-9614-558915d5837a
+        id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        name: my-http-server-backend
+        serverUrl: https://api.example.com
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    McpGatewayMcpBackendKafkaUpdateV1:
+      required:
+      - kafkaClusterId
+      - name
+      type: object
+      properties:
+        kafkaClusterId:
+          type: string
+          format: uuid
+          x-terraform-force-new: true
+        name:
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+          type: string
+          description: Name of the backend.
+          example: my-cassandra-backend
+        authenticationSaslPlain:
+          maxItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationSaslPlainV1'
+        peerNetworks:
+          type: boolean
+          description: Create a network peering connection between the backend and the MCP Gateway
+        usePrivateNetwork:
+          type: boolean
+          description: Use private network to communicate with the backend
+      description: Request body for updating a Kafka backend.
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

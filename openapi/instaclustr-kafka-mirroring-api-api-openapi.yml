@@ -1,0 +1,622 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Kafka Mirroring API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Kafka Mirroring API across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Kafka Mirroring API
+  description: Operations related to managing mirroring setups between Kafka and Kafka Connect clusters.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/{clusterId}/kafka-connect/mirrors:
+    get:
+      tags:
+      - Kafka Mirroring API
+      summary: List all mirroring configurations
+      description: Lists all current mirroring configurations for the given cluster
+      operationId: getAllMirrors
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved all mirroring configs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllMirrorsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Kafka Mirroring API
+      summary: Create a new mirroring configuration
+      description: Creates a new mirroring configuration that will be set up asynchronously. Returns an id that represents the configuration
+      operationId: createMirror
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        description: Create new mirror request
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateInstaclustrMirrorRequestSchemaOnlyClass'
+              - $ref: '#/components/schemas/CreateCustomSourceMirrorRequestSchemaOnlyClass'
+        required: true
+      responses:
+        '200':
+          description: Successfully created new mirroring config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMirrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/kafka-connect/mirrors/{mirrorId}:
+    get:
+      tags:
+      - Kafka Mirroring API
+      summary: Get mirroring configuration details
+      description: Get details about a specific mirroring configuration
+      operationId: getSpecificMirror
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      - name: mirrorId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved mirroring config detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSpecificMirrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    delete:
+      tags:
+      - Kafka Mirroring API
+      summary: Delete a mirroring configuration
+      description: Deletes a specific mirroring configuration, shutting down all its connectors and tasks
+      operationId: deleteSpecificMirror
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      - name: mirrorId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '204':
+          description: Successfully deleted mirroring config
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden. User doesn't have permission to perform this operation
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/kafka-connect/mirrors/{mirrorId}/targetLatency:
+    put:
+      tags:
+      - Kafka Mirroring API
+      summary: Update a mirror's target latency
+      description: Updates a mirror's target latency. The target latency is the measure above which this mirror will be considered out of sync.
+      operationId: updateTargetLatency
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      - name: mirrorId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTargetLatencyRequest'
+      responses:
+        '204':
+          description: Successfully updated target latency
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden. User doesn't have permission to perform this operation
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    UpdateTargetLatencyRequest:
+      required:
+      - newTargetLatency
+      type: object
+      properties:
+        newTargetLatency:
+          minimum: 1000
+          type: integer
+          description: The new target latency in milliseconds to set.
+          format: int32
+    TopicInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the topic being mirrored
+          example: instaclustr-sla
+        averageLatency:
+          type: integer
+          description: Average latency in milliseconds for messages to travel from source to destination topics
+          format: int64
+          example: 153
+        averageRate:
+          type: number
+          description: Average record rate for messages to travel from source to destination topics, it is 0 if there are no messages travelling in between
+          format: double
+          example: 1
+      description: List of mirrored topics, their average latencies and their average record rates
+    CreateInstaclustrMirrorRequestSchemaOnlyClass:
+      type: object
+      properties:
+        sourceType:
+          type: string
+          description: Indicates that your source cluster is an instaclustr managed cluster
+          example: custom
+          enum:
+          - instaclustr
+        useRenaming:
+          type: boolean
+          description: Whether to rename topics as they are mirrored, by prefixing the source alias to the topic name
+          example: true
+        kafkaSource:
+          type: string
+          description: Id of your source instaclustr Kafka cluster
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        usePrivateIps:
+          type: boolean
+          description: Whether or not to connect to  your source cluster's private IP addresses
+          example: false
+        sourceAlias:
+          type: string
+          description: Alias to use for your source Kafka cluster. This will be used to rename topics if that option is turned on
+          example: production-west
+        topicsRegex:
+          type: string
+          description: Regex to select which topics to mirror
+          example: west-.*
+        maxTasks:
+          type: integer
+          description: Maximum number of tasks for Kafka Connect to use
+          format: int32
+          example: 3
+    GetAllMirrorsResponse:
+      type: object
+      properties:
+        mirrors:
+          type: array
+          description: list of all active mirroring configurations
+          items:
+            $ref: '#/components/schemas/GetAllMirrorsResponseItem'
+    CreateMirrorResponse:
+      type: object
+      properties:
+        mirrorId:
+          type: string
+          description: Id of the newly created mirroring config. Clients should use this to query details about the mirroring config
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    GetAllMirrorsResponseItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the mirroring config.
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        connectorName:
+          type: string
+          description: The base name for the connectors of this mirror
+          example: source.target.stFR45Jhdg5r
+        topicsRegex:
+          type: string
+          description: The original regular expression used to define which topics to mirror
+          example: .*
+      description: list of all active mirroring configurations
+    GetSpecificMirrorResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the mirroring config.
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        status:
+          type: string
+          description: The overall status of this mirror
+          example: IN_SYNC
+        connectorName:
+          type: string
+          description: The base name for the connectors of this mirror
+          example: source.target.stFR45Jhdg5r
+        targetLatency:
+          type: integer
+          description: The latency in milliseconds above which this mirror will be considered out of sync
+          format: int32
+          example: 30000
+        topicsRegex:
+          type: string
+          description: The original regular expression used to define which topics to mirror
+          example: .*
+        mirrorStatus:
+          type: string
+          description: Status of the MirrorSourceConnector
+          example: RUNNING
+        checkpointStatus:
+          type: string
+          description: Status of the CheckpointConnector
+          example: RUNNING
+        topicStatuses:
+          type: array
+          description: List of mirrored topics, their average latencies and their average record rates
+          items:
+            $ref: '#/components/schemas/TopicInfo'
+    CreateCustomSourceMirrorRequestSchemaOnlyClass:
+      type: object
+      properties:
+        sourceType:
+          type: string
+          description: Indicates that your source cluster is a custom cluster
+          example: custom
+          enum:
+          - custom
+        useRenaming:
+          type: boolean
+          description: Whether to rename topics as they are mirrored, by prefixing the source alias to the topic name
+          example: true
+        sourceAlias:
+          type: string
+          description: alias to use for your source kafka cluster. This will be used to rename topics if that option is turned on
+          example: production-west
+        sourceConnectionProperties:
+          type: string
+          description: Kafka connection properties used to connect to your source cluster
+          example: bootstrap.servers=10.0.0.1:9092\nsecurity.protocol=PLAINTEXT
+        topicsRegex:
+          type: string
+          description: Regex to select which topics to mirror
+          example: west-.*
+        maxTasks:
+          type: integer
+          description: Maximum number of tasks for Kafka Connect to use
+          format: int32
+          example: 3
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr OpenSearch External S3 Bucket V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged OpenSearch External S3 Bucket V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: OpenSearch External S3 Bucket V2
+  description: Operations related to managing external S3 buckets with read-only access for OpenSearch clusters.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/opensearch_cluster/{clusterId}/external-s3-buckets/v2/:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the OpenSearch cluster
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    x-terraform-resource-name: opensearch_external_s3_bucket_v2
+    get:
+      tags:
+      - OpenSearch External S3 Bucket V2
+      summary: List all external S3 buckets with read-only access for an OpenSearch cluster
+      description: Get a list of external S3 buckets with read-only access attached to the OpenSearch cluster
+      responses:
+        '200':
+          description: Successfully retrieved external S3 bucket configurations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenSearchExternalS3BucketsV2'
+              example:
+              - clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                externalS3Buckets:
+                - clusterDataCentreId: a1b2c3d4-1234-56ab-cdef-0987654321fe
+                  clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                  id: d1e2f3a4-5678-90ab-cdef-1234567890ab
+                  s3BucketName: my-snapshot-bucket
+                  s3Prefixes:
+                  - snapshots/my-cluster
+        '400':
+          description: Invalid cluster ID, expecting UUID 4 format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: OpenSearch cluster does not exist for given Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      operationId: getClusterManagementV2DataSourcesOpensearchClusterByClusterIdExternalS3BucketsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/opensearch/external-s3-buckets/v2/:
+    x-terraform-resource-name: opensearch_external_s3_bucket_v2
+    post:
+      tags:
+      - OpenSearch External S3 Bucket V2
+      summary: Attach an external S3 bucket with read-only access to an OpenSearch cluster
+      description: Attach an external S3 bucket with read-only access to an OpenSearch cluster. The clusterId must be provided in the request body.
+      requestBody:
+        description: Details of the external S3 bucket to attach
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenSearchExternalS3BucketV2'
+        required: true
+      responses:
+        '202':
+          description: External S3 bucket configuration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenSearchExternalS3BucketV2'
+              example:
+                clusterDataCentreId: a1b2c3d4-1234-56ab-cdef-0987654321fe
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: d1e2f3a4-5678-90ab-cdef-1234567890ab
+                s3BucketName: my-snapshot-bucket
+                s3Prefixes:
+                - snapshots/my-cluster
+        '400':
+          description: Invalid cluster ID, bucket name, or prefix
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+        '403':
+          description: This feature is not enabled for your account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: OpenSearch cluster does not exist for given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsOpensearchExternalS3BucketsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/opensearch/external-s3-buckets/v2/{externalS3BucketId}:
+    parameters:
+    - name: externalS3BucketId
+      in: path
+      description: ID of the external S3 bucket configuration
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - OpenSearch External S3 Bucket V2
+      summary: Retrieve an external S3 bucket configuration
+      description: Get an external S3 bucket configuration
+      responses:
+        '200':
+          description: External S3 bucket configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenSearchExternalS3BucketV2'
+              example:
+                clusterDataCentreId: a1b2c3d4-1234-56ab-cdef-0987654321fe
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: d1e2f3a4-5678-90ab-cdef-1234567890ab
+                s3BucketName: my-snapshot-bucket
+                s3Prefixes:
+                - snapshots/my-cluster
+        '400':
+          description: Invalid external S3 bucket ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+        '404':
+          description: External S3 bucket configuration does not exist for given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsOpensearchExternalS3BucketsV2ByExternalS3BucketId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - OpenSearch External S3 Bucket V2
+      summary: Remove an external S3 bucket from an OpenSearch cluster
+      responses:
+        '204':
+          description: External S3 bucket configuration removed
+          content: {}
+        '400':
+          description: Invalid external S3 bucket ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+        '403':
+          description: This feature is not enabled for your account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: External S3 bucket configuration does not exist for given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: deleteClusterManagementV2ResourcesApplicationsOpensearchExternalS3BucketsV2ByExternalS3BucketId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    OpenSearchExternalS3BucketsV2:
+      required:
+      - externalS3Buckets
+      type: object
+      properties:
+        externalS3Buckets:
+          type: array
+          description: List of external S3 bucket configurations
+          items:
+            $ref: '#/components/schemas/OpenSearchExternalS3BucketV2'
+        clusterId:
+          type: string
+          description: ID of the OpenSearch cluster
+          x-terraform-id: true
+      description: List of external S3 bucket configurations with read-only access for an OpenSearch cluster
+      example:
+        clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        externalS3Buckets:
+        - clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+          id: d1e2f3a4-5678-90ab-cdef-1234567890ab
+          s3BucketName: my-snapshot-bucket
+          s3Prefixes:
+          - snapshots/my-cluster
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    OpenSearchExternalS3BucketV2:
+      required:
+      - clusterId
+      - s3BucketName
+      type: object
+      properties:
+        clusterDataCentreId:
+          type: string
+          description: ID of the AWS VPC cluster data centre the bucket permission is attached to
+          format: uuid
+          readOnly: true
+          example: a1b2c3d4-1234-56ab-cdef-0987654321fe
+        s3BucketName:
+          type: string
+          description: Name of the external S3 bucket
+          example: my-snapshot-bucket
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: ID of the OpenSearch cluster to attach the bucket to
+          format: uuid
+          example: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: Instaclustr ID of the external S3 bucket configuration
+          format: uuid
+          readOnly: true
+          example: d1e2f3a4-5678-90ab-cdef-1234567890ab
+        s3Prefixes:
+          type: array
+          description: S3 path prefixes to restrict read-only access to within the bucket
+          example:
+          - snapshots/my-cluster
+          items:
+            type: string
+          x-terraform-force-new: true
+          x-terraform-ignore-order: true
+      description: Defines an external S3 bucket attached to an OpenSearch cluster for read-only access
+      example:
+        clusterDataCentreId: a1b2c3d4-1234-56ab-cdef-0987654321fe
+        clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        id: d1e2f3a4-5678-90ab-cdef-1234567890ab
+        s3BucketName: my-snapshot-bucket
+        s3Prefixes:
+        - snapshots/my-cluster
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

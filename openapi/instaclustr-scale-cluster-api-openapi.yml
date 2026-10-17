@@ -1,0 +1,1684 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Scale Cluster API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Scale Cluster across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Scale Cluster
+  description: Operations related to scaling a cluster. Includes adding a new data centre and resizing a cluster.
+  x-insta-tag-group: Provisioning V1
+  x-priority: 3
+paths:
+  /provisioning/v1/{clusterId}/cluster-data-centres:
+    x-priority: 1
+    post:
+      tags:
+      - Scale Cluster
+      summary: Add new Cluster Data Centre
+      description: Provision new cluster data centre to existing cluster.
+      operationId: addClusterDataCentre
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCentreRequest'
+      responses:
+        '202':
+          description: Successfully created Cluster Data Centre
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: Cluster Data Centre created in the specified cluster
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/{clusterDataCentreId}/resize:
+    get:
+      tags:
+      - Scale Cluster
+      summary: Get resize operations for a CDC
+      operationId: getResizeOps
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 796c69d8-98c5-45aa-a82e-56609e84145f
+      - name: activeOnly
+        in: query
+        description: Return active operation only
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          default: false
+      - name: mostRecent
+        in: query
+        description: Return most recent
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          default: false
+      responses:
+        '200':
+          description: Successfully returned the cdc resize operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResizeClusterDataCentreOperation'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Cluster/CDC not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Scale Cluster
+      summary: Resize an instance
+      description: Nodes in a cluster data centre can be resized in-place via the Console or by issuing an API request. Resizing nodes let you scale the CPU core count and memory quota to meet changing demands and is significantly faster than adding additional Cassandra nodes.
+      operationId: resizeDataCentre
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 796c69d8-98c5-45aa-a82e-56609e84145f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResizeDataCentreRequest'
+        required: true
+      responses:
+        '202':
+          description: Successfully created resize request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: instance resize request accepted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: A resize operation already exists for the specified data centre.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '412':
+          description: Precondition failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResizePreconditionFailureMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/{clusterDataCentreId}/resize/node_size:
+    get:
+      tags:
+      - Scale Cluster
+      summary: Retrieve compatible node sizes for resize
+      description: Retrieve a map between NodePurpose with a list of their valid node sizes for resize.
+      operationId: getNodeSizeForResize
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 796c69d8-98c5-45aa-a82e-56609e84145f
+      responses:
+        '200':
+          description: Successfully retrieved all NodePurpose with their valid node sizes supported for resize.
+          content:
+            application/json:
+              schema:
+                type: string
+              example: '{"ELASTICSEARCH_MASTER":["m5l-250"],"ELASTICSEARCH_KIBANA":["m5l-250"]}'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/{clusterDataCentreId}/resize/{opId}:
+    get:
+      tags:
+      - Scale Cluster
+      summary: Get details for a resize operation
+      operationId: getResizeOperationDetails
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 796c69d8-98c5-45aa-a82e-56609e84145f
+      - name: opId
+        in: path
+        description: Id of the resize cluster data centre operation.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully returned the cdc resize operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterDataCentreResizeOperationDetails'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Operation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    delete:
+      tags:
+      - Scale Cluster
+      summary: Cancel resize CDC operation
+      description: Cancel an active resize cluster data centre operation.
+      operationId: cancelResizeCDCOperation
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 796c69d8-98c5-45aa-a82e-56609e84145f
+      - name: opId
+        in: path
+        description: Id of the resize cluster data centre operation.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Node Purposes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - ELASTICSEARCH_DATA_AND_INGEST
+                  - ELASTICSEARCH_MASTER
+                  - ELASTICSEARCH_KIBANA
+                  - ELASTICSEARCH_COORDINATOR
+                  - OPENSEARCH_DASHBOARDS
+                  - OPENSEARCH_COORDINATOR
+                  - OPENSEARCH_MASTER
+                  - OPENSEARCH_INGEST
+                  - OPENSEARCH_DATA
+                  - OPENSEARCH_DATA_AND_INGEST
+                  - OPENSEARCH_VECTOR_INDEX_BUILDER
+                  - KAFKA_BROKER
+                  - KAFKA_DEDICATED_ZOOKEEPER
+                  - KAFKA_DEDICATED_KRAFT_CONTROLLER
+                  - KAFKA_DISKLESS_BROKER
+                  - KAFKA_DISKLESS_DEDICATED_KRAFT_CONTROLLER
+                  - REDIS
+                  - VALKEY
+                  - CASSANDRA
+                  - CASSANDRA_SHOTOVER_PROXY
+                  - CADENCE
+                  - POSTGRESQL
+                  - MONGODB
+                  - CLICKHOUSE_SERVER
+                  - CLICKHOUSE_KEEPER
+                  - CLICKHOUSE_SERVER_AND_KEEPER
+                  - COUCHBASE
+                  - KAFKA_SHOTOVER_PROXY
+                  - MCP_GATEWAY_SERVER
+                  - NETAPP_SEARCH_SERVER
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ApacheZookeeperOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Server Encryption
+          default: false
+        zookeeperNodeCount:
+          type: integer
+          description: Number of Zookeeper nodes; must be 3 or 5.
+          format: int32
+          default: 3
+    KafkaOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        numberPartitions:
+          type: integer
+          description: Default number of partitions to be assigned per topic.
+          format: int32
+        autoCreateTopics:
+          type: boolean
+          description: Enable to allow brokers to automatically create a topic, if it does not already exist, when messages are published to it.
+          default: true
+        deleteTopics:
+          type: boolean
+          description: Enable to allow topics to be deleted via the ic-kafka-topics tool.
+          default: true
+        dedicatedZookeeper:
+          type: boolean
+          description: Enable to provision dedicated zookeeper nodes.
+          default: false
+        zookeeperNodeSize:
+          type: string
+          description: Dedicated Zookeeper node size.
+        zookeeperNodeCount:
+          type: integer
+          description: Number of dedicated Zookeeper node count, it must be 3 or 5.
+          format: int32
+          default: 3
+        advertisedHostName:
+          type: string
+          description: Advertised HostName is required for PrivateLink.
+        kraftMode:
+          type: string
+          description: Create KRaft Mode with COLOCATED
+          example: COLOCATED
+          enum:
+          - NONE
+          - COLOCATED
+          - COLLOCATED_WITH_SEPARATE_PROCESSES
+          - DEDICATED
+          - NONE
+          - COLOCATED
+        kraftControllerNodeCount:
+          type: string
+          description: Number of KRaft Controller Node count
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    BundleRequest:
+      required:
+      - bundle
+      - version
+      type: object
+      properties:
+        bundle:
+          type: string
+          description: "Instaclustr refers to the base applications running on a cluster as bundles. Addon bundles are additional applications which can be previsioned alongside the base applications. Addons cannot be provisioned by themselves. \n<b>Note:</b> The bundle versions listed are defaults for most accounts, additional versions may be available for your account. You can consult the Instaclustr Console for information about which bundle versions are available for you.\n\n<h3>Base Application Addon Compatibility</h3>\n<b>APACHE_CASSANDRA</b>\n<ul>\n    <li>SPARK</li>\n    <li>LUCENE</li>\n    <li>CONTINUOUS_BACKUP</li>\n</ul>\n<b>Note:</b> PCI compliance is not compatible with Spark or Lucene, see <a href=\"https://www.instaclustr.com/support/documentation/useful-information/pci-compliance/\" target=\"_blank\">here</a> for more details\n\n<b>KAFKA</b>\n<ul>\n    <li>KAFKA_REST_PROXY</li>\n    <li>KAFKA_SCHEMA_REGISTRY</li>\n    <li>KARAPACE_SCHEMA_REGISTRY</li>\n    <li>KARAPACE_REST_PROXY</li>\n</ul>\n"
+          example: APACHE_CASSANDRA
+          enum:
+          - APACHE_CASSANDRA
+          - KAFKA
+          - KAFKA_CONNECT
+          - ELASTICSEARCH
+          - OPENSEARCH
+          - REDIS
+          - VALKEY
+          - SPARK
+          - KAFKA_REST_PROXY
+          - KAFKA_SCHEMA_REGISTRY
+          - APACHE_ZOOKEEPER
+          - POSTGRESQL
+          - PGBOUNCER
+          - KARAPACE_SCHEMA_REGISTRY
+          - CADENCE
+          - KARAPACE_REST_PROXY
+        version:
+          type: string
+          description: "<h3>Accepted Bundle Versions</h3>\n<b>APACHE_CASSANDRA</b>\nNote: PCI is supported on the latest non-preview version of Cassandra.<ul>\n    <li>3.11.8</li>\n    <li>4.0.1</li>\n</ul>\n<b>KAFKA</b>\n<ul>\n    <li>4.1.1</li>\n    <li>3.9.1</li>\n</ul>\n<b>KAFKA_CONNECT</b>\n<ul>\n    <li>4.1.1</li>\n    <li>3.9.1</li>\n</ul>\n<b>ELASTICSEARCH (For Legacy Support Only)</b>\n<ul>\n    <li>1.13.3</li>\n</ul>\n<b>OPENSEARCH</b>\n<ul>\n    <li>1.3.15</li>\n    <li>2.16.0</li>\n</ul>\n<b>REDIS</b>\n<ul>\n    <li>7.0.14</li>\n</ul>\n<b>VALKEY</b>\n<ul>\n    <li>7.2.8</li>\n</ul>\n<b>SPARK</b>\n<ul>\n    <li>2.1.3</li>\n    <li>2.3.2</li>\n    <li>3.0.1</li>\n</ul>\n<b>KARAPACE_SCHEMA_REGISTRY</b>\n<ul>\n    <li>5.0.0</li>\n</ul>\n<b>KARAPACE_REST_PROXY</b>\n<ul>\n    <li>5.0.0</li>\n</ul>\n<b>APACHE_ZOOKEEPER</b>\n<ul>\n    <li>3.9.3</li>\n</ul>\n<b>POSTGRESQL</b>\n<ul>\n    <li>18.1</li>\n    <li>17.7</li>\n</ul>\n<b>PGBOUNCER</b>\n<ul>\n    <li>1.25.0</li>\n</ul>\n<b>CADENCE</b>\n<ul>\n    <li>1.2.2</li>\n</ul>\n"
+          example: 3.11.4
+        options:
+          $ref: '#/components/schemas/BundleOptionsSchema'
+    ElasticSearchOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        dedicatedMasterNodes:
+          type: boolean
+          description: This is an optional boolean parameter used to scale the load of the data node by having 3 dedicated master nodes for a particular cluster. We recommend selecting this to true for clusters with 9 and above nodes.
+          default: false
+        masterNodeSize:
+          type: string
+          description: Only to be included if the if dedicatedMasterNodes is set to true. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>
+          example: m4l-250
+        securityPlugin:
+          type: boolean
+          description: Enables Security Plugin. This option gives an extra layer of security to the cluster. This will automatically enable internode encryption.
+          default: false
+        indexManagementPlugin:
+          type: boolean
+          description: Enables Index Management Plugin. This helps automate recurring index management activities.
+          default: false
+    BundleOptionsSchema:
+      type: object
+      description: "Bundle options - the required schema differs depending on the bundle type.\n\n<b>Note:</b> the bundle options for KafkaConnect supports the following properties (in addition to those documented in the schema):<table>\n  <tbody>\n    <tr>\n      <td><b>Field</b></td>\n      <td><b>Allowed Values</b></td>\n    </tr>\n    <tr>\n      <td>\n        <span style=\"font-weight: 400;\">options.bootstrap.servers</span>\n        <p></p>\n        <p>options.sasl.*</p>\n        <p>options.ssl.*</p>\n        <p>options.security.*</p>\n      </td>\n      <td>\n        <b>Optional</b>\n        <p></p>\n        <p>\n          <span style=\"font-weight: 400;\"\n            >Connection information for your Kafka Cluster. These options are\n            analogous to the similarly named options that you would place in\n            your Kafka Connect worker.properties file. Only required if\n            connecting to a Non-Instaclustr managed Kafka Cluster</span\n          >\n        </p>\n        <p><b>&nbsp;</b></p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+      example:
+        authnAuthz: 'true'
+        clientEncryption: 'false'
+      oneOf:
+      - $ref: '#/components/schemas/CassandraOptionsSchema'
+      - $ref: '#/components/schemas/KafkaOptionsSchema'
+      - $ref: '#/components/schemas/KafkaRestProxyOptionsSchema'
+      - $ref: '#/components/schemas/KarapaceRestProxyOptionsSchema'
+      - $ref: '#/components/schemas/KafkaConnectOptionsSchema'
+      - $ref: '#/components/schemas/OpenSearchOptionsSchema'
+      - $ref: '#/components/schemas/ElasticSearchOptionsSchema'
+      - $ref: '#/components/schemas/RedisBundleOptionsSchema'
+      - $ref: '#/components/schemas/ValkeyBundleOptionsSchema'
+      - $ref: '#/components/schemas/SparkBundleOptionsSchema'
+      - $ref: '#/components/schemas/ApacheZookeeperOptionsSchema'
+      - $ref: '#/components/schemas/PostgresqlOptionsSchema'
+      - $ref: '#/components/schemas/PgBouncerOptionsSchema'
+      - $ref: '#/components/schemas/CadenceOptionsSchema'
+    ReplaceNodeOperationDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - GENESIS
+          - PRE_BUNDLE_PROCESSING
+          - RESIZING_DISK
+          - RESIZED_DISK
+          - EXPANDING_FILESYSTEM
+          - EXPANDED_FILESYSTEM
+          - GRACEFULLY_SHUTTING_DOWN
+          - CREATING_FORCE_INSTANCE_SHUTDOWN
+          - FORCE_INSTANCE_SHUTTING_DOWN
+          - CREATING_REPLACEMENT
+          - PROVISIONING
+          - PROVISIONED
+          - BACKEDUP
+          - RESTORING
+          - FLUSHING
+          - FLUSHED
+          - PREPARING_NETWORK_RECONFIGURE
+          - SWAPPING
+          - SWAPPED
+          - RECONFIGURING_NETWORK
+          - CLEARING_INSTALLED_BUNDLES
+          - CLEARED_INSTALLED_BUNDLES
+          - POST_BUNDLE_PROCESSING
+          - RESTARTING
+          - REPLACED
+          - CANCELLING
+          - CANCELLED
+          - FAILING
+          - FAILED
+        node:
+          type: string
+        replacement:
+          type: string
+        resizeOp:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        failedStatus:
+          type: string
+          enum:
+          - GENESIS
+          - PRE_BUNDLE_PROCESSING
+          - RESIZING_DISK
+          - RESIZED_DISK
+          - EXPANDING_FILESYSTEM
+          - EXPANDED_FILESYSTEM
+          - GRACEFULLY_SHUTTING_DOWN
+          - CREATING_FORCE_INSTANCE_SHUTDOWN
+          - FORCE_INSTANCE_SHUTTING_DOWN
+          - CREATING_REPLACEMENT
+          - PROVISIONING
+          - PROVISIONED
+          - BACKEDUP
+          - RESTORING
+          - FLUSHING
+          - FLUSHED
+          - PREPARING_NETWORK_RECONFIGURE
+          - SWAPPING
+          - SWAPPED
+          - RECONFIGURING_NETWORK
+          - CLEARING_INSTALLED_BUNDLES
+          - CLEARED_INSTALLED_BUNDLES
+          - POST_BUNDLE_PROCESSING
+          - RESTARTING
+          - REPLACED
+          - CANCELLING
+          - CANCELLED
+          - FAILING
+          - FAILED
+    KarapaceRestProxyOptionsSchema:
+      type: object
+      properties:
+        integrateRestProxyWithSchemaRegistry:
+          type: boolean
+          description: Accepts true/false. Enables Integration of the Karapace REST Proxy with the local Karapace Schema Registry
+          default: false
+    GenericResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message content
+    ReplaceNodeOperation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - GENESIS
+          - PRE_BUNDLE_PROCESSING
+          - RESIZING_DISK
+          - RESIZED_DISK
+          - EXPANDING_FILESYSTEM
+          - EXPANDED_FILESYSTEM
+          - GRACEFULLY_SHUTTING_DOWN
+          - CREATING_FORCE_INSTANCE_SHUTDOWN
+          - FORCE_INSTANCE_SHUTTING_DOWN
+          - CREATING_REPLACEMENT
+          - PROVISIONING
+          - PROVISIONED
+          - BACKEDUP
+          - RESTORING
+          - FLUSHING
+          - FLUSHED
+          - PREPARING_NETWORK_RECONFIGURE
+          - SWAPPING
+          - SWAPPED
+          - RECONFIGURING_NETWORK
+          - CLEARING_INSTALLED_BUNDLES
+          - CLEARED_INSTALLED_BUNDLES
+          - POST_BUNDLE_PROCESSING
+          - RESTARTING
+          - REPLACED
+          - CANCELLING
+          - CANCELLED
+          - FAILING
+          - FAILED
+        node:
+          type: string
+          format: uuid
+        replacement:
+          type: string
+          format: uuid
+        params:
+          $ref: '#/components/schemas/ReplaceNodeOperationParams'
+        resizeOp:
+          type: string
+          format: uuid
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        backupTriggered:
+          type: string
+          format: date-time
+        backupCompleted:
+          type: string
+          format: date-time
+        restoreCompleted:
+          type: string
+          format: date-time
+        failedStatus:
+          type: string
+          enum:
+          - GENESIS
+          - PRE_BUNDLE_PROCESSING
+          - RESIZING_DISK
+          - RESIZED_DISK
+          - EXPANDING_FILESYSTEM
+          - EXPANDED_FILESYSTEM
+          - GRACEFULLY_SHUTTING_DOWN
+          - CREATING_FORCE_INSTANCE_SHUTDOWN
+          - FORCE_INSTANCE_SHUTTING_DOWN
+          - CREATING_REPLACEMENT
+          - PROVISIONING
+          - PROVISIONED
+          - BACKEDUP
+          - RESTORING
+          - FLUSHING
+          - FLUSHED
+          - PREPARING_NETWORK_RECONFIGURE
+          - SWAPPING
+          - SWAPPED
+          - RECONFIGURING_NETWORK
+          - CLEARING_INSTALLED_BUNDLES
+          - CLEARED_INSTALLED_BUNDLES
+          - POST_BUNDLE_PROCESSING
+          - RESTARTING
+          - REPLACED
+          - CANCELLING
+          - CANCELLED
+          - FAILING
+          - FAILED
+        restore:
+          type: string
+          format: uuid
+        details:
+          type: string
+        techopsAlerted:
+          type: string
+          format: date-time
+        addedDisk:
+          type: string
+    OpenSearchOptionsSchema:
+      type: object
+      properties:
+        dedicatedMasterNodes:
+          type: boolean
+          description: This is an optional boolean parameter used to scale the load of the data node by having 3 dedicated master nodes for a particular cluster. We recommend selecting this to true for clusters with 9 and above nodes.
+          default: false
+        masterNodeSize:
+          type: string
+          description: Only to be included if the if dedicatedMasterNodes is set to true. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>
+          example: m4l-250
+        openSearchDashboardsNodeSize:
+          type: string
+          description: This is an optional string parameter to used to define the OpenSearch Dashboards node size. Only to be included if wish to add an OpenSearch Dashboards node to the cluster. See Available cluster node sizes in <a href='#operation/extendedProvisionRequestHandler'>Provisioning API</a>
+          example: m4l-250
+        indexManagementPlugin:
+          type: boolean
+          description: Enables Index Management Plugin. This helps automate recurring index management activities.
+          default: false
+        anomalyDetectionPlugin:
+          type: boolean
+          description: Enables the Anomaly Detection Plugin. This allows for the detection of unusual or anomalous data points in your time-series data. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions >= 1.3.7
+          default: false
+        sqlPlugin:
+          type: boolean
+          description: Enables the SQL Plugin. This allows you to query you indices with SQL as an alternative to the OpenSearch Query DSL. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions >= 1.3.7
+          default: false
+        asynchronousSearchPlugin:
+          type: boolean
+          description: Enables the Anomaly Detection Plugin. This allows you to submit queries to be completed asynchronously. Supported on OpenSearch 2.x for versions >= 2.4.0 and 1.x for versions 1.3.7
+          default: false
+    KafkaRestProxyOptionsSchema:
+      type: object
+      properties:
+        integrateRestProxyWithSchemaRegistry:
+          type: boolean
+          description: Accepts true/false. Enables Integration of the REST proxy with a Schema registry
+          default: false
+        useLocalSchemaRegistry:
+          type: boolean
+          description: Accepts true/false. Integrates the REST proxy with the Schema registry attached to this cluster. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true'
+          default: false
+        schemaRegistryServerUrl:
+          type: string
+          description: URL of the Kafka schema registry to integrate with. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'
+        schemaRegistryUsername:
+          type: string
+          description: Username to use when connecting to the Kafka schema registry. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'
+        schemaRegistryPassword:
+          type: string
+          description: Password to use when connecting to the Kafka schema registry. Requires 'integrateRestProxyWithSchemaRegistry' to be 'true' and useLocalSchemaRegistry to be 'false'
+    PostgresqlOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        postgresqlNodeCount:
+          maximum: 5
+          minimum: 1
+          type: integer
+          description: The number of PostgreSQL server nodes created. One of which will be the primary while the rest will be replicas
+          format: int32
+        replicationMode:
+          type: string
+          description: Default <a href="https://www.instaclustr.com/support/documentation/postgresql/options/replication-mode">replication mode</a> for PostgreSQL transactions.
+          default: SYNCHRONOUS
+          enum:
+          - SYNCHRONOUS
+          - ASYNCHRONOUS
+        synchronousModeStrict:
+          type: boolean
+          description: Accepts true/false. Enables <a href="https://www.instaclustr.com/support/documentation/postgresql/options/synchronous-mode-strict/">synchronous mode strict</a> for clusters with SYNCHRONOUS replication mode.
+          default: false
+    CadenceOptionsSchema:
+      required:
+      - targetCassandraCdcId
+      type: object
+      properties:
+        useAdvancedVisibility:
+          type: boolean
+          description: Use Advanced Visibility.
+          default: false
+        targetCassandraCdcId:
+          type: string
+          description: UUID of a Data Centre of an Instaclustr managed Cassandra Cluster, to be used by Cadence. Must be in the same Instaclustr account.
+          format: uuid
+        targetCassandraVpcType:
+          type: string
+          description: Target Cassandra VPC Type
+          default: TARGET_VPC
+          enum:
+          - TARGET_VPC
+          - VPC_PEERED
+          - SEPARATE_VPC
+        targetKafkaCdcId:
+          type: string
+          description: UUID of a Data Centre of an Instaclustr managed Kafka Cluster, to be used by Cadence. Must be in the same Instaclustr account.
+          format: uuid
+        targetKafkaVpcType:
+          type: string
+          description: Target Kafka VPC Type
+          default: VPC_PEERED
+          enum:
+          - TARGET_VPC
+          - VPC_PEERED
+          - SEPARATE_VPC
+        targetOpenSearchCdcId:
+          type: string
+          description: UUID of a Data Centre of an Instaclustr managed OpenSearch Cluster, to be used by Cadence. Must be in the same Instaclustr account.
+          format: uuid
+        targetOpenSearchVpcType:
+          type: string
+          description: Target OpenSearch VPC Type
+          default: VPC_PEERED
+          enum:
+          - TARGET_VPC
+          - VPC_PEERED
+          - SEPARATE_VPC
+        enableArchival:
+          type: boolean
+          description: Use Cadence Archival
+          default: false
+        archivalS3Uri:
+          type: string
+          description: URI of S3 resource for Cadence Archival e.g. 's3://my-bucket'
+        archivalS3Region:
+          type: string
+          description: Region of S3 resource for Cadence Archival e.g. 'us-east-1'
+        awsAccessKeyId:
+          type: string
+          description: Access Key ID for IAM user with Archival bucket access
+        awsSecretAccessKey:
+          type: string
+          description: Secret Access Key for IAM user with Archival bucket access
+        provisioningType:
+          type: string
+          description: Provisioning Type used for the Cadence cluster. If SHARED is used, then the dependant clusters will be set to the Shared Infrastructure clusters.
+          default: STANDARD
+          enum:
+          - STANDARD
+          - SIMPLE
+          - MICRO
+          - PACKAGED
+          - SHARED
+        advertisedHostName:
+          type: string
+          description: Advertised HostName is required for PrivateLink.
+    ResizeDataCentreRequest:
+      required:
+      - concurrentResizes
+      - newNodeSize
+      - notifySupportContacts
+      type: object
+      properties:
+        newNodeSize:
+          type: string
+          description: The desired node size.  See https://www.instaclustr.com/support/documentation/useful-information/supported-instances-and-usecases/ for valid values.
+          example: m5xl-1600-v2
+        concurrentResizes:
+          minimum: 1
+          type: integer
+          description: A number, from 1 to the count of nodes in the largest rack, that specifies how many nodes may be resized at the same time.
+          format: int32
+          example: 1
+        notifySupportContacts:
+          type: boolean
+          example: false
+        nodePurpose:
+          type: string
+          description: A valid node purpose for the cdc. You can get the allowed node purposes for a CDC by GET /provisioning/v1/{clusterId}/{clusterDataCentreId}/nodepurposes
+          example: ELASTICSEARCH_DEDICATED_MASTER
+          enum:
+          - ELASTICSEARCH_DATA_AND_INGEST
+          - ELASTICSEARCH_MASTER
+          - ELASTICSEARCH_KIBANA
+          - ELASTICSEARCH_COORDINATOR
+          - OPENSEARCH_DASHBOARDS
+          - OPENSEARCH_COORDINATOR
+          - OPENSEARCH_MASTER
+          - OPENSEARCH_INGEST
+          - OPENSEARCH_DATA
+          - OPENSEARCH_DATA_AND_INGEST
+          - OPENSEARCH_VECTOR_INDEX_BUILDER
+          - KAFKA_BROKER
+          - KAFKA_DEDICATED_ZOOKEEPER
+          - KAFKA_DEDICATED_KRAFT_CONTROLLER
+          - KAFKA_DISKLESS_BROKER
+          - KAFKA_DISKLESS_DEDICATED_KRAFT_CONTROLLER
+          - REDIS
+          - VALKEY
+          - CASSANDRA
+          - CASSANDRA_SHOTOVER_PROXY
+          - CADENCE
+          - POSTGRESQL
+          - MONGODB
+          - CLICKHOUSE_SERVER
+          - CLICKHOUSE_KEEPER
+          - CLICKHOUSE_SERVER_AND_KEEPER
+          - COUCHBASE
+          - KAFKA_SHOTOVER_PROXY
+          - MCP_GATEWAY_SERVER
+          - NETAPP_SEARCH_SERVER
+    KafkaConnectOptionsSchema:
+      type: object
+      properties:
+        targetKafkaClusterId:
+          type: string
+          description: GUID of the Instaclustr managed Kafka Cluster Id you wish to connect to. Must be in the same Instaclustr account.
+          format: uuid
+        vpcType:
+          type: string
+          description: Only required if targeting an Instaclustr managed cluster. If the target Kafka cluster does not have Private Network add-on, the endpoint only accepts vpcType of VPC_PEERED;  If the target Kafka cluster has the Private Network add-on, the endpoint accepts vpcTypes of VPC_PEERED and KAFKA_VPC.
+          default: SEPARATE_VPC
+          enum:
+          - KAFKA_VPC
+          - TARGET_VPC
+          - VPC_PEERED
+          - SEPARATE_VPC
+        truststore:
+          type: string
+          description: Base64 encoded version of the TLS trust store (in JKS format) used to connect to your Kafka Cluster. Only required if connecting to a Non-Instaclustr managed Kafka Cluster with TLS enabled.
+          format: binary
+        aws.access.key.id:
+          type: string
+          description: <b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors.
+        aws.secret.access.key:
+          type: string
+          description: <b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors.
+        aws.s3.role.arn:
+          type: string
+          description: <b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors.
+        s3.bucket.name:
+          type: string
+          description: <b>AWS ONLY</b>. Access information for the S3 bucket where you will store your custom connectors.
+        azure.storage.account.name:
+          type: string
+          description: <b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors.
+        azure.storage.account.key:
+          type: string
+          description: <b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors.
+        azure.storage.container.name:
+          type: string
+          description: <b>AZURE ONLY</b>. Access information for the Azure Storage container where you will store your custom connectors.
+    PgBouncerOptionsSchema:
+      type: object
+      properties:
+        poolMode:
+          type: string
+          description: PgBouncer pooling mode
+          default: TRANSACTION
+          enum:
+          - TRANSACTION
+          - SESSION
+    ResizeCDCOperationParams:
+      type: object
+      properties:
+        concurrentResizes:
+          type: integer
+          format: int32
+        notifySupportContacts:
+          type: boolean
+        replaceParams:
+          $ref: '#/components/schemas/ReplaceNodeOperationParams'
+        nodePurpose:
+          type:
+          - string
+          - 'null'
+          enum:
+          - ELASTICSEARCH_DATA_AND_INGEST
+          - ELASTICSEARCH_MASTER
+          - ELASTICSEARCH_KIBANA
+          - ELASTICSEARCH_COORDINATOR
+          - OPENSEARCH_DASHBOARDS
+          - OPENSEARCH_COORDINATOR
+          - OPENSEARCH_MASTER
+          - OPENSEARCH_INGEST
+          - OPENSEARCH_DATA
+          - OPENSEARCH_DATA_AND_INGEST
+          - OPENSEARCH_VECTOR_INDEX_BUILDER
+          - KAFKA_BROKER
+          - KAFKA_DEDICATED_ZOOKEEPER
+          - KAFKA_DEDICATED_KRAFT_CONTROLLER
+          - KAFKA_DISKLESS_BROKER
+          - KAFKA_DISKLESS_DEDICATED_KRAFT_CONTROLLER
+          - REDIS
+          - VALKEY
+          - CASSANDRA
+          - CASSANDRA_SHOTOVER_PROXY
+          - CADENCE
+          - POSTGRESQL
+          - MONGODB
+          - CLICKHOUSE_SERVER
+          - CLICKHOUSE_KEEPER
+          - CLICKHOUSE_SERVER_AND_KEEPER
+          - COUCHBASE
+          - KAFKA_SHOTOVER_PROXY
+          - MCP_GATEWAY_SERVER
+          - NETAPP_SEARCH_SERVER
+        excludeNodes:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          items:
+            type:
+            - string
+            - 'null'
+        allowLowAvailabilityTopics:
+          type: boolean
+        ticket:
+          type: string
+        boostedUntil:
+          type: string
+          format: date-time
+        excludedNodes:
+          type: array
+          items:
+            type: string
+    RackAllocation:
+      type: object
+      properties:
+        numberOfRacks:
+          maximum: 5
+          minimum: 2
+          type: integer
+          description: Number of racks to use when allocating nodes
+          format: int32
+          example: 3
+        nodesPerRack:
+          maximum: 100
+          minimum: 1
+          type: integer
+          description: Number of nodes per rack
+          format: int32
+          example: 1
+    CassandraOptionsSchema:
+      type: object
+      properties:
+        authnAuthz:
+          type: boolean
+          description: Accepts true/false. Enables Password Authentication and User Authorization.
+          default: false
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        usePrivateBroadcastRPCAddress:
+          type: boolean
+          description: Enables broadcast of private IPs for auto-discovery.
+          default: false
+        luceneEnabled:
+          type: boolean
+          description: Enables broadcast of private IPs for auto-discovery.
+          default: false
+        continuousBackupEnabled:
+          type: boolean
+          description: Enables commitlog backups and increases the frequency of the default snapshot backups. This option replaces options.backupEnabled.
+          default: false
+        shotoverProxyNodeSize:
+          type: string
+          description: Shotover Proxy Node Size. This option is applicable only for PrivateLink Cassandra Clusters
+    RedisBundleOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        passwordAuth:
+          type: boolean
+          description: Accepts true/false. Enables Password Authentication and User Authorization.
+          default: false
+        masterNodes:
+          maximum: 50
+          minimum: 3
+          type: integer
+          description: The number of Redis Master Nodes to be created.
+          format: int32
+        replicaNodes:
+          maximum: 50
+          minimum: 0
+          type: integer
+          description: The number of Redis Replica Nodes to be created.
+          format: int32
+        advertisedHostName:
+          type: string
+          description: Advertised HostName is required for PrivateLink.
+    ResizePreconditionFailureMessage:
+      type: object
+      properties:
+        cdc:
+          type: string
+          description: The ID of the data centre.
+          format: uuid
+          example: ded724f7-aa4d-42c3-8e4e-a6c5a73b8aa3
+        status:
+          type: string
+          example: Pre-condition failed.
+        reason:
+          type: string
+          example: Config Lock is enabled due to possible custom configuration on the cluster. Please contact Instaclustr Support for assistance with resize.
+    ResizeClusterDataCentreOperation:
+      type: object
+      properties:
+        id:
+          type: string
+        cdc:
+          type: string
+          format: uuid
+        params:
+          $ref: '#/components/schemas/ResizeCDCOperationParams'
+        created:
+          type: string
+          format: date-time
+        completed:
+          type: string
+          format: date-time
+        provider:
+          type: string
+        dataCentre:
+          type: string
+        completedStatus:
+          type: string
+          enum:
+          - GENESIS
+          - PROVISIONING
+          - PROVISIONED
+          - JOINING
+          - RESTORING
+          - DEFERRED
+          - RUNNING
+          - SUSPENDING
+          - SUSPENDED
+          - RESUMING
+          - DELETING
+          - DELETED
+          - DEGRADED
+          - FAILED
+        notifyContacts:
+          type: string
+        replaceOps:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ReplaceNodeOperation'
+        skipInitialCheck:
+          type: boolean
+        details:
+          type: string
+        techopsAlerted:
+          type: string
+          format: date-time
+        firstStateHealthCheckFailure:
+          type: string
+          format: date-time
+        initiatedBy:
+          type: string
+        ignoreFeatureState:
+          type: boolean
+        riemaintRuleIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        sshMessageId:
+          type: string
+          format: uuid
+        maintenanceEventId:
+          type: string
+          format: uuid
+    ReplaceNodeOperationParams:
+      type: object
+      properties:
+        mode:
+          type:
+          - string
+          - 'null'
+          enum:
+          - KEEP_STORAGE
+          - COPY_DATA
+          - DELETE_DATA
+          - MODIFY_STORAGE
+          - MODIFY_STORAGE_AND_INSTANCE
+          - ADD_DISK
+        newSize:
+          type: string
+        gracefulShutdown:
+          type: boolean
+        checkPeers:
+          type: boolean
+        backupDurationThreshold:
+          type: string
+        bundleStartEnabled:
+          type: boolean
+        backupBandwidth:
+          type: string
+        backupConcurrentUploads:
+          type: integer
+          format: int32
+        skipNodeSizeAvailabilityCheck:
+          type: boolean
+        forceInstanceShutdown:
+          type: boolean
+        newIp:
+          type: boolean
+        targetRack:
+          type: string
+        ticket:
+          type:
+          - string
+          - 'null'
+        boostedUntil:
+          type: string
+          format: date-time
+    SparkBundleOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: clientEncryption
+          default: false
+        passwordAuthentication:
+          type: boolean
+          description: Require clients to provide credentials — a username & API Key — to connect to the Spark Jobserver.
+          default: false
+    ClusterDataCentreResizeOperationDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        cdc:
+          type: string
+        concurrentResizes:
+          type: integer
+          format: int32
+        notifyContacts:
+          type: string
+        nodePurpose:
+          type: string
+          enum:
+          - ELASTICSEARCH_DATA_AND_INGEST
+          - ELASTICSEARCH_MASTER
+          - ELASTICSEARCH_KIBANA
+          - ELASTICSEARCH_COORDINATOR
+          - OPENSEARCH_DASHBOARDS
+          - OPENSEARCH_COORDINATOR
+          - OPENSEARCH_MASTER
+          - OPENSEARCH_INGEST
+          - OPENSEARCH_DATA
+          - OPENSEARCH_DATA_AND_INGEST
+          - OPENSEARCH_VECTOR_INDEX_BUILDER
+          - KAFKA_BROKER
+          - KAFKA_DEDICATED_ZOOKEEPER
+          - KAFKA_DEDICATED_KRAFT_CONTROLLER
+          - KAFKA_DISKLESS_BROKER
+          - KAFKA_DISKLESS_DEDICATED_KRAFT_CONTROLLER
+          - REDIS
+          - VALKEY
+          - CASSANDRA
+          - CASSANDRA_SHOTOVER_PROXY
+          - CADENCE
+          - POSTGRESQL
+          - MONGODB
+          - CLICKHOUSE_SERVER
+          - CLICKHOUSE_KEEPER
+          - CLICKHOUSE_SERVER_AND_KEEPER
+          - COUCHBASE
+          - KAFKA_SHOTOVER_PROXY
+          - MCP_GATEWAY_SERVER
+          - NETAPP_SEARCH_SERVER
+        newSize:
+          type: string
+        created:
+          type: string
+          format: date-time
+        completed:
+          type: string
+          format: date-time
+        completedStatus:
+          type: string
+        replaceOps:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ReplaceNodeOperationDetails'
+    DataCentreRequest:
+      required:
+      - dataCentre
+      - network
+      type: object
+      properties:
+        provider:
+          $ref: '#/components/schemas/Provider'
+        dataCentre:
+          type: string
+          description: '<h3>Desired data centre</h3> <details> <summary><h4>Amazon Web Services [AWS_VPC]</h4></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Data Centre</th> <th>Description</th> </tr> <tr> <td>AF_SOUTH_1</td> <td>Africa (Cape Town)</td> </tr> <tr> <td>AP_EAST_1</td> <td>Asia Pacific (Hong Kong)</td> </tr> <tr> <td>AP_NORTHEAST_1</td> <td>Asia Pacific (Tokyo)</td> </tr> <tr> <td>AP_NORTHEAST_2</td> <td>Asia Pacific (Seoul)</td> </tr> <tr> <td>AP_NORTHEAST_3</td> <td>Asia Pacific (Osaka)</td> </tr> <tr> <td>AP_SOUTHEAST_1</td> <td>Asia Pacific (Singapore)</td> </tr> <tr> <td>AP_SOUTHEAST_2</td> <td>Asia Pacific (Sydney)</td> </tr> <tr> <td>AP_SOUTHEAST_3</td> <td>Asia Pacific (Jakarta)</td> </tr> <tr> <td>AP_SOUTHEAST_4</td> <td>Asia Pacific (Melbourne)</td> </tr> <tr> <td>AP_SOUTHEAST_5</td> <td>Asia Pacific (Malaysia)</td> </tr> <tr> <td>AP_SOUTHEAST_6</td> <td>Asia Pacific (New Zealand)</td> </tr> <tr> <td>AP_SOUTHEAST_7</td> <td>Asia Pacific (Thailand)</td> </tr> <tr> <td>AP_SOUTH_1</td> <td>Asia Pacific (Mumbai)</td> </tr> <tr> <td>AP_SOUTH_2</td> <td>Asia Pacific (Hyderabad)</td> </tr> <tr> <td>CA_CENTRAL_1</td> <td>Canada (Central)</td> </tr> <tr> <td>CA_WEST_1</td> <td>Canada West (Calgary)</td> </tr> <tr> <td>CN_NORTHWEST_1</td> <td>China (Ningxia)</td> </tr> <tr> <td>CN_NORTH_1</td> <td>China (Beijing)</td> </tr> <tr> <td>EU_CENTRAL_1</td> <td>EU Central (Frankfurt)</td> </tr> <tr> <td>EU_CENTRAL_2</td> <td>EU Central (Zurich)</td> </tr> <tr> <td>EU_NORTH_1</td> <td>EU North (Stockholm)</td> </tr> <tr> <td>EU_SOUTH_1</td> <td>EU South (Milan)</td> </tr> <tr> <td>EU_SOUTH_2</td> <td>EU South (Spain)</td> </tr> <tr> <td>EU_WEST_1</td> <td>EU West (Ireland)</td> </tr> <tr> <td>EU_WEST_2</td> <td>EU West (London)</td> </tr> <tr> <td>EU_WEST_3</td> <td>EU West (Paris)</td> </tr> <tr> <td>IL_CENTRAL_1</td> <td>Israel (Tel Aviv)</td> </tr> <tr> <td>ME_CENTRAL_1</td> <td>Middle East (UAE)</td> </tr> <tr> <td>ME_SOUTH_1</td> <td>Middle East (Bahrain)</td> </tr> <tr> <td>SA_EAST_1</td> <td>South America (São Paulo)</td> </tr> <tr> <td>US_EAST_1</td> <td>US East (Northern Virginia)</td> </tr> <tr> <td>US_EAST_2</td> <td>US East (Ohio)</td> </tr> <tr> <td>US_WEST_1</td> <td>US West (Northern California)</td> </tr> <tr> <td>US_WEST_2</td> <td>US West (Oregon)</td> </tr> </table> </details> <details> <summary><h4>Microsoft Azure [AZURE_AZ]</h4></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Data Centre</th> <th>Description</th> </tr> <tr> <td>AUSTRALIA_EAST</td> <td>Australia East (NSW)</td> </tr> <tr> <td>CANADA_CENTRAL</td> <td>Canada Central (Toronto)</td> </tr> <tr> <td>CENTRAL_US</td> <td>Central US (Iowa)</td> </tr> <tr> <td>EAST_US</td> <td>East US (Virginia)</td> </tr> <tr> <td>EAST_US_2</td> <td>East US 2 (Virginia)</td> </tr> <tr> <td>GERMANY_WEST_CENTRAL</td> <td>Germany West Central (Frankfurt)</td> </tr> <tr> <td>NORTH_EUROPE</td> <td>North Europe (Ireland)</td> </tr> <tr> <td>SOUTHEAST_ASIA</td> <td>Southeast Asia (Singapore)</td> </tr> <tr> <td>SOUTH_CENTRAL_US</td> <td>South Central US (Texas)</td> </tr> <tr> <td>SWITZERLAND_NORTH</td> <td>Switzerland North (Zurich)</td> </tr> <tr> <td>UK_SOUTH</td> <td>UK South (London)</td> </tr> <tr> <td>WEST_EUROPE</td> <td>West Europe (Netherlands)</td> </tr> <tr> <td>WEST_US_2</td> <td>West US 2 (Washington)</td> </tr> </table> </details> <details> <summary><h4>Google Cloud Platform [GCP]</h4></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Data Centre</th> <th>Description</th> </tr> <tr> <td>asia-east1</td> <td>Eastern Asia-Pacific (Taiwan)</td> </tr> <tr> <td>asia-northeast1</td> <td>Northeastern Asia-pacific (Tokyo)</td> </tr> <tr> <td>asia-northeast2</td> <td>Northeastern Asia-pacific (Osaka)</td> </tr> <tr> <td>asia-northeast3</td> <td>Northeastern Asia-pacific (Seoul)</td> </tr> <tr> <td>asia-south1</td> <td>Southern Asia (India)</td> </tr> <tr> <td>asia-southeast1</td> <td>Southeastern Asia (Singapore)</td> </tr> <tr> <td>asia-southeast2</td> <td>Southeastern Asia (Jakarta)</td> </tr> <tr> <td>australia-southeast1</td> <td>Southeastern Australia (Sydney)</td> </tr> <tr> <td>europe-central2</td> <td>Central Europe (Warsaw)</td> </tr> <tr> <td>europe-north1</td> <td>Northern Europe (Finland)</td> </tr> <tr> <td>europe-southwest1</td> <td>Southwestern Europe (Madrid)</td> </tr> <tr> <td>europe-west1</td> <td>Western Europe (Belgium)</td> </tr> <tr> <td>europe-west2</td> <td>Western Europe (England)</td> </tr> <tr> <td>europe-west3</td> <td>Western Europe (Germany)</td> </tr> <tr> <td>europe-west4</td> <td>Western Europe (Netherlands)</td> </tr> <tr> <td>europe-west6</td> <td>Western Europe (Zurich)</td> </tr> <tr> <td>europe-west8</td> <td>Western Europe (Milan)</td> </tr> <tr> <td>europe-west9</td> <td>Western Europe (Paris)</td> </tr> <tr> <td>me-central2</td> <td>Central Middle East (Dammam)</td> </tr> <tr> <td>northamerica-northeast1</td> <td>Northeastern North America (Montreal)</td> </tr> <tr> <td>northamerica-northeast2</td> <td>Northeastern North America (Toronto)</td> </tr> <tr> <td>northamerica-south1</td> <td>Southern North America (Mexico)</td> </tr> <tr> <td>southamerica-east1</td> <td>Eastern South America (Brazil)</td> </tr> <tr> <td>us-central1</td> <td>Central US (Iowa)</td> </tr> <tr> <td>us-east1</td> <td>Eastern US (South Carolina)</td> </tr> <tr> <td>us-east4</td> <td>Eastern US (North Virginia)</td> </tr> <tr> <td>us-west1</td> <td>Western US (Oregon)</td> </tr> <tr> <td>us-west2</td> <td>Western US (California)</td> </tr> </table> </details>'
+          example: US_WEST_2
+        name:
+          type: string
+          description: 'A logical name for the data centre within a Cassandra cluster. These names must be unique in the cluster.
+
+
+            Cannot be changed once created. If not provided will default to the region'
+          example: US_WEST_2
+        network:
+          type: string
+          description: The private network address block for the cluster specified using CIDR address notation. The network must have a prefix length between /12 and /22, must be part of a private address space and must not intersect with another data centre
+          example: 192.168.0.0/18
+          default: 10.224.0.0/12
+        storageNetwork:
+          type: string
+          description: 'The private network address block to be used for the storage network, specified using CIDR notation. This is only used for certain node sizes, currently limited to those which use Azure NetApp Files: for all other node sizes, this field should not be provided.
+
+
+            The storage network must have a prefix length between /16 and /28, and must be part of a private address range.'
+          example: 192.168.1.0/24
+          x-internal: true
+        nodeSize:
+          type: string
+          description: 'Will use root level nodeSize if not provided. <h3>Available cluster node sizes</h3> <details style="margin-bottom: 1rem;"> <summary><h4>Apache Cassandra [APACHE_CASSANDRA]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAS-DEV-t4g.medium-30 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-t4g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-c7gd.2xlarge-441 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-i3.4xlarge-3538 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-i4g.2xlarge-1746 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-i4g.4xlarge-3492 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-i4g.xlarge-872 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-im4gn.2xlarge-3492 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-is4gen.xlarge-3492 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-m7g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.2xlarge-ebs-optimised-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.2xlarge-ebs-optimised-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.2xlarge-ebs-optimised-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.2xlarge-ebs-optimised-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.2xlarge-ebs-optimised-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.4xlarge-ebs-optimised-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.4xlarge-ebs-optimised-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.4xlarge-ebs-optimised-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.4xlarge-ebs-optimised-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.4xlarge-ebs-optimised-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.medium-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.medium-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.medium-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.medium-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r7g.xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.2xlarge-ebs-optimised-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.4xlarge-ebs-optimised-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.4xlarge-ebs-optimised-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.4xlarge-ebs-optimised-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.4xlarge-ebs-optimised-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.4xlarge-ebs-optimised-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-50 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-r8g.xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c5d.2xlarge-186 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c5d.large-46 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c5d.xlarge-93 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c6gd.2xlarge-441 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c6gd.large-109 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c6gd.medium-54 </td> <td>General Availability</td> </tr> <tr> <td>CSO-PRD-c6gd.xlarge-220 </td> <td>General Availability</td> </tr> <tr> <td>i3.2xlarge </td> <td>General Availability</td> </tr> <tr> <td>i3.2xlarge-v2 </td> <td>General Availability</td> </tr> <tr> <td>i3en.xlarge </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-c6gd.2xlarge-441 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-m6g.large-120 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-m6g.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-m6g.large-400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-m6g.large-600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.2xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.2xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.2xlarge-2400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.2xlarge-3200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.2xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.4xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.4xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.4xlarge-2400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.4xlarge-3200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.4xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-1200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-1600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.large-800 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.medium-120 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.medium-250 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.medium-400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.medium-600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.medium-80 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-2400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-3200 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-400 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-600 </td> <td>Deprecated</td> </tr> <tr> <td>CAS-PRD-r6g.xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>t3.medium-v2 </td> <td>Deprecated</td> </tr> <tr> <td>t3.small-v2 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAS-DEV-Standard_DS1_v2-32 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-Standard_DS2_v2-64 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-Standard_D16s_v5-1000 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-Standard_D16s_v5-1500 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-Standard_D16s_v5-2000 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-Standard_L8s_v3-1788 </td> <td>General Availability</td> </tr> <tr> <td>Standard_DS12_v2-1023-an </td> <td>General Availability</td> </tr> <tr> <td>Standard_DS12_v2-2046-an </td> <td>General Availability</td> </tr> <tr> <td>Standard_DS12_v2-512-an </td> <td>General Availability</td> </tr> <tr> <td>Standard_DS13_v2-2046-an </td> <td>General Availability</td> </tr> <tr> <td>Standard_DS2_v2-256-an </td> <td>General Availability</td> </tr> <tr> <td>L8s_v2-an </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAS-DEV-n1-standard-1-5 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-n1-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>CAS-DEV-n1-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-16-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-16-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-16-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-16-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-16-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-2-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-4-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-8-1200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-8-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-8-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-highmem-8-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-standard-2-400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n2-standard-2-600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n4-standard-16-1600 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n4-standard-16-3200 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n4-standard-16-800 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-n4-standard-8-2400 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-t2d-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-t2d-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRD-t2d-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>CAS-PRDn2-highmem-8-3200 </td> <td>General Availability</td> </tr> <tr> <td>cassandra-production-n2-highmem-16-3000 </td> <td>General Availability</td> </tr> <tr> <td>cassandra-production-n2-highmem-4-3000 </td> <td>General Availability</td> </tr> <tr> <td>cassandra-production-n2-highmem-8-1500 </td> <td>General Availability</td> </tr> <tr> <td>cassandra-production-n2-standard-8-375 </td> <td>General Availability</td> </tr> <tr> <td>cassandra-production-n2-standard-8-750 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Apache ZooKeeper [APACHE_ZOOKEEPER]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>MZK-DEV-t4g.small-20 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m7g.large-60 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m7g.xlarge-120 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m7gd.large-75 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m7gd.xlarge-150 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m8g.large-60 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m8g.xlarge-120 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m8gd.large-75 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m8gd.xlarge-150 </td> <td>General Availability</td> </tr> <tr> <td>ZKR-PRD-m5d.large-75 </td> <td>General Availability</td> </tr> <tr> <td>ZKR-PRD-m5d.xlarge-150 </td> <td>General Availability</td> </tr> <tr> <td>zookeeper-developer-t3.small-20 </td> <td>General Availability</td> </tr> <tr> <td>zookeeper-production-m5.large-60 </td> <td>General Availability</td> </tr> <tr> <td>zookeeper-production-m5.xlarge-120 </td> <td>General Availability</td> </tr> <tr> <td>MZK-PRD-m6g.large-60 </td> <td>Deprecated</td> </tr> <tr> <td>MZK-PRD-m6g.xlarge-120 </td> <td>Deprecated</td> </tr> <tr> <td>MZK-PRD-m6gd.large-75 </td> <td>Deprecated</td> </tr> <tr> <td>MZK-PRD-m6gd.xlarge-150 </td> <td>Deprecated</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Cadence [CADENCE]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAD-DEV-t4g.medium-10 </td> <td>General Availability</td> </tr> <tr> <td>CAD-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-m7g.2xlarge-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-m7g.4xlarge-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-m7g.large-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-m7g.xlarge-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-r7g.medium-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-SI-DEV-t4g.medium-10 </td> <td>General Availability</td> </tr> <tr> <td>CAD-SI-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>CAD-SI-PRD-m7g.large-50 </td> <td>General Availability</td> </tr> <tr> <td>CAD-SI-PRD-t4g.medium-10 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAD-DEV-standard_ds2_v2-30 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-standard_ds2_v2-150 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-standard_ds3_v2-150 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CAD-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-n1-standard-2-150 </td> <td>General Availability</td> </tr> <tr> <td>CAD-PRD-n1-standard-4-150 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>ClickHouse [CLICKHOUSE]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CLK-DEV-m7i.large-100 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DEV-m7i.large-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DEV-m7i.large-50 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-DEV-t3.small-30 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-PRD-m7i.large-100 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-PRD-m7i.large-50 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.2xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.2xlarge-500 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.4xlarge-3000 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.4xlarge-500 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.4xlarge-750 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.8xlarge-1000 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.8xlarge-6000 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.8xlarge-750 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-m7i.xlarge-500 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-r7i.large-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-r7i.large-500 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>CLK-DEV-Standard_D2s_v5-100 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DEV-Standard_D2s_v5-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DEV-Standard_D2s_v5-50 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-DEV-Standard_B2ls_v2-30 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-PRD-Standard_B2s_v2-100 </td> <td>General Availability</td> </tr> <tr> <td>CLK-DK-PRD-Standard_B2s_v2-50 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D16s_v5-500 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D16s_v5-750 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D32s_v5-1000 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D32s_v5-750 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D4s_v5-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D4s_v5-500 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D8s_v5-250 </td> <td>General Availability</td> </tr> <tr> <td>CLK-PRD-Standard_D8s_v5-500 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Elasticsearch (For Legacy Support Only) [ELASTICSEARCH]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>ESH-DM-m5d.2xlarge </td> <td>General Availability</td> </tr> <tr> <td>ESH-DM-m5d.large </td> <td>General Availability</td> </tr> <tr> <td>ESH-DM-m5d.xlarge </td> <td>General Availability</td> </tr> <tr> <td>ESH-PRD-c5d.2xlarge-200 </td> <td>General Availability</td> </tr> <tr> <td>ESH-PRD-i3.2xlarge-1769 </td> <td>General Availability</td> </tr> <tr> <td>ESH-PRD-i3en.xlarge-2328 </td> <td>General Availability</td> </tr> <tr> <td>ESH-DEV-t3.medium-30 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-DEV-t3.small-5 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-DM-DEV-t3.small-5 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-m5.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-m5.large-400 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-m5.xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-m5.xlarge-400 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-m5.xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-r5.xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-r5.xlarge-2000 </td> <td>Deprecated</td> </tr> <tr> <td>ESH-PRD-r5.xlarge-800 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>ESH-DEV-n2-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>ESH-DEV-n2-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>ESH-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>ESH-DEV-n2-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>ESH-DM-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Apache Kafka [KAFKA]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>i3.2xlarge-1900-gp2 </td> <td>General Availability</td> </tr> <tr> <td>i3.xlarge-950-gp2 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-t4g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-t4g.small-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m7g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m7g.xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m7g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m8g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m8g.xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-m8g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-i3en.2xlarge-4656 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-i3en.xlarge-2328 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.2xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.2xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.2xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.2xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.2xlarge-4500 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r7g.xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.2xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.2xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.2xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.2xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.2xlarge-4500 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-r8g.xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m7g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m7g.xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m7g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m8g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m8g.xlarge-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-m8g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>c5.2xlarge-1500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>c5.4xlarge-1500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>c5.xlarge-750-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>c5.xlarge-800-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>KDR-PRD-m6g.large-80 </td> <td>Deprecated</td> </tr> <tr> <td>KDR-PRD-m6g.xlarge-250 </td> <td>Deprecated</td> </tr> <tr> <td>KDR-PRD-m6g.xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KDZ-PRD-m6g.large-80 </td> <td>Deprecated</td> </tr> <tr> <td>KDZ-PRD-m6g.xlarge-250 </td> <td>Deprecated</td> </tr> <tr> <td>KDZ-PRD-m6g.xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.2xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.2xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.2xlarge-2400 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.2xlarge-3200 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.2xlarge-4500 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-1200 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-1600 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-2400 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-400 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-600 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.large-800 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.xlarge-2400 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.xlarge-3200 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-r6g.xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>r5.2xlarge-1500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.2xlarge-3000-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.2xlarge-4500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.large-500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.large-800-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-1500-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-2250-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-750-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-800-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>t3.medium-80-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>t3.small-20-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>zk-developer-t3.small-20 </td> <td>Deprecated</td> </tr> <tr> <td>zk-production-m5.large-60 </td> <td>Deprecated</td> </tr> <tr> <td>zk-production-m5.xlarge-120 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>KFK-DEV-Standard_D2s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-DEV-Standard_D2ls_v5-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-Standard_D2ps_v6-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-Standard_D2s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-Standard_D4ps_v6-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-Standard_D4s_v5-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2ps_v6-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2ps_v6-400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2ps_v6-600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2ps_v6-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2ps_v6-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2s_v5-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2s_v5-400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E2s_v5-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4ps_v6-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4ps_v6-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4ps_v6-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4ps_v6-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4s_v5-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4s_v5-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E4s_v5-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8ps_v6-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8ps_v6-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8ps_v6-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8ps_v6-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8s_v5-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8s_v5-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-Standard_E8s_v5-4500 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-DEV-Standard_D2ls_v5-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-Standard_D2ps_v6-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-Standard_D2s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-Standard_D4ps_v6-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-Standard_D4s_v5-250 </td> <td>General Availability</td> </tr> <tr> <td>KDR-PRD-standard_d2s_v3-64 </td> <td>Deprecated</td> </tr> <tr> <td>KDR-PRD-standard_d4s_v3-128 </td> <td>Deprecated</td> </tr> <tr> <td>KDZ-PRD-standard_d2s_v3-64 </td> <td>Deprecated</td> </tr> <tr> <td>KDZ-PRD-standard_d4s_v3-128 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>kafka-production-n2-standard-8-1500 </td> <td>General Availability</td> </tr> <tr> <td>kafka-production-n2-standard-8-3000 </td> <td>General Availability</td> </tr> <tr> <td>kafka-production-n2-standard-8-375 </td> <td>General Availability</td> </tr> <tr> <td>kafka-production-n2-standard-8-750 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-n4a-highcpu-2-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-n4a-highcpu-2-5 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-n4a-highcpu-2-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-DEV-n4a-highcpu-2-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-n2d-standard-2-60 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-n2d-standard-4-120 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-n4a-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-n4a-standard-4-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-KR-PRD-n4a-standard-4-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-2-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-4-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-4-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-4-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-4-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-4-800 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-8-1200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-8-1600 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-8-2400 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-8-3200 </td> <td>General Availability</td> </tr> <tr> <td>KFK-PRD-n4a-highmem-8-4500 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c2d-highcpu-16-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c2d-highcpu-4-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c2d-highcpu-8-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c3d-highcpu-16-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c3d-highcpu-4-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-SO-PRD-c3d-highcpu-8-40 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-DEV-n4a-highcpu-2-30 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-n4a-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-n4a-standard-4-250 </td> <td>General Availability</td> </tr> <tr> <td>KFK-ZK-PRD-n4a-standard-4-80 </td> <td>General Availability</td> </tr> <tr> <td>KFK-DEV-n2-standard-2-80 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-DEV-n1-standard-1-30 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-DEV-n2-standard-2-30 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-PRD-n1-standard-2-60 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-PRD-n1-standard-4-120 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-PRD-n2-standard-2-60 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-KR-PRD-n2-standard-4-120 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-2-400 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-2-800 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-4-1500 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-4-2250 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-4-750 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-8-1500 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-PRD-n2-highmem-8-3000 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-DEV-n1-standard-1-30 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-DEV-n2-standard-2-30 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-PRD-n1-standard-2-60 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-PRD-n1-standard-4-120 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-PRD-n2-standard-2-60 </td> <td>Deprecated</td> </tr> <tr> <td>KFK-ZK-PRD-n2-standard-4-120 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-2-400 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-2-800 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-4-1500 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-4-2250 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-4-750 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-8-1500 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-8-3000 </td> <td>Deprecated</td> </tr> <tr> <td>n1-highmem-8-4500 </td> <td>Deprecated</td> </tr> <tr> <td>n1-standard-1-80 </td> <td>Deprecated</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Apache Kafka Connect [KAFKA_CONNECT]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>KCN-DEV-t4g.medium-30 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c7g.2xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c7g.4xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c7g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c7g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c8g.2xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c8g.4xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c8g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-c8g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r7g.2xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r7g.4xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r7g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r7g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r8g.2xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r8g.4xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r8g.large-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-r8g.xlarge-80 </td> <td>General Availability</td> </tr> <tr> <td>c5.2xlarge-20-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>c5.4xlarge-40-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>c5.xlarge-10-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-c6g.2xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-c6g.4xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-c6g.large-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-c6g.xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-r6g.2xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-r6g.4xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-r6g.large-80 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-r6g.xlarge-80 </td> <td>Deprecated</td> </tr> <tr> <td>r5.2xlarge-20-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.4xlarge-40-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-10-gp2 </td> <td>Deprecated</td> </tr> <tr> <td>t3.medium-10-gp2 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>KCN-DEV-Standard_D2s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-Standard_D16s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-Standard_D2ps_v6-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-Standard_D4ps_v6-800 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-Standard_D4s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-Standard_D8s_v5-80 </td> <td>General Availability</td> </tr> <tr> <td>Standard_D16s_v3-40 </td> <td>General Availability</td> </tr> <tr> <td>Standard_D2s_v3-10 </td> <td>General Availability</td> </tr> <tr> <td>Standard_D4s_v3-10 </td> <td>General Availability</td> </tr> <tr> <td>Standard_D8s_v3-20 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>KCN-DEV-n4a-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-n4a-standard-16-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-n4a-standard-4-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-PRD-n4a-standard-8-80 </td> <td>General Availability</td> </tr> <tr> <td>KCN-DEV-n2-standard-2-10 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-n2-standard-16-40 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-n2-standard-4-10 </td> <td>Deprecated</td> </tr> <tr> <td>KCN-PRD-n2-standard-8-20 </td> <td>Deprecated</td> </tr> <tr> <td>n1-standard-16-40 </td> <td>Deprecated</td> </tr> <tr> <td>n1-standard-2-10 </td> <td>Deprecated</td> </tr> <tr> <td>n1-standard-4-10 </td> <td>Deprecated</td> </tr> <tr> <td>n1-standard-8-20 </td> <td>Deprecated</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>MCP Gateway [MCP_GATEWAY]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>MCP-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-c6g.xlarge-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-m6g.large-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-m6g.medium-30 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>MCP-DEV-Standard_B2ls_v2-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-Standard_D2s_v5-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-Standard_D4s_v5-30 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>MCP-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>MCP-PRD-n4d-highcpu-4-30 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>OpenSearch [OPENSEARCH]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>SRH-DEV-t4g.medium-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-t4g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-t4g.small-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-m6g.2xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-m6g.4xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-m6g.large-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-m6g.xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-m6g.2xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-m6g.4xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-m6g.large-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-m6g.xlarge-10 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-c5d.2xlarge-200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-c7g.8xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-c7g.8xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-i3.2xlarge-1769 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-i3.4xlarge-3538 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-i3en.2xlarge-4656 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-i3en.xlarge-2328 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-m6g.large-120 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-m6g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-m6g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-m6g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.2xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.2xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.2xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.2xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.2xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-4500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.4xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.large-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.medium-120 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.medium-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.medium-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.medium-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-r6g.xlarge-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g5.2xlarge-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g5.4xlarge-4500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g5.xlarge-1600 </td> <td>General Availability</td> </tr> <tr> <td>m5l-400-v2 </td> <td>Deprecated</td> </tr> <tr> <td>r5xl-800-v2 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DEV-t3.medium-30 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DEV-t3.small-5 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-DEV-t3.small-5 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-m5d.2xlarge </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-m5d.large </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-m5d.xlarge </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-m5.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-m5.xlarge-1600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-m5.xlarge-400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-m5.xlarge-800 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-r5.xlarge-1200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-r5.xlarge-2000 </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>SRH-DEV-D2s_v4-120-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v4-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v4-30-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v4-80-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v5-120-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v5-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v5-30-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-D2s_v5-80-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-DS1_v2-30-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-DS1_v2-5-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-DEV-DS1_v2-5-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D2as_v4-16-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D2s_v3-16-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D4as_v4-32-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D4s_v3-32-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D8as_v4-64-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-D8s_v3-64-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-DEV-DS1_v2-5-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D2as_v4-16-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D2s_v3-16-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D4as_v4-32-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D4s_v3-32-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D8as_v4-64-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-D8s_v3-64-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v4-120-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v4-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v4-400-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v4-600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v5-120-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v5-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v5-400-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D2s_v5-600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D8s_v4-2000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D8s_v4-4000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-D8s_v4-6000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-1200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-1600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-2400-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-3200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-4000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-6000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-800-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E16s_v4-8000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-1200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-1600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-400-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E2s_v4-800-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E32s_v4-12000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E32s_v4-4000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E32s_v4-6000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E32s_v4-8000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-1200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-2000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-250-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-3200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-400-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E4s_v4-800-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-1200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-1600-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-2000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-3200-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-4000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-6000-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-E8s_v4-800-an </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-L8s_v2-1788-an </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>SRH-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n1-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n1-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n1-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n1-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n2-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n2-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DEV-n2-standard-2-80 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-n2-standard-16-128 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-n2-standard-2-64 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-n2-standard-4-64 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DI-PRD-n2-standard-8-128 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-n2-standard-16-128 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-n2-standard-2-64 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-n2-standard-4-64 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-n2-standard-8-128 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-4500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-16-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-2-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-1500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-3000 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-4-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-1200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-1500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-3000 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-3200 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-highmem-8-800 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-standard-2-120 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-standard-2-400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-PRD-n2-standard-2-600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g2-standard-16-4500 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g2-standard-4-1600 </td> <td>General Availability</td> </tr> <tr> <td>SRH-VIB-GPU-PRD-g2-standard-8-2400 </td> <td>General Availability</td> </tr> <tr> <td>SRH-DM-PRD-n1-highmem-16-128 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-PRD-n1-standard-2-64 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-PRD-n1-standard-4-64 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-DM-PRD-n1-standard-8-128 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-1200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-1600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-2400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-3200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-4500 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-16-800 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-1200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-1600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-250 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-2-800 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-1200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-1500 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-1600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-2400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-3000 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-3200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-4-800 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-1200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-1500 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-1600 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-2400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-3000 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-3200 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-highmem-8-800 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-standard-2-120 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-standard-2-250 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-standard-2-400 </td> <td>Deprecated</td> </tr> <tr> <td>SRH-PRD-n1-standard-2-600 </td> <td>Deprecated</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>PostgreSQL [POSTGRESQL]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>PGS-DEV-t4g.medium-30 </td> <td>General Availability</td> </tr> <tr> <td>PGS-DEV-t4g.small-5 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.2xlarge-1000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.2xlarge-2000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.large-1000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.large-250-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.large-500-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.xlarge-1000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.xlarge-2000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m6g.xlarge-500-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.2xlarge-1000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.2xlarge-2000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.large-1000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.large-250 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.large-500 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.xlarge-1000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.xlarge-2000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m7g.xlarge-500 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.2xlarge-FSxNGen2-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.2xlarge-FSxNGen2-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.2xlarge-FSxNGen2-4096 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.4xlarge-FSxNGen2-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.4xlarge-FSxNGen2-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.4xlarge-FSxNGen2-4096 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.8xlarge-FSxNGen2-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.8xlarge-FSxNGen2-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.8xlarge-FSxNGen2-4096 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.large-FSxNGen2-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.xlarge-FSxNGen2-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-m8g.xlarge-FSxNGen2-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r6g.4xlarge-1000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r6g.4xlarge-2000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r6g.4xlarge-4000-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r6g.4xlarge-500-v2 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r7g.4xlarge-1000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r7g.4xlarge-2000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r7g.4xlarge-4000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-r7g.4xlarge-500 </td> <td>General Availability</td> </tr> <tr> <td>PGS-DEV-t3.medium-30 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-DEV-t3.small-5 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.2xlarge-1000 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.2xlarge-2000 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.2xlarge-4000 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.large-250 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.large-500 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.xlarge-1000 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.xlarge-2000 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-r5.xlarge-500 </td> <td>Deprecated</td> </tr> <tr> <td>PGS-PRD-m7g.2xlarge-1024-FSX </td> <td>Public Preview</td> </tr> <tr> <td>PGS-PRD-m7g.2xlarge-2048-FSX </td> <td>Public Preview</td> </tr> <tr> <td>PGS-PRD-m7g.4xlarge-1024-FSX </td> <td>Public Preview</td> </tr> <tr> <td>PGS-PRD-m7g.4xlarge-2048-FSX </td> <td>Public Preview</td> </tr> <tr> <td>PGS-PRD-m7g.large-1024-FSX </td> <td>Public Preview</td> </tr> <tr> <td>PGS-PRD-m7g.xlarge-1024-FSX </td> <td>Public Preview</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>PGS-DEV-Standard_DS1_v2-30-an </td> <td>General Availability</td> </tr> <tr> <td>PGS-DEV-Standard_DS1_v2-5-an </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E16s_v4-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E16s_v4-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E16s_v4-512 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E16s_v4-ANF-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E2s_v4-256 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E2s_v4-512 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E32s_v4-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E32s_v4-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E32s_v4-512 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E32s_v4-ANF-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E4s_v4-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E4s_v4-512 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E8s_v4-1024 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E8s_v4-2048 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E8s_v4-512 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-Standard_E8s_v4-ANF-2048 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>PGS-DEV-n2-standard-2-30 </td> <td>General Availability</td> </tr> <tr> <td>PGS-DEV-n2-standard-2-5 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-n2-standard-2-250 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-n2-standard-4-1000 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-n2-standard-4-500 </td> <td>General Availability</td> </tr> <tr> <td>PGS-PRD-n2-standard-8-2000 </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Redis [REDIS]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>r6g.2xlarge-400-r </td> <td>General Availability</td> </tr> <tr> <td>r6g.4xlarge-600-r </td> <td>General Availability</td> </tr> <tr> <td>r6g.large-100-r </td> <td>General Availability</td> </tr> <tr> <td>r6g.xlarge-200-r </td> <td>General Availability</td> </tr> <tr> <td>RDS-DEV-t4g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>RDS-DEV-t4g.small-20 </td> <td>General Availability</td> </tr> <tr> <td>r5.2xlarge-400-r </td> <td>Deprecated</td> </tr> <tr> <td>r5.4xlarge-600-r </td> <td>Deprecated</td> </tr> <tr> <td>r5.8xlarge-1000-r </td> <td>Deprecated</td> </tr> <tr> <td>r5.large-100-r </td> <td>Deprecated</td> </tr> <tr> <td>r5.xlarge-200-r </td> <td>Deprecated</td> </tr> <tr> <td>t3.medium-80-r </td> <td>Deprecated</td> </tr> <tr> <td>t3.small-20-r </td> <td>Deprecated</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>Standard_DS2_v2-64-r </td> <td>General Availability</td> </tr> <tr> <td>Standard_E16s_v3-800-r </td> <td>General Availability</td> </tr> <tr> <td>Standard_E2s_v3-100-r </td> <td>General Availability</td> </tr> <tr> <td>Standard_E4s_v3-200-r </td> <td>General Availability</td> </tr> <tr> <td>Standard_E8s_v3-400-r </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>n1-highmem-16-600-r </td> <td>General Availability</td> </tr> <tr> <td>n1-highmem-2-100-r </td> <td>General Availability</td> </tr> <tr> <td>n1-highmem-4-200-r </td> <td>General Availability</td> </tr> <tr> <td>n1-highmem-8-400-r </td> <td>General Availability</td> </tr> <tr> <td>n1-standard-1-30-r </td> <td>General Availability</td> </tr> </table> </details> </details> <details style="margin-bottom: 1rem;"> <summary><h4>Valkey [VALKEY]</h4></summary> <details> <summary><h5>Amazon Web Services [AWS_VPC]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>VAL-DEV-t4g.medium-80 </td> <td>General Availability</td> </tr> <tr> <td>VAL-DEV-t4g.small-20 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-r6g.2xlarge-400 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-r6g.4xlarge-600 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-r6g.large-100 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-r6g.xlarge-200 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Microsoft Azure [AZURE_AZ]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>VAL-DEV-Standard_D2s_v5-64 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-standard_E16s_v3-1024 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-standard_E2s_v3-128 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-standard_E4s_v3-256 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-standard_E8s_v3-512 </td> <td>General Availability</td> </tr> </table> </details> <details> <summary><h5>Google Cloud Platform [GCP]</h5></summary> <table style="width:100%; font-size: 0.8em"> <tr> <th>Node Size</th> <th>Lifecycle State</th> </tr> <tr> <td>VAL-DEV-n1-standard-1-30 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-n1-highmem-16-600 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-n1-highmem-2-100 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-n1-highmem-4-200 </td> <td>General Availability</td> </tr> <tr> <td>VAL-PRD-n1-highmem-8-400 </td> <td>General Availability</td> </tr> </table> </details> </details> <style> details > summary:hover { cursor: pointer; } details > summary > details { margin-top: 1rem; margin-left: 1rem; } summary > h3, summary > h3, summary > h4, summary > h5 { display: inline-block; margin-top: 0.3rem; margin-bottom: 0.3rem; } </style>'
+          example: t3.small
+        bundles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BundleRequest'
+        rackAllocation:
+          $ref: '#/components/schemas/RackAllocation'
+      description: 'Definition of a data centre to be created within a cluster. Any fields left blank will use the values provided in the ClusterProvisioningRequest top level object
+
+        Currently only APACHE_CASSANDRA supports multiple data centres.
+
+        If overriding the bundles you must specify APACHE_CASSANDRA (and LUCENE - if specified at top level) at the same version. SPARK can only be defined on one data centre'
+    ValkeyBundleOptionsSchema:
+      type: object
+      properties:
+        clientEncryption:
+          type: boolean
+          description: Accepts true/false. Enables Client ⇄ Node Encryption.
+          default: false
+        passwordAuth:
+          type: boolean
+          description: Accepts true/false. Enables Password Authentication and User Authorization.
+          default: false
+        masterNodes:
+          maximum: 50
+          minimum: 3
+          type: integer
+          description: The number of Valkey Master Nodes to be created.
+          format: int32
+        replicaNodes:
+          maximum: 50
+          minimum: 0
+          type: integer
+          description: The number of Valkey Replica Nodes to be created.
+          format: int32
+        advertisedHostName:
+          type: string
+          description: Advertised HostName is required for PrivateLink.
+    Provider:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Provider name
+          example: AWS_VPC
+          enum:
+          - AWS_VPC
+          - AZURE_AZ
+          - GCP
+        accountName:
+          type: string
+          description: For customers running in their own account. Your provider account can be found on the Create Cluster page on the console, or the “Provider Account” property on any existing cluster. For customers running in Instaclustr account, this property may be omitted.
+          example: test-account
+          default: 'null'
+        customVirtualNetworkId:
+          type: string
+          description: '<b>AWS</b>: VPC ID to provision data centre into, cluster network must match the IPv4 CIDR block of the specified VPC.<br/> <b>GCP</b>: Network name or a relative Network or Subnetwork URI e.g. projects/my-project/regions/us-central1/subnetworks/my-subnet, cluster network must match the IPv4 CIDR block of the specified subnet.'
+        tags:
+          type: object
+          description: <b>AWS_VPC, GCP, AZURE and AZURE_AZ only</b>. If specified, the value is a map from tag key to value. For AWS_VPC restrictions, refer to the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-restrictions" target="_blank">AWS User Guide</a>. Tags are defined per cluster and will be applied to every instance in the cluster.
+          example:
+            testTagKey: testKeyValue
+        resourceGroup:
+          type: string
+          description: <b>AZURE only</b>. If specified, the value is the name for an Azure Resource Group which the resources will be provisioned into.
+          example: 'null'
+          default: 'null'
+        diskEncryptionKey:
+          type: string
+          description: <b>AWS_VPC only</b>. Specify a KMS encryption key to encrypt data on nodes. KMS encryption key must be set in Account settings before provisioning an encrypted cluster.
+          example: 'null'
+          default: 'null'
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

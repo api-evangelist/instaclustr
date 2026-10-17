@@ -1,0 +1,560 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Backup & Restore API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Backup & Restore across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Backup And Restore
+  description: Operations related to backing up and restoring a cluster
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/{clusterId}/backups:
+    get:
+      tags:
+      - Backup And Restore
+      summary: List cluster backup events
+      description: List backups and restores for each node in a given cluster, for the last 7 days.
+      operationId: listClusterEvents
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: ba74ca2b-7fc0-4487-a9d8-037823144753
+      responses:
+        '200':
+          description: Successfully retrieved the list of cluster backups.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterEvents'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Backup And Restore
+      summary: Trigger cluster backup
+      description: Triggers a cluster-wide backup on each node.
+      operationId: triggerBackup
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: ba74ca2b-7fc0-4487-a9d8-037823144753
+      responses:
+        '204':
+          description: Successfully triggered a backup.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Backup capability is not available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/backups/restore:
+    post:
+      tags:
+      - Backup And Restore
+      summary: Trigger cluster restore
+      description: 'Triggers a restore cluster operation.
+
+        Cluster backups may be used to restore data from a point-in-time to a new cluster. Data will be restored to a new cluster.
+
+
+        When restoring a cluster, you may choose to:
+
+
+        Restore all data or only selected tables: If restoring a subset of tables, the cluster schema will still be restored in its entirety and therefore the schemas for any non-restored keyspaces and tables will still be applied. However, only backup data for the selected tables will be restored.
+
+
+        Restore to a point-in-time: The restore process will use the latest backup data for each node, up to the specified point-in-time. If restoring a cluster with Continuous Backup enabled, then commit logs will also be restored.
+
+
+        Once the restore parameters are submitted, a new cluster will be provisioned under the account with a topology matching the designated point-in-time (e.g. if 3 nodes were added to a 3-node cluster on 01/10/2017 and the restore operation was for a point-in-time of 30/09/2017, then the restored cluster will have 3 nodes).
+
+
+        An empty request body will trigger a restore to the current date and time, using the most recent backup for each node and a cluster name marked as “restored” and containing the timestamp when the restore was requested.'
+      operationId: triggerRestore
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: ba74ca2b-7fc0-4487-a9d8-037823144753
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RestoreCassandraClusterRequestSchema'
+              - $ref: '#/components/schemas/RestoreElasticsearchClusterRequestSchema'
+              - $ref: '#/components/schemas/RestorePostgresqlClusterRequestSchema'
+      responses:
+        '200':
+          description: Successfully triggered a restore.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreClusterResponseSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorMessage'
+                - $ref: '#/components/schemas/GenericMapResponseSchema'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '412':
+          description: Pre-condition failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreBackupPreconditionFailureMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ClusterDataCentre:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cluster Data Centre ID
+          format: uuid
+          example: a8c32b20-c8f0-11e7-abc4-cec278b6b50a
+        name:
+          type: string
+          description: Cluster Data Centre name
+          example: AWS_VPC_US_EAST_1
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterEventsNode'
+    ClusterEventsNode:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Node ID
+          format: uuid
+          example: cb986e08-f6be-4d08-8de2-4352c2cfaf1f
+        publicAddress:
+          type: string
+          description: Public IP address of the node
+          format: ipv4
+          example: 50.0.0.1
+        privateAddress:
+          type: string
+          description: Private IP address of the node
+          format: ipv4
+          example: 10.0.0.1
+        events:
+          type: array
+          description: List of backup/restore events
+          items:
+            $ref: '#/components/schemas/ClusterEventsNodeEvent'
+    ClusterEventsNodeEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of event
+          enum:
+          - snapshot-upload
+          - cassandra-restore
+          - commitlog-upload
+        state:
+          type: string
+          description: State of the event
+          enum:
+          - ACTIVE
+          - COMPLETED
+          - FAILED
+        progress:
+          maximum: 1
+          minimum: 0
+          type: number
+          description: Event progress
+          format: float
+          example: 0.5
+        start:
+          type: number
+          description: Timestamp of when the event was triggered
+          example: 1510585212265
+        end:
+          type:
+          - number
+          - 'null'
+          description: Timestamp of when the event was completed
+          example: 1510585212265
+      description: List of backup/restore events
+    RestoreBackupPreconditionFailureMessage:
+      type: object
+      properties:
+        cluster:
+          type: string
+          description: Cluster ID
+          format: uuid
+          example: ded724f7-aa4d-42c3-8e4e-a6c5a73b8aa3
+        status:
+          type: string
+          example: Pre-condition failed
+        reason:
+          type: string
+    RestoreClusterResponseSchema:
+      type: object
+      properties:
+        restoredCluster:
+          type: string
+          description: Cluster ID
+          format: uuid
+          example: 77b5a4e1-c422-4a78-b551-d8fa5c42ad95
+    RestoreCassandraClusterRequestSchema:
+      type: object
+      properties:
+        clusterNameOverride:
+          pattern: '[a-zA-Z0-9][a-zA-Z0-9_-]*'
+          type: string
+          description: The display name of the restored cluster.<br><br>By default, the restored cluster will be created with its current name appended with “restored” and the date & time it was requested to be restored.
+          example: my-restored-cluster
+        cdcInfos:
+          type: array
+          description: An optional list of Cluster Data Centres for which custom VPC settings will be used.<br><br>This property must be populated for all Cluster Data Centres or none at all.
+          items:
+            $ref: '#/components/schemas/RestoreCdcInfoSchema'
+        pointInTime:
+          minimum: 1420070400000
+          type: integer
+          description: Timestamp in milliseconds since epoch. All backed up data will be restored for this point in time.<br><br>Defaults to the current date and time.
+          format: int64
+        keyspaceTables:
+          type: string
+          description: A comma separated list of keyspace/table names which follows the format <code>&lt;keyspace&gt;.&lt;table1&gt;,&lt;keyspace&gt;.&lt;table2&gt;</code><br><br>Only data for the specified tables will be restored, for the point in time.
+          example: keyspace1.test1,keyspace1.test2
+        clusterNetwork:
+          type: string
+          description: The cluster network for this cluster to be restored to.
+          format: ipv4
+          example: 10.0.0.0/16
+    ClusterEvents:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cluster ID
+          format: uuid
+          example: 77b5a4e1-c422-4a78-b551-d8fa5c42ad95
+        name:
+          type: string
+          description: Cluster name
+          example: example-cluster
+        clusterDataCentres:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterDataCentre'
+    GenericMapResponseSchema:
+      type: object
+    RestoreElasticsearchClusterRequestSchema:
+      type: object
+      properties:
+        clusterNameOverride:
+          pattern: '[a-zA-Z0-9][a-zA-Z0-9_-]*'
+          type: string
+          description: The display name of the restored cluster.<br><br>By default, the restored cluster will be created with its current name appended with “restored” and the date & time it was requested to be restored.
+          example: my-restored-cluster
+        cdcInfos:
+          type: array
+          description: An optional list of Cluster Data Centres for which custom VPC settings will be used.<br><br>This property must be populated for all Cluster Data Centres or none at all.
+          items:
+            $ref: '#/components/schemas/RestoreCdcInfoSchema'
+        pointInTime:
+          minimum: 1420070400000
+          type: integer
+          description: Timestamp in milliseconds since epoch. All backed up data will be restored for this point in time.<br><br>Defaults to the current date and time.
+          format: int64
+        indexNames:
+          type: string
+          description: A comma separated list of index names which follows the format <code>&lt;index-1&gt;,&lt;index-2&gt;</code><br><br>Only data for the specified indices will be restored, for the point in time.
+          example: test,test2
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    RestorePostgresqlClusterRequestSchema:
+      type: object
+      properties:
+        clusterNameOverride:
+          pattern: '[a-zA-Z0-9][a-zA-Z0-9_-]*'
+          type: string
+          description: The display name of the restored cluster.<br><br>By default, the restored cluster will be created with its current name appended with “restored” and the date & time it was requested to be restored.
+          example: my-restored-cluster
+        cdcInfos:
+          type: array
+          description: An optional list of Cluster Data Centres for which custom VPC settings will be used.<br><br>This property must be populated for all Cluster Data Centres or none at all.
+          items:
+            $ref: '#/components/schemas/RestoreCdcInfoSchema'
+        pointInTime:
+          minimum: 1420070400000
+          type: integer
+          description: Timestamp in milliseconds since epoch. All backed up data will be restored for this point in time.<br><br>Defaults to 6 minutes from request submission. You cannot specify a time within last 6 minutes due to wal log backups are every 5 minutes.
+          format: int64
+    RestoreCdcInfoSchema:
+      type: object
+      properties:
+        cdcId:
+          type: string
+          description: Cluster Data Centre ID
+          format: uuid
+          example: a8c32b20-c8f0-11e7-abc4-cec278b6b50a
+        restoreToSameVpc:
+          type: boolean
+          description: Determines if the restored cluster will be allocated to the existing VPC.<br><br>Either restoreToSameVpc or customVpcId must be provided.
+          default: false
+        customVpcId:
+          type: string
+          description: Custom VPC ID to which the restored cluster will be allocated.<br><br>Either restoreToSameVpc or customVpcId must be provided.
+          example: vpc-002512aa
+        customVpcNetwork:
+          type: string
+          description: CIDR block in which the cluster will be allocated for a custom VPC.
+          example: 10.0.0.0/16
+      description: An optional list of Cluster Data Centres for which custom VPC settings will be used.<br><br>This property must be populated for all Cluster Data Centres or none at all.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

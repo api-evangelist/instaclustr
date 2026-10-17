@@ -1,0 +1,1332 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr User Management and SCIM 2.0 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged User Management and SCIM 2.0 API across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: User Management and SCIM 2.0 API
+  description: Operations related to user management. Several operations implement the SCIM 2.0 protocol.
+  x-insta-tag-group: User Management
+paths:
+  /scim/v2/Groups:
+    get:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Get groups (SCIM 2.0)
+      description: 'Fetches all Instaclustr accounts and organizations linked to the OWNER who has generated the given User Management API key.
+
+
+        This request follows the SCIM 2.0 protocol. Additional SCIM 2.0 compliant properties may be included in the actual response as null valued properties.'
+      operationId: getGroups
+      parameters:
+      - name: startIndex
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: count
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: filter
+        in: query
+        description: Filters the group list by the group's display name using case-sensitive matching.
+        required: false
+        style: form
+        explode: true
+        schema:
+          pattern: displayName eq "(.+)"
+          type: string
+        example: displayName eq "MyInstaclustrAccount|CLUSTER_ADMIN"
+      responses:
+        '200':
+          description: Successfully returned groups.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupListResponseSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupListResponseSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /scim/v2/Groups/{id}:
+    get:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Get single group (SCIM 2.0)
+      description: 'Fetches a single Instaclustr account by account ID or organization ID.
+
+        The value of account ID has the form [accountId]|[role] where role can be OWNER, CLUSTER_ADMIN, BILLING, READ_ONLY
+
+        The account or organization must be linked to the OWNER who has generated the given User Management API key.
+
+
+        This request follows the SCIM 2.0 protocol. Additional SCIM 2.0 compliant properties may be included in the actual response as null valued properties.'
+      operationId: getGroup
+      parameters:
+      - name: id
+        in: path
+        description: Instaclustr group ID with or without role
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+        example: ca552914-2518-46ab-9352-e29dde1cca92|READ_ONLY
+      responses:
+        '200':
+          description: Successfully returned group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+    patch:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Update group membership (SCIM 2.0)
+      description: 'Links or unlinks SCIM provisioned users to the given Instaclustr account.
+
+        The value of account ID has the form [accountId]|[role] where role can be OWNER, CLUSTER_ADMIN, BILLING, READ_ONLY
+
+        When given an organization ID it will also link or unlink the user from the organization.
+
+        The account or organization must be linked to the OWNER who has generated the given User Management API key.
+
+
+        Note - While the request accepts all properties compliant with the SCIM 2.0 protocol, properties not listed in the request body schema will be ignored for the operation.'
+      operationId: updateGroup
+      parameters:
+      - name: id
+        in: path
+        description: Instaclustr group ID with or without role
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+        example: a2ecfbc3-6632-492b-a929-5fd0f42d087d|READ_ONLY
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimGroupPatchRequestSchema'
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/ScimGroupPatchRequestSchema'
+      responses:
+        '200':
+          description: Successfully updated group membership.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimGroupResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Given user(s) may not be be added/removed from the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /scim/v2/Users:
+    get:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Get users (SCIM 2.0)
+      description: 'Fetches paginated users provisioned by the given User Management API key.
+
+
+        This request follows the SCIM 2.0 protocol. Additional SCIM 2.0 compliant properties may be included in the actual response as null valued properties.'
+      operationId: getUsers
+      parameters:
+      - name: filter
+        in: query
+        description: Filters the user list by the given external username.
+        required: false
+        style: form
+        explode: true
+        schema:
+          pattern: ^userName eq "(.+)"
+          type: string
+        example: userName eq "external_username_123"
+      - name: startIndex
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: count
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: Successfully returned users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUserListResponseSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimUserListResponseSchema'
+        '400':
+          description: Unable to parse the filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+    post:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Create a user (SCIM 2.0)
+      description: 'Provisions a new Instaclustr user.
+
+
+        This request may also be used with an existing Instaclustr user if it is linked to the account used to generate the User Management API key.
+
+        This request may not be used to provision any existing Service User even if it is already linked to the account used to generate the User Management API key.
+
+
+        Note - While the request accepts all properties compliant with the SCIM 2.0 protocol, properties not listed in the request body schema will be ignored for the operation.'
+      operationId: createUser_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimUserResourceBaseSchema'
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/ScimUserResourceBaseSchema'
+      responses:
+        '200':
+          description: Successfully created user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Not allowed to create user with the provided details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /scim/v2/Users/{userId}:
+    get:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Get single user (SCIM 2.0)
+      description: 'Fetches a single user with a matching username that has been provisioned by the given User Management API key.
+
+
+        This request follows the SCIM 2.0 protocol. Additional SCIM 2.0 compliant properties may be included in the actual response as null valued properties.'
+      operationId: getUser
+      parameters:
+      - name: userId
+        in: path
+        description: Username of Instaclustr user.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: user_123
+      responses:
+        '200':
+          description: Successfully returned user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '404':
+          description: Unable to parse the filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+    put:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Update a user (SCIM 2.0)
+      description: 'Updates an Instaclustr user provisioned through SCIM by the given User Management API key.
+
+
+        Note - While the request accepts all properties compliant with the SCIM 2.0 protocol, properties not listed in the request body schema will be ignored for the operation.'
+      operationId: updateUser
+      parameters:
+      - name: userId
+        in: path
+        description: Username of Instaclustr user.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: user_123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimUserResourceUpdateSchema'
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/ScimUserResourceUpdateSchema'
+      responses:
+        '200':
+          description: Successfully updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Patch a user (SCIM 2.0)
+      description: 'Patch an Instaclustr user provisioned through SCIM by the given User Management API key.
+
+
+        Deactivating a user will unlink it from all SCIM groups, accounts and organizations, and will exclude the user from all SCIM user queries.
+
+        It is not possible to activate a user who is an OWNER of a SCIM group. For non-PCI account, the targeting deactivation user must not be the last owner for any of the linked accounts. For PCI account or for accounts with Inactivity Settings enabled, the targeting deactivation user must not be the second last owner for any of the linked accounts.
+
+
+        Deactivating a user will completely deactivate the user from Instaclustr, preventing it from logging in to Instaclustr console and API, and access to any accounts and organizations.
+
+        Activating a user will include the user in all SCIM user queries.
+
+
+        An Instaclustr user cannot be deleted via SCIM. To permanently delete an Instaclustr user contact support@instaclustr.com.
+
+
+        Note - While the request accepts all properties compliant with the SCIM 2.0 protocol, properties not listed in the request body schema will be ignored for the operation.'
+      operationId: patchUser
+      parameters:
+      - name: userId
+        in: path
+        description: Username of Instaclustr user.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: user_123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimUserPatchRequestSchema'
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/ScimUserPatchRequestSchema'
+      responses:
+        '200':
+          description: Successfully updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimUserResourceSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Cannot deactivate a user that is a sole owner of another account with clusters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ScimExceptionSchema'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /usermanagement/me:
+    get:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Get the details of the current user
+      description: Retrieve the details of the current user, account, and access level based on the access key used to authenticate this user
+      operationId: getMe
+      responses:
+        '200':
+          description: Successfully retrieved details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /usermanagement/me/apikey/rotate:
+    post:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Rotate the requesting user's API key
+      description: This endpoint rotates the API key that was used to authenticate this request.
+      operationId: rotateApiKey
+      responses:
+        '200':
+          description: Successfully created or recreated the API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+              example:
+                account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                apiKeyType: MONITORING
+                cidrAllowList:
+                - 0.0.0.0/0
+                key: 73b3c11632c39eed21d0b14d1eccfad5
+                username: testuser
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /usermanagement/role:
+    put:
+      tags:
+      - User Management and SCIM 2.0 API
+      summary: Update the role of a user
+      description: Updates the role of a user for an account.
+      operationId: updateRole
+      requestBody:
+        description: User role update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated the user role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateUserRoleResponseSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: The target user is not linked to the current account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: The account must have at least one owner.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ScimUserPatchOperationSchema:
+      required:
+      - op
+      - value
+      type: object
+      properties:
+        op:
+          type: string
+          enum:
+          - replace
+        value:
+          $ref: '#/components/schemas/ScimUserPatchOpValueSchema'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    ScimEmailSchema:
+      required:
+      - primary
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          example: user1@example.com
+        display:
+          type: string
+          example: user1@example.com
+        type:
+          type: string
+          example: work
+        primary:
+          type: boolean
+          example: true
+    AccountInfoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this account.
+          example: 054862bb-c95c-4a0f-8798-8178a1597dda
+        name:
+          type: string
+          description: The name of the account.
+          example: coolsystems
+        companyName:
+          type: string
+          description: The company name.
+          example: Cool Systems Pty Ltd
+        accountType:
+          type: string
+          description: The account type.
+          example: INSTACLUSTR
+          enum:
+          - INSTACLUSTR
+          - IBM
+          - HEROKU
+          - AWS_SAAS
+          - AZURE_SAAS
+          - GCP_SAAS
+          - AZURE_RIYOA
+      description: The account details for the current user.
+    ScimUserResourceSchema:
+      required:
+      - emails
+      - name
+      - userName
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:schemas:core:2.0:User"]'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimEmailSchema'
+        userName:
+          type: string
+          example: external_username_123
+        name:
+          $ref: '#/components/schemas/ScimNameSchema'
+        id:
+          type: string
+          description: Username of Instaclustr user.
+          example: user_123
+        meta:
+          $ref: '#/components/schemas/ScimUserMetaSchema'
+        active:
+          type: boolean
+    AccountUpdateUserRoleResponseSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: The role for scim-user has been updated to READ_ONLY for account 77b5a4e1-c422-4a78-b551-d8fa5c42ad95.
+    ScimNameSchema:
+      required:
+      - familyName
+      - givenName
+      type: object
+      properties:
+        givenName:
+          type: string
+          example: Robert
+        familyName:
+          type: string
+          example: Smith
+    ScimGroupListResponseSchema:
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:ListResponse
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:api:messages:2.0:ListResponse"]'
+        totalResults:
+          type: integer
+          format: int32
+          example: 50
+        startIndex:
+          type: integer
+          format: int32
+          example: 1
+        itemsPerPage:
+          type: integer
+          format: int32
+          example: 10
+        Resources:
+          type: array
+          description: List of Instaclustr accounts formatted to SCIM 2.0's Group resource specification
+          items:
+            $ref: '#/components/schemas/ScimGroupResourceSchema'
+    UserRoleRequest:
+      required:
+      - role
+      type: object
+      properties:
+        user:
+          type: string
+          description: Target user name or email address
+        scimUsername:
+          type: string
+          description: SCIM username
+        role:
+          type: string
+          description: Updated role
+          enum:
+          - OWNER
+          - CLUSTER_ADMIN
+          - BILLING
+          - READ_ONLY
+        targetAccount:
+          type: string
+          description: Target Account
+    ApiKeyResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the API key for basic auth
+          example: jsmith
+        account:
+          type: string
+          description: Account that the API key is associated with. An API key can only be used for its account's resources.
+        apiKeyType:
+          type: string
+          description: The type of the API key. Different types of API keys must be used for different types of endpoints, such as provisioning and monitoring endpoints.
+          example: PROVISIONING
+        key:
+          type: string
+        isExpired:
+          type: boolean
+        cidrAllowList:
+          type: array
+          items:
+            type: string
+    ScimGroupPatchRequestSchema:
+      required:
+      - Operations
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:api:messages:2.0:PatchOp"]'
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimGroupPatchOperationSchema'
+      example:
+        Operations:
+        - op: add
+          path: members
+          value:
+          - value: user_1
+        - op: remove
+          path: members[value eq "user_2"]
+        schemas:
+        - urn:ietf:params:scim:api:messages:2.0:PatchOp
+    ScimGroupPatchOpValueSchema:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: Username of Instaclustr user.
+          example: user_123
+    MeResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDetailsResponse'
+        account:
+          $ref: '#/components/schemas/AccountInfoResponse'
+        keyAccessLevel:
+          type: string
+          description: The level of access given to the key the user was authenticated with.
+          example: MONITORING
+          enum:
+          - MONITORING
+          - PROVISIONING
+          - PROVISIONING_READONLY
+          - HEROKU
+          - USER_MANAGEMENT
+    ScimUserListResponseSchema:
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:ListResponse
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:api:messages:2.0:ListResponse"]'
+        totalResults:
+          type: integer
+          format: int32
+          example: 50
+        startIndex:
+          type: integer
+          format: int32
+          example: 1
+        itemsPerPage:
+          type: integer
+          format: int32
+          example: 10
+        Resources:
+          type: array
+          description: List of Instaclustr users formatted to SCIM 2.0's User resource specification
+          items:
+            $ref: '#/components/schemas/ScimUserResourceSchema'
+    ScimExceptionSchema:
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:Error
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:schemas:core:2.0:Error"]'
+        status:
+          type: string
+        scimType:
+          type: string
+        detail:
+          type: string
+    ScimGroupMetaSchema:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Group
+        created:
+          type: string
+          format: date-time
+          example: '2020-06-04T13:10:44.824+10:00'
+        location:
+          type: string
+          format: uri
+          example: https://api.instaclustr.com/scim/v2/Groups/a54fc430-dd9b-42b8-b308-4d89c93bafb8
+    ScimGroupResourceSchema:
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:schemas:core:2.0:Group"]'
+        id:
+          type: string
+          description: Instaclustr group ID with or without role
+          format: string
+          example: a54fc430-dd9b-42b8-b308-4d89c93bafb8|READ_ONLY
+        displayName:
+          type: string
+          description: Name of Instaclustr group
+          example: Example Group
+        meta:
+          $ref: '#/components/schemas/ScimGroupMetaSchema'
+    UserDetailsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this user.
+          example: jsmith
+        displayName:
+          type: string
+          description: The user's preferred name for communication.
+          example: John Smith
+        email:
+          type: string
+          description: The user's email address.
+          example: jsmith@example.com
+        isAdmin:
+          type: boolean
+      description: The details of the current user.
+    ScimUserMetaSchema:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: User
+    ScimGroupPatchOperationSchema:
+      required:
+      - op
+      - path
+      - value
+      type: object
+      properties:
+        op:
+          type: string
+          enum:
+          - add
+          - remove
+        path:
+          type: string
+          enum:
+          - members
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimGroupPatchOpValueSchema'
+    ScimUserResourceUpdateSchema:
+      required:
+      - emails
+      - id
+      - name
+      - userName
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:schemas:core:2.0:User"]'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimEmailSchema'
+        userName:
+          type: string
+          example: external_username_123
+        name:
+          $ref: '#/components/schemas/ScimNameSchema'
+        id:
+          type: string
+          description: Username of Instaclustr user.
+          example: user_123
+    ScimUserPatchOpValueSchema:
+      required:
+      - active
+      - emails
+      - name
+      - userName
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Determines whether the user will be activated or deactivated.
+          example: true
+        userName:
+          type: string
+          example: external_username_123
+        name:
+          $ref: '#/components/schemas/ScimNameSchema'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimEmailSchema'
+    ScimUserPatchRequestSchema:
+      required:
+      - Operations
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:api:messages:2.0:PatchOp"]'
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimUserPatchOperationSchema'
+    ScimUserResourceBaseSchema:
+      required:
+      - emails
+      - name
+      - userName
+      type: object
+      properties:
+        schemas:
+          uniqueItems: true
+          type: array
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          items:
+            type: string
+            example: '["urn:ietf:params:scim:schemas:core:2.0:User"]'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimEmailSchema'
+        userName:
+          type: string
+          example: external_username_123
+        name:
+          $ref: '#/components/schemas/ScimNameSchema'
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

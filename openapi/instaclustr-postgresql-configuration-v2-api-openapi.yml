@@ -1,0 +1,350 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr PostgreSQL Configuration V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged PostgreSQL Configuration V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: PostgreSQL Configuration V2
+  description: Operations related to PostgreSQL configuration properties.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/postgresql_cluster/{clusterId}/configurations:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the PostgreSQL cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: configurations_v2
+    get:
+      tags:
+      - PostgreSQL Configuration V2
+      summary: Get cluster configurations
+      description: Get a list of applied configurations for the specified cluster.
+      responses:
+        '200':
+          description: Successfully retrieved a list of the configuration properties applied to the cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostgresqlConfigurationPropertiesV2'
+      operationId: getClusterManagementV2DataSourcesPostgresqlClusterByClusterIdConfigurations
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/postgresql/configurations/v2/:
+    x-terraform-resource-name: postgresql_configuration_v2
+    post:
+      tags:
+      - PostgreSQL Configuration V2
+      summary: Create configuration
+      description: Create a cluster configuration with the provided input. If the specified configuration has not been set, it will be created. Cluster nodes will need to be manually reloaded to apply configuration changes.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostgresqlConfigurationPropertyV2'
+        required: true
+      responses:
+        '202':
+          description: Configuration property created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresqlConfigurationPropertyV2'
+              example:
+                clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+                id: b997a00d-5bd4-4774-9bd7-5c0ad6189246|idle_in_transaction_session_timeout
+                name: idle_in_transaction_session_timeout
+                value: '1'
+        '404':
+          description: PostgreSQL cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsPostgresqlConfigurationsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/postgresql/configurations/v2/{configurationId}:
+    parameters:
+    - name: configurationId
+      in: path
+      description: 'Instaclustr identifier for the PostgreSQL configuration property. The value of this property has the form: [cluster-id]|[configuration_name]'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - PostgreSQL Configuration V2
+      summary: Get configuration
+      description: Get a configuration applied to the cluster.
+      responses:
+        '202':
+          description: configuration property successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresqlConfigurationPropertyV2'
+              example:
+                clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+                id: b997a00d-5bd4-4774-9bd7-5c0ad6189246|idle_in_transaction_session_timeout
+                name: idle_in_transaction_session_timeout
+                value: '1'
+        '404':
+          description: PostgreSQL cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsPostgresqlConfigurationsV2ByConfigurationId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - PostgreSQL Configuration V2
+      summary: Update configuration
+      description: Update an applied configuration to the cluster. Cluster nodes will need to be manually reloaded to apply configuration changes.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostgresqlConfigurationPropertyUpdateV2'
+        required: true
+      responses:
+        '202':
+          description: configuration property successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresqlConfigurationPropertyV2'
+              example:
+                clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+                id: b997a00d-5bd4-4774-9bd7-5c0ad6189246|idle_in_transaction_session_timeout
+                name: idle_in_transaction_session_timeout
+                value: '1'
+        '404':
+          description: PostgreSQL cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsPostgresqlConfigurationsV2ByConfigurationId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - PostgreSQL Configuration V2
+      summary: Reset a configuration
+      description: Restore an altered configuration property to its default value. Cluster nodes will need to be manually reloaded to apply configuration changes.
+      responses:
+        '204':
+          description: Successfully reset the cluster configuration.
+          content: {}
+        '404':
+          description: PostgreSQL cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsPostgresqlConfigurationsV2ByConfigurationId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+    PostgresqlConfigurationPropertyUpdateV2:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: Value of the configuration property.
+      description: PostgreSQL configuration property. Cluster nodes will need to be manually [reloaded](https://www.instaclustr.com/support/documentation/postgresql/postgresql-operations/reloading-a-node/) to apply configuration changes.
+      example:
+        value: '1'
+    PostgresqlConfigurationPropertiesV2:
+      required:
+      - configurationProperties
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: ID of the PostgreSQL cluster
+          x-terraform-id: true
+        configurationProperties:
+          type: array
+          description: List of configuration properties
+          items:
+            $ref: '#/components/schemas/PostgresqlConfigurationPropertyV2'
+          x-terraform-ignore-order: true
+      description: PostgreSQL configuration properties
+      example:
+        clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+        configurationProperties:
+        - clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+          name: 'statement_timeout  '
+          value: '1'
+        - clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+          name: idle_in_transaction_session_timeout
+          value: '1'
+    PostgresqlConfigurationPropertyV2:
+      required:
+      - clusterId
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the configuration property.
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: Id of the PostgreSQL cluster.
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the PostgreSQL configuration property. The value of this property has the form: [cluster-id]|[configuration_name]'
+          readOnly: true
+        value:
+          type: string
+          description: Value of the configuration property.
+      description: PostgreSQL configuration property. Cluster nodes will need to be manually [reloaded](https://www.instaclustr.com/support/documentation/postgresql/postgresql-operations/reloading-a-node/) to apply configuration changes.
+      example:
+        clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+        name: idle_in_transaction_session_timeout
+        value: '1'
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

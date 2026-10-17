@@ -114,22 +114,17 @@ common:
   url: https://support.instaclustr.com/hc/en-us
 
 apis:
-- aid: instaclustr:instaclustr-api
-  name: Instaclustr API
-  description: The current Instaclustr API (Cluster Management V2/V3, Monitoring, User Management and SCIM 2.0, Organization Management, MCP Gateway
-    and node pricing information), documented in Redocly at docs.api.instaclustr.com and authenticated with HTTP Basic (username plus API key).
+- aid: instaclustr:instaclustr-account-cluster-list-v2-api
+  name: Instaclustr Account Cluster List V2 API
+  description: >-
+    The Account Cluster List V2 API from Instaclustr — 1 operation(s) for account cluster list v2.
   humanURL: https://instaclustr.redoc.ly/Current/
   baseURL: https://api.instaclustr.com
   tags:
-  - Cluster Management
-  - Monitoring
-  - SCIM
+  - Account Cluster List V2
   properties:
   - type: OpenAPI
-    url: openapi/instaclustr-openapi.yml
-  - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://instaclustr.redoc.ly/Current/
+    url: openapi/instaclustr-account-cluster-list-v2-api-openapi.yml
   - type: Documentation
     url: https://www.instaclustr.com/support/documentation/
   - type: JSONSchema
@@ -144,20 +139,3360 @@ apis:
     url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
   - type: JSONSchema
     url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
-- aid: instaclustr:instaclustr-deprecated-api
-  name: Instaclustr API (Deprecated endpoints)
-  description: Deprecated Instaclustr API endpoints still documented in the Redocly portal's Deprecated version, served from the same api.instaclustr.com
-    host.
-  humanURL: https://instaclustr.redoc.ly/Deprecated/
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-cassandra-provisioning-v2-api
+  name: Instaclustr Apache Cassandra Provisioning V2 API
+  description: >-
+    The Apache Cassandra Provisioning V2 API from Instaclustr — 10 operation(s) for apache cassandra provisioning
+    v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
   baseURL: https://api.instaclustr.com
   tags:
-  - Deprecated
+  - Apache Cassandra Provisioning V2
   properties:
   - type: OpenAPI
-    url: openapi/instaclustr-deprecated-openapi.yml
+    url: openapi/instaclustr-apache-cassandra-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-acl-v2-api
+  name: Instaclustr Apache Kafka ACL V2 API
+  description: The Apache Kafka ACL V2 API from Instaclustr — 4 operation(s) for apache kafka acl v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka ACL V2
+  properties:
   - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://instaclustr.redoc.ly/Deprecated/
+    url: openapi/instaclustr-apache-kafka-acl-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-acl-v3-api
+  name: Instaclustr Apache Kafka ACL V3 API
+  description: The Apache Kafka ACL V3 API from Instaclustr — 2 operation(s) for apache kafka acl v3.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka ACL V3
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-acl-v3-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-connect-mirror-v2-api
+  name: Instaclustr Apache Kafka Connect Mirror V2 API
+  description: Operations related to Apache Kafka Connect Mirror.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Connect Mirror V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-connect-mirror-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-connect-provisioning-v2-api
+  name: Instaclustr Apache Kafka Connect Provisioning V2 API
+  description: >-
+    The Apache Kafka Connect Provisioning V2 API from Instaclustr — 6 operation(s) for apache kafka connect
+    provisioning v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Connect Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-connect-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-provisioning-v2-api
+  name: Instaclustr Apache Kafka Provisioning V2 API
+  description: >-
+    The Apache Kafka Provisioning V2 API from Instaclustr — 6 operation(s) for apache kafka provisioning
+    v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-provisioning-v3-api
+  name: Instaclustr Apache Kafka Provisioning V3 API
+  description: Operations relating to the Apache Kafka Rest Proxy user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Provisioning V3
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-provisioning-v3-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-rest-proxy-user-api
+  name: Instaclustr Apache Kafka Rest Proxy User API
+  description: Operations relating to the Apache Kafka Rest Proxy user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Rest Proxy User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-rest-proxy-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-schema-registry-user-api
+  name: Instaclustr Apache Kafka Schema Registry User API
+  description: Operations relating to the Apache Schema Registry user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Schema Registry User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-schema-registry-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-tiered-storage-api
+  name: Instaclustr Apache Kafka Tiered Storage API
+  description: >-
+    The Apache Kafka Tiered Storage API from Instaclustr — 4 operation(s) for apache kafka tiered storage.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Tiered Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-tiered-storage-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-topic-v2-api
+  name: Instaclustr Apache Kafka Topic V2 API
+  description: >-
+    The Apache Kafka Topic V2 API from Instaclustr — 4 operation(s) for apache kafka topic v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Topic V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-topic-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-topic-v3-api
+  name: Instaclustr Apache Kafka Topic V3 API
+  description: >-
+    The Apache Kafka Topic V3 API from Instaclustr — 2 operation(s) for apache kafka topic v3.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka Topic V3
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-topic-v3-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-kafka-user-api
+  name: Instaclustr Apache Kafka User API
+  description: The Apache Kafka User API from Instaclustr — 14 operation(s) for apache kafka user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Kafka User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-kafka-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-apache-zookeeper-provisioning-v2-api
+  name: Instaclustr Apache Zookeeper Provisioning V2 API
+  description: >-
+    The Apache Zookeeper Provisioning V2 API from Instaclustr — 5 operation(s) for apache zookeeper provisioning
+    v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Apache Zookeeper Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-apache-zookeeper-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-encryption-key-v2-api
+  name: Instaclustr AWS Encryption Key V2 API
+  description: >-
+    The AWS Encryption Key V2 API from Instaclustr — 4 operation(s) for aws encryption key v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Encryption Key V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-encryption-key-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-endpoint-dns-names-v2-api
+  name: Instaclustr AWS Endpoint DNS Names V2 API
+  description: Operations related to AWS endpoint dns names.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Endpoint DNS Names V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-endpoint-dns-names-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-endpoint-service-names-v2-api
+  name: Instaclustr AWS Endpoint Service Names V2 API
+  description: Operations related to AWS endpoint service names.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Endpoint Service Names V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-endpoint-service-names-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-endpoint-service-principals-api
+  name: Instaclustr AWS Endpoint Service Principals API
+  description: Operations related to AWS endpoint service principals.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Endpoint Service Principals
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-endpoint-service-principals-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-endpoint-service-principals-v2-api
+  name: Instaclustr AWS Endpoint Service Principals V2 API
+  description: Operations related to AWS endpoint service principals.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Endpoint Service Principals V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-endpoint-service-principals-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-fsx-ontap-file-systems-api
+  name: Instaclustr AWS FSx ONTAP File Systems API
+  description: Operations related to AWS FSx ONTAP file system provisioning
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS FSx ONTAP File Systems
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-fsx-ontap-file-systems-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-fsx-ontap-filesystem-credentials-v2-api
+  name: Instaclustr AWS FSx ONTAP Filesystem Credentials V2 API
+  description: Operations related to BYO AWS FSx ONTAP filesystem credentials
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS FSx ONTAP Filesystem Credentials V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-fsx-ontap-filesystem-credentials-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-prefix-list-firewall-rule-v1-api
+  name: Instaclustr AWS Prefix List Firewall Rule V1 API
+  description: Operations related to AWS prefix list firewall rule
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Prefix List Firewall Rule V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-prefix-list-firewall-rule-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-prefix-list-firewall-rules-v1-api
+  name: Instaclustr AWS Prefix List Firewall Rules V1 API
+  description: >-
+    Operations related to bulk AWS prefix list firewall rule operations for a cluster data centre
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Prefix List Firewall Rules V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-prefix-list-firewall-rules-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-security-group-firewall-rule-v2-api
+  name: Instaclustr AWS Security Group Firewall Rule V2 API
+  description: Operations related to AWS security group firewall rule
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Security Group Firewall Rule V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-security-group-firewall-rule-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-security-group-firewall-rules-v2-api
+  name: Instaclustr AWS Security Group Firewall Rules V2 API
+  description: >-
+    Operations related to perform bulk operation on Cluster AWS security group firewall rules
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS Security Group Firewall Rules V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-security-group-firewall-rules-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-aws-vpc-peer-v2-api
+  name: Instaclustr AWS VPC Peer V2 API
+  description: Operations related to AWS VPC Peering with Cluster Data Centers.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - AWS VPC Peer V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-aws-vpc-peer-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-azure-private-link-service-subscriptions-api
+  name: Instaclustr Azure Private Link Service Subscriptions API
+  description: Azure Private Link Service allowed subscriptions
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Azure Private Link Service Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-azure-private-link-service-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-azure-vnet-peer-v2-api
+  name: Instaclustr Azure Vnet Peer V2 API
+  description: Operations related to Azure Vnet Peering with Cluster Data Centers.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Azure Vnet Peer V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-azure-vnet-peer-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-bundle-information-api
+  name: Instaclustr Bundle Information API
+  description: Operations related to retrieving information on bundles.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Bundle Information
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-bundle-information-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-bundle-user-api
+  name: Instaclustr Bundle User API
+  description: Operations related to users in a bundle.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Bundle User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-bundle-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-byoc-aws-cloudformation-api
+  name: Instaclustr BYOC AWS CloudFormation API
+  description: Operations related to Bring-Your-Own-Cloud (BYOC) AWS CloudFormation template.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - BYOC AWS CloudFormation
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-byoc-aws-cloudformation-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-byoc-aws-provider-account-setup-v1-api
+  name: Instaclustr BYOC AWS Provider Account Setup V1 API
+  description: Operations related to BYOC provider account setup records.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - BYOC AWS Provider Account Setup V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-byoc-aws-provider-account-setup-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cadence-domain-rate-limits-v2-api
+  name: Instaclustr Cadence Domain Rate Limits V2 API
+  description: Operations related to Cadence per-frontend-instance domain request-rate limits.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cadence Domain Rate Limits V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cadence-domain-rate-limits-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cadence-global-domain-rate-limits-v2-api
+  name: Instaclustr Cadence Global Domain Rate Limits V2 API
+  description: Operations related to Cadence cluster-wide domain request-rate limits.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cadence Global Domain Rate Limits V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cadence-global-domain-rate-limits-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cadence-provisioning-v2-api
+  name: Instaclustr Cadence Provisioning V2 API
+  description: >-
+    The Cadence Provisioning V2 API from Instaclustr — 5 operation(s) for cadence provisioning v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cadence Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cadence-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-clickhouse-configurations-api
+  name: Instaclustr ClickHouse Configurations API
+  description: Operations related to ClickHouse configuration properties.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - ClickHouse Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-clickhouse-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-clickhouse-integrations-api
+  name: Instaclustr ClickHouse Integrations API
+  description: Operations related to ClickHouse integrations.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - ClickHouse Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-clickhouse-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-clickhouse-provisioning-api
+  name: Instaclustr ClickHouse Provisioning API
+  description: Operations related to ClickHouse provisioning.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - ClickHouse Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-clickhouse-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cloud-provider-details-v2-api
+  name: Instaclustr Cloud Provider Details V2 API
+  description: Cloud provider information.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cloud Provider Details V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cloud-provider-details-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-config-api
+  name: Instaclustr Cluster Config API
+  description: Operations related to configurations of a cluster.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Config
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-config-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-exclusion-window-v2-api
+  name: Instaclustr Cluster Exclusion Window V2 API
+  description: Cluster exclusion window
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Exclusion Window V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-exclusion-window-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-maintenance-events-v2-api
+  name: Instaclustr Cluster Maintenance Events V2 API
+  description: Operations related to cluster maintenance events
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Maintenance Events V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-maintenance-events-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-network-firewall-rule-v2-api
+  name: Instaclustr Cluster Network Firewall Rule V2 API
+  description: >-
+    Operations related to cluster network firewall rule, not supported for on-premises clusters
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Network Firewall Rule V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-network-firewall-rule-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-network-firewall-rules-v2-api
+  name: Instaclustr Cluster Network Firewall Rules V2 API
+  description: >-
+    Operations related to perform bulk operation on Cluster network firewall rules, not supported for
+    on-premises clusters
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Network Firewall Rules V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-network-firewall-rules-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-non-recurring-exclusion-window-v2-api
+  name: Instaclustr Cluster Non Recurring Exclusion Window V2 API
+  description: Cluster non-recurring exclusion window
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Non Recurring Exclusion Window V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-non-recurring-exclusion-window-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-resource-api
+  name: Instaclustr Cluster Resource API
+  description: Operations related to provisioning clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Resource
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-resource-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-settings-v2-api
+  name: Instaclustr Cluster Settings V2 API
+  description: The Cluster Settings V2 API from Instaclustr — 1 operation(s) for cluster settings v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Settings V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-settings-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-cluster-suspend-resume-v2-api
+  name: Instaclustr Cluster Suspend Resume V2 API
+  description: Operations related to suspending and resuming clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Cluster Suspend Resume V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-cluster-suspend-resume-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-custom-tags-v2-api
+  name: Instaclustr Custom Tags V2 API
+  description: Operations related to managing custom tags
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Custom Tags V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-custom-tags-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-firewall-rule-api
+  name: Instaclustr Firewall Rule API
+  description: Operations related to firewall rules of a cluster.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Firewall Rule
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-firewall-rule-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-gcp-psc-service-attachments-accept-list-v2-api
+  name: Instaclustr GCP PSC Service Attachments Accept List V2 API
+  description: Operations related to GCP PSC Service Attachments Accept List
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - GCP PSC Service Attachments Accept List V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-gcp-psc-service-attachments-accept-list-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-gcp-vpc-peer-v2-api
+  name: Instaclustr GCP VPC Peer V2 API
+  description: Operations related to GCP VPC Peering with Cluster Data Centers.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - GCP VPC Peer V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-gcp-vpc-peer-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-horizontal-scaling-operations-api
+  name: Instaclustr Horizontal Scaling Operations API
+  description: Operations related to horizontal scaling of Cluster Data Centres.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Horizontal Scaling Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-horizontal-scaling-operations-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-kafka-acl-api
+  name: Instaclustr Kafka ACL API
+  description: Operations related to Kafka Access Control Lists.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Kafka ACL
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-kafka-acl-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-kafka-mirroring-api-api
+  name: Instaclustr Kafka Mirroring API
+  description: >-
+    Operations related to managing mirroring setups between Kafka and Kafka Connect clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Kafka Mirroring API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-kafka-mirroring-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-kafka-topic-api
+  name: Instaclustr Kafka Topic API
+  description: Operations related to Kafka topics.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Kafka Topic
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-kafka-topic-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-karapace-rest-proxy-user-api
+  name: Instaclustr Karapace Rest Proxy User API
+  description: Operations relating to the Karapace Rest Proxy user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Karapace Rest Proxy User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-karapace-rest-proxy-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-karapace-schema-registry-user-api
+  name: Instaclustr Karapace Schema Registry User API
+  description: Operations relating to the Karapace Schema Registry user.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Karapace Schema Registry User
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-karapace-schema-registry-user-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-maintenance-events-api-api
+  name: Instaclustr Maintenance Events API
+  description: Operations related to managing maintenance events on Instaclustr clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Maintenance Events API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-maintenance-events-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-management-units-usage-api
+  name: Instaclustr Management Units Usage API
+  description: Account Management Units Usage Information
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Management Units Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-management-units-usage-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-mcp-gateway-backend-v1-api
+  name: Instaclustr MCP Gateway Backend V1 API
+  description: Operations related to MCP Gateway backends.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - MCP Gateway Backend V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-mcp-gateway-backend-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-mcp-gateway-persona-access-control-v1-api
+  name: Instaclustr MCP Gateway Persona Access Control V1 API
+  description: Operations related to MCP Gateway persona access control.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - MCP Gateway Persona Access Control V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-mcp-gateway-persona-access-control-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-mcp-gateway-provisioning-v1-api
+  name: Instaclustr MCP Gateway Provisioning V1 API
+  description: Operations related to MCP Gateway provisioning
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - MCP Gateway Provisioning V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-mcp-gateway-provisioning-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-mcp-gateway-tool-v1-api
+  name: Instaclustr MCP Gateway Tool V1 API
+  description: Operations related to MCP Gateway tools
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - MCP Gateway Tool V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-mcp-gateway-tool-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-mcp-gateway-virtual-server-v1-api
+  name: Instaclustr MCP Gateway Virtual Server V1 API
+  description: Operations related to MCP Gateway virtual servers.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - MCP Gateway Virtual Server V1
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-mcp-gateway-virtual-server-v1-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-monitoring-api-api
+  name: Instaclustr Monitoring API
+  description: Operation to retrieve metric definitions.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Monitoring API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-monitoring-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-monitoring-api-cluster-api
+  name: Instaclustr Monitoring API - Cluster API
+  description: Operations related to monitoring provisioned clusters
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Monitoring API - Cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-monitoring-api-cluster-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-monitoring-api-data-centre-api
+  name: Instaclustr Monitoring API - Data Centre API
+  description: Operations related to monitoring data centres of provisioned clusters
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Monitoring API - Data Centre
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-monitoring-api-data-centre-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-monitoring-api-node-api
+  name: Instaclustr Monitoring API - Node API
+  description: Operations related to monitoring nodes of provisioned clusters
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Monitoring API - Node
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-monitoring-api-node-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-node-reload-api
+  name: Instaclustr Node Reload API
+  description: Operation related to reloading nodes.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Node Reload
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-node-reload-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-opensearch-egress-rules-v2-api
+  name: Instaclustr OpenSearch Egress Rules V2 API
+  description: >-
+    The OpenSearch Egress Rules V2 API from Instaclustr — 3 operation(s) for opensearch egress rules v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - OpenSearch Egress Rules V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-opensearch-egress-rules-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-opensearch-external-s3-bucket-v2-api
+  name: Instaclustr OpenSearch External S3 Bucket V2 API
+  description: >-
+    Operations related to managing external S3 buckets with read-only access for OpenSearch clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - OpenSearch External S3 Bucket V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-opensearch-external-s3-bucket-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-opensearch-provisioning-v2-api
+  name: Instaclustr OpenSearch Provisioning V2 API
+  description: >-
+    The OpenSearch Provisioning V2 API from Instaclustr — 10 operation(s) for opensearch provisioning
+    v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - OpenSearch Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-opensearch-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-organization-management-api-api
+  name: Instaclustr Organization Management API
+  description: >-
+    Operations related to Organization Management.<br><br>These endpoints require an Organization Management
+    API key. Organization API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/'
+    target='_blank'>console</a> by going to the Organization Management page > API Keys.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Organization Management API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-organization-management-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-postgresql-configuration-v2-api
+  name: Instaclustr PostgreSQL Configuration V2 API
+  description: Operations related to PostgreSQL configuration properties.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - PostgreSQL Configuration V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-postgresql-configuration-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-postgresql-operations-api
+  name: Instaclustr PostgreSQL Operations API
+  description: Operations related to PostgreSQL.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - PostgreSQL Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-postgresql-operations-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-postgresql-provisioning-v2-api
+  name: Instaclustr PostgreSQL Provisioning V2 API
+  description: Operations related to managing a Postgresql cluster
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - PostgreSQL Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-postgresql-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-pricing-information-node-sizes-api
+  name: Instaclustr Pricing information - Node sizes API
+  description: >-
+    Operation to fetch pricing information. These endpoints do not require any API keys to access. These
+    are publicly available information.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Pricing information - Node sizes
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-pricing-information-node-sizes-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-private-link-private-service-connect-endpoint-addresses-v2-api
+  name: Instaclustr Private Link Private Service Connect Endpoint Addresses V2 API
+  description: Operations related to Private Link / Private Service Connect Endpoint addresses
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Private Link Private Service Connect Endpoint Addresses V2
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/instaclustr-private-link-private-service-connect-endpoint-addresses-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-redis-provisioning-v2-api
+  name: Instaclustr Redis Provisioning V2 API
+  description: >-
+    The Redis Provisioning V2 API from Instaclustr — 8 operation(s) for redis provisioning v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Redis Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-redis-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-redis-user-v2-api
+  name: Instaclustr Redis User V2 API
+  description: The Redis User V2 API from Instaclustr — 3 operation(s) for redis user v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Redis User V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-redis-user-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-resize-operations-v2-api
+  name: Instaclustr Resize Operations V2 API
+  description: Operations and information related to resizing clusters.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Resize Operations V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-resize-operations-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-scale-cluster-api
+  name: Instaclustr Scale Cluster API
+  description: >-
+    Operations related to scaling a cluster. Includes adding a new data centre and resizing a cluster.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Scale Cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-scale-cluster-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-service-user-management-api-api
+  name: Instaclustr Service User Management API
+  description: >-
+    Operations related to service user management.<br>Service Users are API-only users. Service Users
+    are created in, and have access to, a single account. This account is the account associated with
+    the API key that was used to create the Service User via the API. Owner and Cluster Admin level users
+    in an account can create Service Users. The user who creates a Service User automatically becomes
+    an Administrator of that Service User. Administrators of a Service User may invite additional Cluster
+    Admin users to be Controllers of that user. Owner users in an account automatically have Administrator-level
+    access to all Service Users in that account.<br>A Service User may not have multiple API keys of the
+    same type, however an account can create multiple Service Users.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Service User Management API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-service-user-management-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-terraform-import-v2-api
+  name: Instaclustr Terraform Import V2 API
+  description: The Terraform Import V2 API from Instaclustr — 1 operation(s) for terraform import v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Terraform Import V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-terraform-import-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-user-actions-v3-api
+  name: Instaclustr User Actions V3 API
+  description: Operations related to the user actions
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - User Actions V3
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-user-actions-v3-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-user-management-and-scim-2-0-api-api
+  name: Instaclustr User Management and SCIM 2.0 API
+  description: >-
+    Operations related to user management. Several operations implement the <a href='http://www.simplecloud.info/#Specification'
+    target='_blank'>SCIM 2.0 protocol</a>.<br><br>
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - User Management and SCIM 2.0 API
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-user-management-and-scim-2-0-api-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-valkey-provisioning-v2-api
+  name: Instaclustr Valkey Provisioning V2 API
+  description: >-
+    The Valkey Provisioning V2 API from Instaclustr — 8 operation(s) for valkey provisioning v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Valkey Provisioning V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-valkey-provisioning-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-valkey-user-v2-api
+  name: Instaclustr Valkey User V2 API
+  description: The Valkey User V2 API from Instaclustr — 3 operation(s) for valkey user v2.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Valkey User V2
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-valkey-user-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-vpc-peering-api
+  name: Instaclustr VPC Peering API
+  description: Operations related to VPC Peering.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - VPC Peering
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-vpc-peering-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-backup-and-restore-api
+  name: Instaclustr Backup And Restore API
+  description: Operations related to backing up and restoring a cluster
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Backup And Restore
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-backup-and-restore-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-provisioning-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-data-centre-request-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cluster-details-response-for-terraform-import-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-bundle-compatibility-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-topic-v2-schema.json
+- aid: instaclustr:instaclustr-encryptionkey-api
+  name: Instaclustr Encryptionkey API
+  description: Operations related to encryption keys.
+  humanURL: https://instaclustr.redoc.ly/Current/
+  baseURL: https://api.instaclustr.com
+  tags:
+  - Encryptionkey
+  properties:
+  - type: OpenAPI
+    url: openapi/instaclustr-encryptionkey-api-openapi.yml
+  - type: Documentation
+    url: https://www.instaclustr.com/support/documentation/
+  - type: JSONSchema
+    url: json-schema/instaclustr-open-search-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-kafka-cluster-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cadence-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-cassandra-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-postgresql-cluster-v2-schema.json
+  - type: JSONSchema
+    url: json-schema/instaclustr-click-house-integration-s3-fsxn-schema.json
   - type: JSONSchema
     url: json-schema/instaclustr-cluster-provisioning-request-schema.json
   - type: JSONSchema

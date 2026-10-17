@@ -1,0 +1,379 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr AWS Prefix List Firewall Rule V1 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged AWS Prefix List Firewall Rule V1 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: AWS Prefix List Firewall Rule V1
+  description: Operations related to AWS prefix list firewall rule
+  x-insta-tag-group: Cluster Management V2
+paths:
+  ? /cluster-management/v2/data-sources/providers/aws/aws_cluster_data_centre/{clusterDataCentreId}/prefix-list-firewall-rules/v1
+  : parameters:
+    - name: clusterDataCentreId
+      in: path
+      description: ID of the cluster data centre.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: prefix_list_firewall_rules_v1
+    get:
+      tags:
+      - AWS Prefix List Firewall Rule V1
+      summary: List all prefix list firewall rules
+      responses:
+        '200':
+          description: Successfully retrieved AWS prefix list firewall rules.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AwsPrefixListFirewallRulesV1'
+      operationId: getClusterManagementV2DataSourcesProvidersAwsAwsClusterDataCentreByClusterDataCentreIdPrefixListFirewallRulesV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/prefix-list-firewall-rules/v1:
+    x-terraform-resource-name: aws_prefix_list_firewall_rule_v1
+    post:
+      tags:
+      - AWS Prefix List Firewall Rule V1
+      summary: Add an AWS prefix list firewall rule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsPrefixListFirewallRuleV1'
+        required: true
+      responses:
+        '202':
+          description: Successfully added the AWS prefix list firewall rule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsPrefixListFirewallRuleV1'
+              example:
+                clusterDataCentreId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                deferredReason: ''
+                id: 47ac0d3e-1b2f-4e8a-9c3d-5e6f708192a4
+                prefixListId: pl-01abc2345defg6789
+                status: GENESIS
+                type: CASSANDRA_CQL
+          x-terraform-resource-poll-completed-statuses: RUNNING
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: GENESIS,PROVISIONING
+        '409':
+          description: A matching firewall rule already exists for the prefix list in the cluster data centre.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesProvidersAwsPrefixListFirewallRulesV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/prefix-list-firewall-rules/v1/{firewallRuleId}:
+    parameters:
+    - name: firewallRuleId
+      in: path
+      description: ID of the AWS prefix list firewall rule.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - AWS Prefix List Firewall Rule V1
+      summary: Get AWS prefix list firewall rule details
+      responses:
+        '200':
+          description: Retrieved the details of the AWS prefix list firewall rule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsPrefixListFirewallRuleV1'
+              example:
+                clusterDataCentreId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                deferredReason: ''
+                id: 47ac0d3e-1b2f-4e8a-9c3d-5e6f708192a4
+                prefixListId: pl-01abc2345defg6789
+                status: GENESIS
+                type: CASSANDRA_CQL
+        '404':
+          description: Aws prefix list firewall rule not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesProvidersAwsPrefixListFirewallRulesV1ByFirewallRuleId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - AWS Prefix List Firewall Rule V1
+      summary: Delete AWS prefix list firewall rule
+      responses:
+        '204':
+          description: Aws Prefix List Firewall Rule successfully deleted.
+          content: {}
+        '404':
+          description: Aws Prefix List Firewall Rule not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesProvidersAwsPrefixListFirewallRulesV1ByFirewallRuleId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    FirewallRuleTypesV2:
+      type: string
+      description: The type of firewall rule.
+      example: CASSANDRA_CQL
+      enum:
+      - APACHE_ZOOKEEPER
+      - CADENCE
+      - CADENCE_GRPC
+      - CADENCE_HTTP_API
+      - CADENCE_WEB
+      - CASSANDRA
+      - CASSANDRA_CQL
+      - CLICKHOUSE
+      - CLICKHOUSE_WEB
+      - ELASTICSEARCH
+      - KAFKA
+      - KAFKA_CONNECT
+      - KAFKA_ENCRYPTION
+      - KAFKA_MTLS
+      - KAFKA_NO_ENCRYPTION
+      - KAFKA_PRIVATE_SASL_PLAINTEXT_LISTENER
+      - KAFKA_PUBLIC_SASL_PLAINTEXT_LISTENER
+      - KAFKA_PRIVATE_PLAINTEXT_LISTENER
+      - KAFKA_PUBLIC_PLAINTEXT_LISTENER
+      - KAFKA_PRIVATE_SSL_LISTENER
+      - KAFKA_PUBLIC_SSL_LISTENER
+      - KAFKA_REST_PROXY
+      - KAFKA_SCHEMA_REGISTRY
+      - KARAPACE_REST_PROXY
+      - KARAPACE_SCHEMA_REGISTRY
+      - OPENSEARCH
+      - OPENSEARCH_DASHBOARDS
+      - PGBOUNCER
+      - POSTGRESQL
+      - REDIS
+      - VALKEY
+      - SEARCH_DASHBOARDS
+      - SECURE_APACHE_ZOOKEEPER
+      - SPARK
+      - SPARK_JOBSERVER
+      - SHOTOVER_PROXY
+      - MCP_GATEWAY
+      - KAFKA_DISKLESS
+      x-terraform-force-new: true
+    AwsPrefixListFirewallRuleV1:
+      required:
+      - clusterDataCentreId
+      - prefixListId
+      - type
+      type: object
+      properties:
+        clusterDataCentreId:
+          type: string
+          description: ID of the cluster data centre for the AWS prefix list firewall rule.
+          format: uuid
+          example: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+          x-terraform-force-new: true
+        deferredReason:
+          type: string
+          description: The reason (if needed) for the deferred status of the AWS prefix list firewall rule
+          readOnly: true
+          example: RETRY_LATER
+        prefixListId:
+          type: string
+          description: The prefix list ID of the AWS prefix list firewall rule.
+          example: pl-01abc2345defg6789
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the AWS prefix list firewall rule.
+          format: uuid
+          readOnly: true
+          example: 47ac0d3e-1b2f-4e8a-9c3d-5e6f708192a4
+        type:
+          $ref: '#/components/schemas/FirewallRuleTypesV2'
+        status:
+          type: string
+          description: The status of the AWS prefix list firewall rule.
+          readOnly: true
+          example: RUNNING
+          x-terraform-field-status: true
+      description: Definition of an AWS Prefix List based firewall rule to be applied to a cluster data centre. Only supported for Bring Your Own Cloud (BYOC) data centres.
+      example:
+        clusterDataCentreId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        prefixListId: pl-01abc2345defg6789
+        type: CASSANDRA_CQL
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    AwsPrefixListFirewallRulesV1:
+      type: object
+      properties:
+        clusterDataCentreId:
+          type: string
+          description: ID of the parent AWS cluster data centre.
+          format: uuid
+          example: 91346037-b969-4c4d-8112-59e1d2aa67e9
+          x-terraform-id: true
+        firewallRules:
+          type: array
+          description: AWS prefix list firewall rules in the cluster data centre.
+          items:
+            $ref: '#/components/schemas/AwsPrefixListFirewallRuleV1'
+      description: A listable data source of all AWS Prefix List based firewall rules in an Instaclustr managed cluster data centre. Only supported for Bring Your Own Cloud (BYOC) data centres.
+      example:
+        clusterDataCentreId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+        firewallRules:
+        - clusterDataCentreId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+          prefixListId: pl-903004f01234567ab
+          type: CASSANDRA_CQL
+        - clusterDataCentreId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+          prefixListId: pl-903004f61234567cd
+          type: CASSANDRA_CQL
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

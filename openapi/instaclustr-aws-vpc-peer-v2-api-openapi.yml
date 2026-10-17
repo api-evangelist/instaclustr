@@ -1,0 +1,440 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr AWS VPC Peer V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged AWS VPC Peer V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: AWS VPC Peer V2
+  description: Operations related to AWS VPC Peering with Cluster Data Centers.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/providers/aws/vpc-peers/v2:
+    x-terraform-resource-name: aws_vpc_peers_v2
+    get:
+      tags:
+      - AWS VPC Peer V2
+      summary: List all AWS VPC Peering requests
+      responses:
+        '200':
+          description: Successfully retrieved AWS VPC Peering requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountAwsVpcPeersV2'
+      operationId: getClusterManagementV2DataSourcesProvidersAwsVpcPeersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/vpc-peers/v2:
+    x-terraform-resource-name: aws_vpc_peer_v2
+    post:
+      tags:
+      - AWS VPC Peer V2
+      summary: Create AWS VPC Peering Request
+      description: Creates a new VPC Peering Connection request for the given AWS hosted Cluster Data Centre.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsVpcPeerV2'
+        required: true
+      responses:
+        '202':
+          description: AWS VPC Peering request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsVpcPeerV2'
+              example:
+                cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+                dataCentreVpcId: vpc-123abc45
+                id: cc317853-be79-4100-898f-c12e4610a892
+                peerAwsAccountId: '123456789123'
+                peerRegion: US_EAST_1
+                peerSubnets:
+                - 10.129.0.0/16
+                peerVpcId: vpc-123abc45
+                statusCode: pending-acceptance
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesProvidersAwsVpcPeersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/vpc-peers/v2/{vpcPeerId}:
+    parameters:
+    - name: vpcPeerId
+      in: path
+      description: ID of the VPC Peering Connection
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - AWS VPC Peer V2
+      summary: Get AWS VPC Peering Connection info
+      description: Fetches the details for a given AWS VPC Peering Connection.
+      responses:
+        '200':
+          description: AWS VPC Peering Connection info retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsVpcPeerV2'
+              example:
+                cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+                dataCentreVpcId: vpc-123abc45
+                id: cc317853-be79-4100-898f-c12e4610a892
+                peerAwsAccountId: '123456789123'
+                peerRegion: US_EAST_1
+                peerSubnets:
+                - 10.129.0.0/16
+                peerVpcId: vpc-123abc45
+                statusCode: pending-acceptance
+        '404':
+          description: VPC Peering Connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesProvidersAwsVpcPeersV2ByVpcPeerId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - AWS VPC Peer V2
+      summary: Update AWS VPC Peering Connection info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsVpcPeerUpdateV2'
+        required: true
+      responses:
+        '202':
+          description: AWS VPC Peering updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsVpcPeerV2'
+              example:
+                cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+                dataCentreVpcId: vpc-123abc45
+                id: cc317853-be79-4100-898f-c12e4610a892
+                peerAwsAccountId: '123456789123'
+                peerRegion: US_EAST_1
+                peerSubnets:
+                - 10.129.0.0/16
+                peerVpcId: vpc-123abc45
+                statusCode: pending-acceptance
+        '404':
+          description: VPC Peering Connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesProvidersAwsVpcPeersV2ByVpcPeerId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - AWS VPC Peer V2
+      summary: Delete AWS VPC Peering Connection
+      responses:
+        '204':
+          description: AWS VPC Peering request deleted
+          content: {}
+        '404':
+          description: VPC Peering Connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesProvidersAwsVpcPeersV2ByVpcPeerId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    AwsVpcPeerV2:
+      type: object
+      properties:
+        peerAwsAccountId:
+          type: string
+          description: The AWS account ID of the owner of the accepter VPC.
+          example: '123888456789'
+          x-terraform-force-new: true
+        peerPrefixLists:
+          type: array
+          description: Customer-managed AWS prefix list IDs (pl-...) used as peering destinations. Only supported for Bring Your Own Cloud (BYOC) clusters. peerSubnets and peerPrefixLists are mutually exclusive; provide exactly one. Create-only (force-new) for Terraform; AwsVpcPeerUpdateV2 remains CIDR-only.
+          items:
+            maxLength: 20
+            pattern: ^pl-([0-9a-f]{8}|[0-9a-f]{17})$
+            type: string
+            example: pl-0123456789abcdef0
+          x-terraform-force-new: true
+          x-terraform-ignore-order: true
+        peerSubnets:
+          type: array
+          description: The subnets for the peering VPC. peerSubnets and peerPrefixLists are mutually exclusive; provide exactly one.
+          items:
+            type: string
+          x-terraform-ignore-order: true
+        peerVpcId:
+          type: string
+          description: ID of the VPC with which the peering connection is created.
+          example: vpc-aabb1122
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the VPC peering connection.
+          readOnly: true
+          example: 068c447e-8475-49b2-974b-ca1c91702ed4
+        dataCentreVpcId:
+          type: string
+          description: ID of the current data centre VPC.
+          readOnly: true
+          example: vpc-123abc45
+        peerRegion:
+          type: string
+          description: Region code for the accepter VPC.
+          example: US_EAST_1
+          x-terraform-force-new: true
+        cdcId:
+          type: string
+          description: ID of the Cluster Data Centre
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+          x-terraform-force-new: true
+        statusCode:
+          type: string
+          description: Status of the VPC Peering Connection. Values can be `pending-acceptance`, `failed`, `expired`, `provisioning`, `active`, `deleting`, `deleted` or `rejected`.
+          readOnly: true
+          example: pending-acceptance
+      description: Definition of an AWS VPC Peering request to allow privately routed connections to a target data centre.
+      example:
+        cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+        peerAwsAccountId: '123456789123'
+        peerRegion: US_EAST_1
+        peerSubnets:
+        - 10.129.0.0/16
+        peerVpcId: vpc-123abc45
+    AwsVpcPeerUpdateV2:
+      required:
+      - peerSubnets
+      type: object
+      properties:
+        peerSubnets:
+          type: array
+          description: The subnets for the peering VPC.
+          items:
+            type: string
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    AccountAwsVpcPeersV2:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: UUID of the Instaclustr Account.
+          x-terraform-id: true
+        peeringRequests:
+          type: array
+          description: ''
+          items:
+            $ref: '#/components/schemas/AwsVpcPeerSummaryV2'
+      description: A listable data source of all AWS VPC Peering requests in an Instaclustr Account.
+    AwsVpcPeerSummaryV2:
+      required:
+      - cdcId
+      - peerAwsAccountId
+      - peerRegion
+      - peerSubnets
+      - peerVpcId
+      type: object
+      properties:
+        peerAwsAccountId:
+          type: string
+          description: The AWS account ID of the owner of the accepter VPC.
+          example: '123888456789'
+          x-terraform-force-new: true
+        peerPrefixLists:
+          type: array
+          description: Customer-managed AWS prefix list IDs (pl-...) used as peering destinations when peerSubnets is not set. Only supported for Bring Your Own Cloud (BYOC) clusters. peerSubnets and peerPrefixLists are mutually exclusive; provide exactly one.
+          items:
+            maxLength: 20
+            pattern: ^pl-([0-9a-f]{8}|[0-9a-f]{17})$
+            type: string
+            example: pl-0123456789abcdef0
+          x-terraform-force-new: true
+          x-terraform-ignore-order: true
+        peerSubnets:
+          type: array
+          description: The subnets for the peering VPC when peerPrefixLists is not set. peerSubnets and peerPrefixLists are mutually exclusive; provide exactly one.
+          items:
+            type: string
+          x-terraform-ignore-order: true
+        peerVpcId:
+          type: string
+          description: ID of the VPC with which the peering connection is created.
+          example: vpc-aabb1122
+          x-terraform-force-new: true
+        isManagedByInstaclustr:
+          type: boolean
+          description: Whether the VPC peering connection is managed by Instaclustr.
+          readOnly: true
+          example: true
+        id:
+          type: string
+          description: ID of the VPC peering connection.
+          readOnly: true
+          example: 068c447e-8475-49b2-974b-ca1c91702ed4
+        dataCentreVpcId:
+          type: string
+          description: ID of the current data centre VPC.
+          readOnly: true
+          example: vpc-123abc45
+        peerRegion:
+          type: string
+          description: Region code for the accepter VPC.
+          example: US_EAST_1
+          x-terraform-force-new: true
+        cdcId:
+          type: string
+          description: ID of the Cluster Data Centre
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+          x-terraform-force-new: true
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

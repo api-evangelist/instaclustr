@@ -1,0 +1,323 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr MCP Gateway Persona Access Control V1 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged MCP Gateway Persona Access Control V1 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: MCP Gateway Persona Access Control V1
+  description: Operations related to MCP Gateway persona access control.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/mcp_gateway_cluster/{clusterId}/persona-access-controls/v1:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the MCP Gateway cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: persona_access_control_v1
+    get:
+      tags:
+      - MCP Gateway Persona Access Control V1
+      summary: List all persona access controls in an MCP Gateway cluster
+      responses:
+        '200':
+          description: Successfully retrieved persona access controls for the MCP Gateway cluster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+      operationId: getClusterManagementV2DataSourcesMcpGatewayClusterByClusterIdPersonaAccessControlsV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/persona-access-controls/v1:
+    x-terraform-resource-name: mcp_gateway_persona_access_control_v1
+    post:
+      tags:
+      - MCP Gateway Persona Access Control V1
+      summary: Create an MCP Gateway persona access control
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway persona access control creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsMcpGatewayPersonaAccessControlsV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/mcp-gateway/persona-access-controls/v1/{personaAccessControlId}:
+    parameters:
+    - name: personaAccessControlId
+      in: path
+      description: ID of the MCP Gateway persona access control.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - MCP Gateway Persona Access Control V1
+      summary: Get an MCP Gateway persona access control
+      responses:
+        '200':
+          description: MCP Gateway persona access control details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+        '404':
+          description: MCP Gateway persona access control not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsMcpGatewayPersonaAccessControlsV1ByPersonaAccessControlId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - MCP Gateway Persona Access Control V1
+      summary: Update an MCP Gateway persona access control
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+        required: true
+      responses:
+        '202':
+          description: MCP Gateway persona access control update requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpGatewayPersonaAccessControlV1'
+        '404':
+          description: MCP Gateway persona access control not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsMcpGatewayPersonaAccessControlsV1ByPersonaAccessControlId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - MCP Gateway Persona Access Control V1
+      summary: Delete an MCP Gateway persona access control
+      responses:
+        '204':
+          description: MCP Gateway persona access control delete requested.
+          content: {}
+        '404':
+          description: MCP Gateway persona access control not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsMcpGatewayPersonaAccessControlsV1ByPersonaAccessControlId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    McpGatewayPersonaAccessControlV1:
+      required:
+      - personaRole
+      - type
+      - virtualServerId
+      type: object
+      properties:
+        virtualServerId:
+          type: string
+          description: ID of the virtual server this access control belongs to.
+          format: uuid
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: ID of the MCP Gateway cluster.
+          format: uuid
+          readOnly: true
+          example: 4650aa98-e894-4675-9614-558915d5837a
+        id:
+          type: string
+          description: 'Composition key for the persona access control. The value has the form: [virtualServerId]_[personaRole]'
+          readOnly: true
+          example: b2c3d4e5-f6a7-8901-bcde-f12345678901_analyst
+        type:
+          type: string
+          description: Whether this rule is an allowlist or denylist for the persona role.
+          example: ALLOWLIST
+          enum:
+          - ALLOWLIST
+          - DENYLIST
+        personaRole:
+          minLength: 1
+          pattern: '[^"''\\]+'
+          type: string
+          description: Name of the persona role.
+          example: analyst
+        tools:
+          type: array
+          description: List of backend tools this access control applies to. If empty, the rule applies to all tools.
+          items:
+            type: string
+            description: ID of the MCP tool.
+            format: uuid
+            example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+          x-terraform-ignore-order: true
+      description: Access control configuration for a persona role in an MCP Gateway virtual server.
+      example:
+        personaRole: analyst
+        tools:
+        - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        type: ALLOWLIST
+        virtualServerId: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

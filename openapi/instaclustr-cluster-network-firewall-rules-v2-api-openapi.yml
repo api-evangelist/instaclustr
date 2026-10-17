@@ -1,0 +1,400 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Cluster Network Firewall Rules V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Cluster Network Firewall Rules V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Cluster Network Firewall Rules V2
+  description: Operations related to perform bulk operation on Cluster network firewall rules, not supported for on-premises clusters
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/resources/cluster-network-firewall-rules/v2/:
+    x-terraform-resource-name: cluster_network_firewall_rules_v2
+    post:
+      tags:
+      - Cluster Network Firewall Rules V2
+      summary: Add multiple network firewall rules in the cluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterAllNetworkFirewallRulesV2'
+        required: true
+      responses:
+        '202':
+          description: Successfully added cluster network firewall rules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAllNetworkFirewallRulesV2'
+              example:
+                clusterId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+                firewallRules:
+                - deferredReason: ''
+                  id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                  network: 127.0.0.4/32
+                  type: CASSANDRA_CQL
+                - deferredReason: ''
+                  id: c66477fa-6b2b-4850-915f-6d42a0e7cd64
+                  network: 127.0.0.3/32
+                  type: CASSANDRA_CQL
+                id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                status: RUNNING
+          x-terraform-resource-poll-completed-statuses: RUNNING
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: GENESIS,PROVISIONING
+        '409':
+          description: Any firewall rule of that kind already exists for that address in cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesClusterNetworkFirewallRulesV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/cluster-network-firewall-rules/v2/{clusterId}:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the cluster
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Cluster Network Firewall Rules V2
+      summary: Get Network Firewall rules for the cluster
+      responses:
+        '200':
+          description: Retrieved Network firewall rules for cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAllNetworkFirewallRulesV2'
+              example:
+                clusterId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+                firewallRules:
+                - deferredReason: ''
+                  id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                  network: 127.0.0.4/32
+                  type: CASSANDRA_CQL
+                - deferredReason: ''
+                  id: c66477fa-6b2b-4850-915f-6d42a0e7cd64
+                  network: 127.0.0.3/32
+                  type: CASSANDRA_CQL
+                id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                status: RUNNING
+        '404':
+          description: Cluster or Cluster Network Firewall Rule not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesClusterNetworkFirewallRulesV2ByClusterId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Cluster Network Firewall Rules V2
+      summary: Update multiple network firewall rules in the cluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterAllNetworkFirewallRulesV2'
+        required: true
+      responses:
+        '202':
+          description: Successfully updated cluster network firewall rules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAllNetworkFirewallRulesV2'
+              example:
+                clusterId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+                firewallRules:
+                - deferredReason: ''
+                  id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                  network: 127.0.0.4/32
+                  type: CASSANDRA_CQL
+                - deferredReason: ''
+                  id: c66477fa-6b2b-4850-915f-6d42a0e7cd64
+                  network: 127.0.0.3/32
+                  type: CASSANDRA_CQL
+                id: 5c29c9c8-ddf1-4a98-8eb6-51230571663a
+                status: RUNNING
+          x-terraform-resource-poll-completed-statuses: RUNNING
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: GENESIS,PROVISIONING
+        '404':
+          description: Cluster or Cluster Network Firewall Rule not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: putClusterManagementV2ResourcesClusterNetworkFirewallRulesV2ByClusterId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Cluster Network Firewall Rules V2
+      summary: Delete cluster network firewall rules
+      responses:
+        '204':
+          description: Cluster Network Firewall Rules successfully deleted
+          content: {}
+        '404':
+          description: Cluster or Cluster Network Firewall Rule not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesClusterNetworkFirewallRulesV2ByClusterId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ClusterAllNetworkFirewallRuleV2:
+      required:
+      - network
+      - type
+      type: object
+      properties:
+        deferredReason:
+          type: string
+          description: The reason (if needed) for the deferred status of the cluster network firewall rule.
+          readOnly: true
+        id:
+          type: string
+          description: ID of the cluster network firewall rule.
+          format: uuid
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/ClusterAllFirewallRuleTypesV2'
+        network:
+          type: string
+          description: The network of the cluster network firewall rule.
+          x-insta-unchangeable: true
+      description: Definition of an CIDR based firewall rule to be applied to a cluster.
+      example:
+        deferredReason: ''
+        id: c66477fa-6b2b-4850-915f-6d42a0e7cd64
+        network: 127.0.0.3/32
+        type: CASSANDRA_CQL
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    ClusterAllFirewallRuleTypesV2:
+      type: string
+      description: The type of firewall rule.
+      example: CASSANDRA_CQL
+      enum:
+      - APACHE_ZOOKEEPER
+      - CADENCE
+      - CADENCE_GRPC
+      - CADENCE_HTTP_API
+      - CADENCE_WEB
+      - CASSANDRA
+      - CASSANDRA_CQL
+      - CLICKHOUSE
+      - CLICKHOUSE_WEB
+      - ELASTICSEARCH
+      - KAFKA
+      - KAFKA_CONNECT
+      - KAFKA_ENCRYPTION
+      - KAFKA_MTLS
+      - KAFKA_NO_ENCRYPTION
+      - KAFKA_PRIVATE_SASL_PLAINTEXT_LISTENER
+      - KAFKA_PUBLIC_SASL_PLAINTEXT_LISTENER
+      - KAFKA_PRIVATE_PLAINTEXT_LISTENER
+      - KAFKA_PUBLIC_PLAINTEXT_LISTENER
+      - KAFKA_PRIVATE_SSL_LISTENER
+      - KAFKA_PUBLIC_SSL_LISTENER
+      - KAFKA_REST_PROXY
+      - KAFKA_SCHEMA_REGISTRY
+      - KARAPACE_REST_PROXY
+      - KARAPACE_SCHEMA_REGISTRY
+      - OPENSEARCH
+      - OPENSEARCH_DASHBOARDS
+      - PGBOUNCER
+      - POSTGRESQL
+      - REDIS
+      - VALKEY
+      - SEARCH_DASHBOARDS
+      - SECURE_APACHE_ZOOKEEPER
+      - SPARK
+      - SPARK_JOBSERVER
+      - SHOTOVER_PROXY
+      - MCP_GATEWAY
+      - KAFKA_DISKLESS
+      x-insta-unchangeable: true
+    ClusterAllNetworkFirewallRulesV2:
+      required:
+      - clusterId
+      - firewallRules
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: ID of the cluster
+          format: uuid
+        id:
+          type: string
+          description: ID of the cluster network firewall rules resource
+          format: uuid
+          readOnly: true
+        firewallRules:
+          type: array
+          description: Firewall rules
+          items:
+            $ref: '#/components/schemas/ClusterAllNetworkFirewallRuleV2'
+          x-terraform-field-name: firewall_rule
+          x-terraform-ignore-order: true
+        status:
+          type: string
+          description: The status of the cluster
+          readOnly: true
+          x-terraform-field-status: true
+      description: A listable data source of all CIDR based firewall rules in an Instaclustr managed cluster.
+      example:
+        clusterId: 91346037-b969-4c4d-8112-59e1d2aa67e9
+        firewallRules:
+        - network: 127.0.0.4/32
+          type: CASSANDRA_CQL
+        - network: 127.0.0.3/32
+          type: CASSANDRA_CQL
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

@@ -1,0 +1,534 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Firewall Rule API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Firewall Rule across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Firewall Rule
+  description: Operations related to firewall rules of a cluster.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/{clusterId}/firewallRules:
+    get:
+      tags:
+      - Firewall Rule
+      summary: List all firewall rules
+      description: Lists all the firewall rules for the specified cluster.
+      operationId: listAllFirewallRules
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: List retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FirewallRuleMixedSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    put:
+      tags:
+      - Firewall Rule
+      summary: Update a firewall rule
+      description: 'Updates a firewall rule for the specified cluster as identified by the cluster id and network/security group id. Used for changing the port ranges that a particular cluster will accept requests on. Note: It can take up to 10 minutes for the firewall rule changes to reach a useable state. You may check the status of provisioning using the list firewall rules endpoint, or via the console.'
+      operationId: updateFirewallRule
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallRuleMixedSchema'
+      responses:
+        '202':
+          description: Firewall rule update request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: update firewall rule request accepted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorMessage'
+                - $ref: '#/components/schemas/ErrorCollectionResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Firewall Rule
+      summary: Create a firewall rule
+      description: 'Creates a firewall rule for the specified cluster. The request will fail if the firewall rule already exists.
+
+
+        Note: It can take up to 10 minutes for the firewall rule to reach a useable state. You may check the status of provisioning using the list firewall rules endpoint, or via the console.'
+      operationId: createFirewallRule
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallRuleMixedSchema'
+      responses:
+        '202':
+          description: Firewall rule creation request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: create firewall rule request accepted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorMessage'
+                - $ref: '#/components/schemas/ErrorCollectionResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    delete:
+      tags:
+      - Firewall Rule
+      summary: Delete a firewall rule
+      description: 'Deletes the specified firewall rule for the specified resource.
+
+
+        Note that the API responds with 202 Accepted for any valid IP address, even if it is not referenced in the cluster. To verify deletion, use the list firewall rules endpoint, or check the “Cassandra Allowed Addresses” section in the console.
+
+
+        Upon deletion, you may need to wait up to 10 minutes before provisioning a replacement using the same network.'
+      operationId: deleteFirewallRule
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallRuleMixedSchema'
+      responses:
+        '202':
+          description: Firewall rule delete request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: firewall rule marked for deletion
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorMessage'
+                - $ref: '#/components/schemas/ErrorCollectionResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    NetworkFirewallRuleSchema:
+      required:
+      - rules
+      type: object
+      properties:
+        rules:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FirewallRuleKind'
+        network:
+          type: string
+          description: The network to which the firewall rule relates.  Should not be included if securityGroupId is already included.
+          format: ipv4
+          example: 10.0.0.0/16
+    GenericResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message content
+    ErrorCollectionResponse:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+    FirewallRuleMixedSchema:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/SecurityGroupFirewallRuleSchema'
+      - $ref: '#/components/schemas/NetworkFirewallRuleSchema'
+    FirewallRuleKind:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - CASSANDRA
+          - CASSANDRA_CQL
+          - SPARK
+          - SPARK_JOBSERVER
+          - KAFKA
+          - KAFKA_NO_ENCRYPTION
+          - KAFKA_ENCRYPTION
+          - KAFKA_MTLS
+          - KAFKA_PRIVATE_SASL_PLAINTEXT_LISTENER
+          - KAFKA_PUBLIC_SASL_PLAINTEXT_LISTENER
+          - KAFKA_PRIVATE_PLAINTEXT_LISTENER
+          - KAFKA_PUBLIC_PLAINTEXT_LISTENER
+          - KAFKA_PRIVATE_SSL_LISTENER
+          - KAFKA_PUBLIC_SSL_LISTENER
+          - KAFKA_REST_PROXY
+          - KAFKA_DISKLESS
+          - ELASTICSEARCH
+          - OPENSEARCH
+          - SEARCH_DASHBOARDS
+          - OPENSEARCH_DASHBOARDS
+          - KAFKA_CONNECT
+          - KAFKA_SCHEMA_REGISTRY
+          - REDIS
+          - VALKEY
+          - APACHE_ZOOKEEPER
+          - SECURE_APACHE_ZOOKEEPER
+          - POSTGRESQL
+          - KARAPACE_SCHEMA_REGISTRY
+          - CADENCE
+          - CADENCE_GRPC
+          - CADENCE_HTTP_API
+          - CADENCE_WEB
+          - PGBOUNCER
+          - MONGODB
+          - CLICKHOUSE
+          - CLICKHOUSE_WEB
+          - COUCHBASE
+          - COUCHBASE_MEMCACHED_SSL
+          - KARAPACE_REST_PROXY
+          - SHOTOVER_PROXY
+          - CASSANDRA_SIDECAR
+          - MCP_GATEWAY
+          - NETAPP_SEARCH
+        status:
+          type:
+          - string
+          - 'null'
+          description: The provisioning status of the firewall.
+          readOnly: true
+          enum:
+          - GENESIS
+          - PROVISIONING
+          - PROVISIONED
+          - JOINING
+          - RESTORING
+          - DEFERRED
+          - RUNNING
+          - SUSPENDING
+          - SUSPENDED
+          - RESUMING
+          - DELETING
+          - DELETED
+          - DEGRADED
+          - FAILED
+        deferredReason:
+          type:
+          - string
+          - 'null'
+          description: The reason for deferral, if the provisioning status of this firewall rule is deferred.
+          readOnly: true
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    SecurityGroupFirewallRuleSchema:
+      required:
+      - rules
+      type: object
+      properties:
+        rules:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FirewallRuleKind'
+        securityGroupId:
+          pattern: ^sg-([0-9a-fA-F]{8}|[0-9a-fA-F]{17})$
+          type: string
+          description: The security group to which the firewall rule relates.  Should not be included if network is already included.
+          example: sg-fa3dE817
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

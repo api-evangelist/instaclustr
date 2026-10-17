@@ -1,0 +1,364 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr AWS Encryption Key V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged AWS Encryption Key V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: AWS Encryption Key V2
+  description: ''
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/providers/aws/encryption-keys/v2:
+    x-terraform-resource-name: aws_encryption_keys_v2
+    get:
+      tags:
+      - AWS Encryption Key V2
+      summary: List all AWS encryption keys
+      responses:
+        '200':
+          description: Successfully retrieved registered AWS KMS encryption keys.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountAwsEncryptionKeysV2'
+      operationId: getClusterManagementV2DataSourcesProvidersAwsEncryptionKeysV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/providers/aws/encryption-keys/v2/{encryptionKeyId}/validate/v2:
+    parameters:
+    - name: encryptionKeyId
+      in: path
+      description: ID of the encryption key.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - AWS Encryption Key V2
+      summary: Validate encryption Key
+      responses:
+        '200':
+          description: Encryption Key validation response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncryptionKeyValidationResponseV2'
+        '404':
+          description: Encryption key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2OperationsProvidersAwsEncryptionKeysV2ByEncryptionKeyIdValidateV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/encryption-keys/v2:
+    x-terraform-resource-name: aws_encryption_key_v2
+    post:
+      tags:
+      - AWS Encryption Key V2
+      summary: Add an AWS KMS encryption key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsEncryptionKeyV2'
+        required: true
+      responses:
+        '202':
+          description: Successfully added the AWS encryption key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsEncryptionKeyV2'
+              example:
+                alias: encryption_key
+                arn: arn:aws:kms:us-east-1:123456789123:key/123abcde-4567-8910-abcd-123456789abc
+                id: ID of the encryption key.
+                inUse: true
+                regions:
+                - name: US_EAST_1
+                - name: US_WEST_1
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesProvidersAwsEncryptionKeysV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/encryption-keys/v2/{encryptionKeyId}:
+    parameters:
+    - name: encryptionKeyId
+      in: path
+      description: ID of the encryption key.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - AWS Encryption Key V2
+      summary: Get encryption key details
+      responses:
+        '200':
+          description: Retrieved the details of the encryption key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsEncryptionKeyV2'
+              example:
+                alias: encryption_key
+                arn: arn:aws:kms:us-east-1:123456789123:key/123abcde-4567-8910-abcd-123456789abc
+                id: ID of the encryption key.
+                inUse: true
+                regions:
+                - name: US_EAST_1
+                - name: US_WEST_1
+        '404':
+          description: Encryption key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesProvidersAwsEncryptionKeysV2ByEncryptionKeyId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - AWS Encryption Key V2
+      summary: Delete encryption key
+      responses:
+        '204':
+          description: Encryption key successfully deleted.
+          content: {}
+        '404':
+          description: Encryption key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesProvidersAwsEncryptionKeysV2ByEncryptionKeyId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    AwsEncryptionKeyV2:
+      required:
+      - alias
+      - arn
+      type: object
+      properties:
+        regions:
+          type: array
+          description: Regions of the key
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/AwsRegionV2'
+        inUse:
+          type: boolean
+          description: Whether the encryption key is used by a cluster.
+          readOnly: true
+        alias:
+          maxLength: 30
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]{1}[a-zA-Z0-9 _-]*$
+          type: string
+          description: Encryption key alias for display purposes.
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the encryption key.
+          format: uuid
+          readOnly: true
+        arn:
+          type: string
+          description: AWS ARN for the encryption key.
+          x-terraform-force-new: true
+        providerAccountName:
+          type: string
+          description: For customers running in their own account. Your provider account can be found on the Create Cluster page on the Instaclustr Console, or the "Provider Account" property on any existing cluster. For customers provisioning on Instaclustr's cloud provider accounts, this property may be omitted.
+          x-terraform-computed: true
+          x-terraform-force-new: true
+      description: Definition of a customer managed AWS KMS Key for use with at rest EBS encryption in Instaclustr managed clusters.
+      example:
+        alias: encryption_key
+        arn: arn:aws:kms:us-east-1:123456789123:key/123abcde-4567-8910-abcd-123456789abc
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    AwsRegionV2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the AWS Region
+          example: us-east-1
+          x-insta-unchangeable: true
+      description: ''
+    AccountAwsEncryptionKeysV2:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: UUID of the Instaclustr Account.
+          x-terraform-id: true
+        encryptionKeys:
+          type: array
+          description: ''
+          items:
+            $ref: '#/components/schemas/AwsEncryptionKeyV2'
+      description: A listable data source of all AWS Encryption Keys in an Instaclustr Account.
+    EncryptionKeyValidationResponseV2:
+      title: Type for EncryptionKeyValidationResponse
+      type: object
+      properties:
+        regions:
+          type: array
+          description: Regions of the key
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/AwsRegionV2'
+        isValid:
+          type: boolean
+          description: If the key is valid or invalid.
+        message:
+          type: string
+          description: Detailed message of the validation result.
+      description: ''
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

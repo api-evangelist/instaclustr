@@ -1,0 +1,959 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Organization Management API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Organization Management API across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Organization Management API
+  description: 'Operations related to Organization Management.
+
+
+    These endpoints require an Organization Management API key. Organization API keys can be retrieved any time from the console by going to the Organization Management page > API Keys.'
+  x-insta-tag-group: Other
+paths:
+  /organisations/v2/{organisationId}/contracts:
+    parameters:
+    - name: organisationId
+      in: path
+      description: ID of the organisation.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Organization Management API
+      summary: Get contract details
+      responses:
+        '200':
+          description: Get contract details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractItem'
+      x-insta-linked-to-organisation:
+      - ORGANISATION_MANAGEMENT
+      x-insta-oauth-authenticated: true
+      operationId: getOrganisationsV2ByOrganisationIdContracts
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /organisations/v2/{organisationId}/mu-usage:
+    parameters:
+    - name: organisationId
+      in: path
+      description: ID of the organisation.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    - name: aggrType
+      in: query
+      description: Aggregation type (case insensitive), accepted values are cluster/account/region/application.
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: period
+      in: query
+      description: The period of time from which management units usage information is returned.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: end
+      in: query
+      description: 'End time of management unit usage data in format ISO-8601 or epoch time. examples: end=2025-01-01T00:00:00.00Z or end=1735650000'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Organization Management API
+      summary: List current or historical management unit usage
+      responses:
+        '200':
+          description: List current or historical management unit usage
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MuUsageAggregatedByTime'
+      x-insta-linked-to-organisation:
+      - ORGANISATION_MANAGEMENT
+      x-insta-oauth-authenticated: true
+      operationId: getOrganisationsV2ByOrganisationIdMuUsage
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/organisations/{organisationId}/linked-accounts:
+    get:
+      tags:
+      - Organization Management API
+      summary: Retrieve linked accounts
+      description: Retrieve all accounts linked to the organization.
+      operationId: getLinkedAccounts
+      parameters:
+      - name: organisationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved accounts linked to the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationLinkedAccountResponse'
+        '404':
+          description: Invalid organization id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    post:
+      tags:
+      - Organization Management API
+      summary: Create a new account
+      description: Create a new account under an organization.
+      operationId: createAccount
+      parameters:
+      - name: organisationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganisationCreateAccountRequest'
+      responses:
+        '200':
+          description: Successfully created a new account for the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewAccountResponse'
+        '400':
+          description: Invalid Request Params, User is unable to create accounts or unable to link to organization or update billing details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Invalid organization ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/organisations/{organisationId}/linked-accounts/{accountId}:
+    delete:
+      tags:
+      - Organization Management API
+      summary: Unlink an account
+      description: Unlink an account from to the organization.
+      operationId: removeAccount
+      parameters:
+      - name: organisationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully unlinked account from the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationDetailsResponse'
+        '404':
+          description: Account is not linked to the organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/organisations/{organisationId}/user-actions:
+    get:
+      tags:
+      - Organization Management API
+      summary: Get user actions
+      description: Get user actions for the organization and its linked accounts
+      operationId: listUserActions
+      parameters:
+      - name: organisationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: Number of records to return per page
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+          default: 10
+        example: 50
+      - name: recordIndex
+        in: query
+        description: Starting index for the records to return, useful for pagination. e.g. 10 will return records starting from 11
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      - name: actionKinds
+        in: query
+        description: Filter results by types of actions. Multiple actions are allowed. Invalid value will be ignored
+        required: false
+        style: form
+        explode: true
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            allOf:
+            - type: string
+              enum:
+              - CREATE_CLUSTER
+              - DELETE_CLUSTER
+              - REQUEST_CLUSTER_DELETE
+              - SUSPEND_CLUSTER
+              - RESUME_CLUSTER
+              - ADD_NODE
+              - ADD_DATA_CENTRE
+              - CHANGE_CLUSTER_SETTINGS
+              - CHANGE_CLUSTER_FIREWALL_RULES
+              - CREATE_VPC_PEERING_REQUEST
+              - EDIT_VPC_PEERING_REQUEST
+              - DELETE_VPC_PEERING_REQUEST
+              - ACCOUNT_INVITE_USER
+              - ACCOUNT_ACCEPT_INVITATION
+              - ACCOUNT_REVOKE_INVITATION
+              - ACCOUNT_REVOKE_LINK
+              - ACCOUNT_MODIFY_LINK
+              - ACCOUNT_CREATE_LINK
+              - ACCOUNT_GENERATE_API_KEY
+              - ACCOUNT_REVOKE_API_KEY
+              - ACCOUNT_UNEXPIRE_API_KEY
+              - ACCOUNT_ADD_ENCRYPTION_KEY
+              - ACCOUNT_UPDATE_REGIONS_ENCRYPTION_KEY
+              - ACCOUNT_REVOKE_ENCRYPTION_KEY
+              - RESTORE
+              - BACKUP
+              - CREATE_BACKUP_SCHEDULE
+              - DELETE_BACKUP_SCHEDULE
+              - ADMIN_ADD_CONFIG_OVERRIDE
+              - ADMIN_DELETE_CONFIG_OVERRIDE
+              - ADMIN_ADD_KAFKA_LISTENER
+              - ADMIN_DELETE_KAFKA_LISTENER
+              - ADMIN_RENAME_USER_LOGIN
+              - ADMIN_SET_ACCESS_LEVEL
+              - CREATE_BUNDLE_USER
+              - EDIT_BUNDLE_USER
+              - DELETE_BUNDLE_USER
+              - RESTART_BUNDLE
+              - RECONFIGURE_BUNDLE
+              - RELOAD_BUNDLE
+              - RESIZE_CDC
+              - RESIZE_CDC_DOWNSIZE_ACKNOWLEDGED
+              - CANCEL_RESIZE_CDC
+              - RETRY_RESIZE_CDC
+              - CREATE_KAFKA_TOPIC
+              - EDIT_KAFKA_TOPIC
+              - DELETE_KAFKA_TOPIC
+              - CREATE_KAFKA_ACLS
+              - DELETE_KAFKA_ACLS
+              - DEACTIVATE_SERVICE_USER
+              - REACTIVATE_SERVICE_USER
+              - CREATE_SERVICE_USER
+              - DEACTIVATE_SCIM_USER
+              - REACTIVATE_SCIM_USER
+              - DEACTIVATE_USER
+              - NOTIFICATION_PREFERENCE_UPDATE
+              - UPDATE_SSO_LOGIN_TYPE
+              - PRIVATE_LINK_MIGRATION_ENABLE
+              - PRIVATE_LINK_MIGRATION_DISABLE
+              - ADMIN_ADD_KAFKA_PRIVATE_LINK_LISTENER
+              - ADMIN_DELETE_KAFKA_PRIVATE_LINK_LISTENER
+              - ADMIN_ADD_KAFKA_PRIVATE_LINK_IAM_ROLE
+              - ADMIN_DELETE_KAFKA_PRIVATE_LINK_IAM_ROLE
+              - MANAGED_IDENTITY_MIGRATION_ENABLE
+              - MANAGED_IDENTITY_MIGRATION_DISABLE
+              - MIGRATE_FROM_AZURE_TO_AZUREAZ
+              - ENABLE_KAFKA_TIERED_STORAGE
+              - ENABLE_KAFKA_CLIENT_METRICS
+              - DISABLE_KAFKA_CLIENT_METRICS
+              - UPDATE_KAFKA_CLIENT_METRICS
+              - CHANGE_CLICKHOUSE_INTEGRATION
+              - DELETE_CLICKHOUSE_INTEGRATION
+              - CREATE_SHARED_GATEWAY
+              - DELETE_SHARED_GATEWAY
+              - CREATE_SCIM_USER
+              - WEBHOOK_UPDATED
+              - WEBHOOK_REMOVED
+              - AZURE_APPLICATION_SECURITY_GROUP_MIGRATION_ENABLE
+              - CREATE_CDC_TAG
+              - UPDATE_CDC_TAG
+              - DELETE_CDC_TAG
+              - START_ZIA_NODE_TUNNEL_MIGRATION
+              - CREATE_APPLICATION_GROUP
+              - UPDATE_APPLICATION_GROUP
+              - DELETE_APPLICATION_GROUP
+              - BYOC_TEMPLATE_DOWNLOAD
+              - BYOC_SETUP_INIT
+              - BYOC_SETUP_VALIDATE
+              - BYOC_SETUP_DELETE
+              - BYOC_SETUP_UPDATE
+              - ENABLE_CLUSTER_DNS
+              - FSXN_BYO_CREDENTIAL_HANDOVER
+              - FSXN_BYO_CREDENTIAL_DEREGISTERED
+              - ADMIN_ENABLE_FEATURE
+              - ADMIN_DISABLE_FEATURE
+              - ADMIN_RETRY_RESTORE
+            - type: string
+              enum:
+              - CREATE_ORGANISATION
+              - LINK_ACCOUNT
+              - UNLINK_ACCOUNT
+              - ORGANISATION_UPDATE_BILLING_DETAILS
+              - SYNC_BILLING_TO_ACCOUNT
+              - ORGANISATION_SET_IDP_DETAILS
+              - SYNC_IDP_TO_ACCOUNT
+              - INVITE_USER
+              - REVOKE_USER_INVITE
+              - LINK_USER
+              - UNLINK_USER
+              - MIGRATE_CLUSTER
+              - CREATE_SIGNUP_BLOCK
+              - DELETE_SIGNUP_BLOCK
+              - ORGANISATION_GENERATE_API_KEY
+              - ORGANISATION_REVOKE_API_KEY
+              - WEBHOOK_REMOVED
+              - WEBHOOK_UPDATED
+        example: LINK_ACCOUNT
+      - name: descriptionKeyword
+        in: query
+        description: Keyword in the action description
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: update
+      - name: account
+        in: query
+        description: Account ID or name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 773e542f-30f7-4d23-a650-69133bedca78
+      - name: clusterId
+        in: query
+        description: Cluster Id
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 2f02e54a-26cd-4929-a24f-c72922b763df
+      - name: crudOperations
+        in: query
+        description: Operation type in CRUD form. Invalid value will be ignored
+        required: false
+        style: form
+        explode: true
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: object
+            allOf:
+            - type: string
+              enum:
+              - ORG_LEVEL_USER_ACTIONS_CREATE
+              - ORG_LEVEL_USER_ACTIONS_UPDATE
+              - ORG_LEVEL_USER_ACTIONS_DELETE
+            - type: string
+              enum:
+              - ACCOUNT_LEVEL_USER_ACTIONS_CREATE
+              - ACCOUNT_LEVEL_USER_ACTIONS_UPDATE
+              - ACCOUNT_LEVEL_USER_ACTIONS_DELETE
+        example: ORG_LEVEL_USER_ACTIONS_CREATE
+      - name: userName
+        in: query
+        description: Username
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: john
+      - name: startTime
+        in: query
+        description: Start timestamp in milliseconds since epoch or ISO formatted date and time
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2023-11-05T13:15:30Z'
+      - name: endTime
+        in: query
+        description: End timestamp in milliseconds since epoch or ISO formatted date and time
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2023-11-05T13:15:30Z'
+      - name: getActionCounts
+        in: query
+        description: If set to true, the response will include counts of each action type
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: true
+      - name: organisationLogsOnly
+        in: query
+        description: If set to true, the response will include only logs related to the organization
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+      - name: accountLogsOnly
+        in: query
+        description: If set to true, the response will include only logs related to the accounts
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successfully retrieved the user actions for the organization and its linked accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserActionSearchSummariesResult'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    OrganisationLinkedAccountResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The account's ID
+        accountName:
+          type: string
+          description: The account's name
+        accountType:
+          type: string
+          description: The account's type
+          enum:
+          - INSTACLUSTR
+          - IBM
+          - HEROKU
+          - AWS_SAAS
+          - AZURE_SAAS
+          - GCP_SAAS
+          - AZURE_RIYOA
+        isAccountPciCompliant:
+          type: boolean
+          description: If the account is PCI compliant
+        accountHasBillingDetails:
+          type: boolean
+          description: If the account has billing details
+        isEnabledIdpSyncedToOrganisation:
+          type: boolean
+          description: If the IDPs on the account are synced to the organization
+        isAccountInvoiced:
+          type: boolean
+          description: If the account is invoiced
+        isBillingSyncedToOrganisation:
+          type: boolean
+          description: If the billing details are synced to the organization
+        accountSupportContacts:
+          type: string
+          description: The account's support contacts
+        accountEmergencyContacts:
+          type: string
+          description: The account's emergency contacts
+        accountMaintenanceContacts:
+          type: string
+          description: The account's maintenance contacts
+        areOrgAndAccountSharedProviderAccountsActivelyUsed:
+          type: boolean
+          description: If the organization and the account's shared provider accounts are actively being used
+        areWebhooksInSync:
+          type: boolean
+          description: If the organization and the account's webhooks are in sync
+    ContractItem:
+      type: object
+      properties:
+        contractDetail:
+          $ref: '#/components/schemas/ContractItemDetail'
+        addOnRates:
+          type: array
+          description: List of unique add-on information.
+          items:
+            $ref: '#/components/schemas/AddOnRateItem'
+        riyoaNodeManagementUnits:
+          type: array
+          description: List of unique management units information of node type.
+          items:
+            $ref: '#/components/schemas/NodeManagementUnitItem'
+        defaultRiyoaFlatRatePerMu:
+          type: number
+          description: Flat list price per management unit in dollars from icb.default_riyoa_tiered_unit_rates.
+          format: double
+        hasRiyoaTieredUnitRates:
+          type: boolean
+          description: True when the contract has tiered unit rates defined in contract_riyoa_tiered_unit_rates.
+      description: Contract information.
+    MuUsageAggregatedItem:
+      type: object
+      properties:
+        entityName:
+          type: string
+          description: Name of entity.
+        entityId:
+          type: string
+          description: Id of entity.
+        managementUnitUsage:
+          type: number
+          description: Management unit usage of a cluster/account/region/application.
+          format: double
+      description: Management unit usage result for a cluster/account/region/application.
+    AddOnRateItem:
+      type: object
+      properties:
+        upliftRate:
+          type: integer
+          description: Rate of add-on.
+          format: int32
+        addonType:
+          type: string
+          description: Name of add-on.
+      description: Single add-on info of contract.
+    ContractItemDetail:
+      type: object
+      properties:
+        includedManagementUnits:
+          type: number
+          description: Free management unit quota of contract.
+          format: double
+        addonCap:
+          type: integer
+          description: Cap for add on rate of contract.
+          format: int32
+        buoRiyoaDiscount:
+          type: number
+          description: Discount for bundle used only.
+          format: double
+        supportTier:
+          type: string
+          description: Support tier of contract.
+          enum:
+          - STANDARD
+          - PREMIUM
+      description: Detail of contract.
+    OrganisationCreateAccountRequest:
+      type: object
+      properties:
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+        accountName:
+          type: string
+          description: The name of the new account being created under the Organization
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    NewAccountResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+    UserActionSearchSummaryResponse:
+      type: object
+      properties:
+        action:
+          type: string
+        domainType:
+          type: string
+        domainId:
+          type: string
+          format: uuid
+        domainName:
+          type: string
+        description:
+          type: string
+        actionTime:
+          type: string
+        userName:
+          type: string
+    MuUsageAggregatedByTime:
+      type: object
+      properties:
+        totalManagementUnitUsage:
+          type: number
+          description: Total management unit usage of all accounts
+          format: double
+        entities:
+          type: array
+          description: List of management unit usage result aggregated by entity Id/Name.
+          items:
+            $ref: '#/components/schemas/MuUsageAggregatedItem'
+        entityType:
+          type: string
+          description: Entity's type, value should be the same as aggregation type.
+          enum:
+          - ACCOUNT
+          - CLUSTER
+          - APPLICATION
+          - REGION
+        timestamp:
+          type: string
+          description: Point of time that management unit usage result is at.
+          format: string
+      description: Management unit usage result item aggregated by time.
+    OrganisationDetailsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Organization identifier in UUID4 format
+        name:
+          type: string
+          description: Name of the organization
+        supportContacts:
+          type: string
+          description: Semi-colon separated emails that Instaclustr Support can contact
+        emergencyContacts:
+          type: string
+          description: Semi-colon seperated emails that are used for high priority incidents
+        maintenanceContacts:
+          type: string
+          description: Semi-colon seperated emails that are used for maintenance events
+        blockedEmailDomains:
+          type: array
+          description: List of email domains blocked from signup
+          items:
+            type: string
+            description: List of email domains blocked from signup
+        features:
+          $ref: '#/components/schemas/OrganisationFeaturesResponse'
+        accountCreationBlocked:
+          type: boolean
+          description: Whether the organization blocks creating accounts for users who are not organization owners
+        blockScimUserRevokeNotification:
+          type: boolean
+          description: Whether the email being sent to SCIM provisioned non-owner users about being revoked from account
+    UserActionSearchSummariesResult:
+      type: object
+      properties:
+        totalResults:
+          type: integer
+          format: int32
+        startIndex:
+          type: integer
+          format: int32
+        itemsPerPage:
+          type: integer
+          format: int32
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserActionSearchSummaryResponse'
+        search:
+          type: string
+        totalOrgActionCount:
+          type: integer
+          format: int32
+        totalAccountActionCount:
+          type: integer
+          format: int32
+        counts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserActionCountForKind'
+    OrganisationFeaturesResponse:
+      type: object
+      properties:
+        ssoSelfServeEnabled:
+          type: boolean
+          description: Whether SSO self-serve is enabled on the organisation
+        supportContactsPerClusterEnabled:
+          type: boolean
+          description: Allow specifying email contacts per cluster in all linked accounts, including support, emergency and maintenance contacts
+        guideRIYOASetupAWSSecurityConcernedSetupEnabled:
+          type: boolean
+        guideRIYOASetupAWSStandardSetupEnabled:
+          type: boolean
+        guideRIYOASetupAzureMarketplaceSetupEnabled:
+          type: boolean
+        guideRIYOASetupAzureStandardSetupEnabled:
+          type: boolean
+        guideRIYOASetupGCPStandardSetupEnabled:
+          type: boolean
+        managementUnitsUsageSupported:
+          type: boolean
+        byocEnabled:
+          type: boolean
+          description: Whether at least one member account has a validated self-service BYOC provider account setup
+      description: Features available on the organization
+    UserActionCountForKind:
+      type: object
+      properties:
+        kind:
+          type: string
+          description: User action kind
+        domain:
+          type: string
+          description: Domain of the User Action - Account or org
+        count:
+          type: integer
+          description: User action counts for the action kind
+      description: Contains information about the User actions count by User action kind
+    NodeManagementUnitItem:
+      type: object
+      properties:
+        managementUnits:
+          type: number
+          description: Management units of node type.
+          format: double
+        nodeType:
+          $ref: '#/components/schemas/NodeType'
+        slaTier:
+          type: string
+          description: SLA tier of node size of contract.
+          enum:
+          - PRODUCTION
+          - NON_PRODUCTION
+        primaryBundle:
+          type: string
+          description: Specific bundle for node type.
+      description: Management unit information of node type.
+    NodeType:
+      type: object
+      properties:
+        cloudProvider:
+          type: string
+          description: Name of provider.
+        name:
+          type: string
+          description: Name of node type.
+        dataCentre:
+          type: string
+          description: Name of data centre.
+      description: Node type information.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

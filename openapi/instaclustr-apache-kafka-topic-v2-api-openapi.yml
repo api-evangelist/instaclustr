@@ -1,0 +1,451 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Apache Kafka Topic V2 API
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  version: '1.0'
+  description: 'Operations tagged Apache Kafka Topic V2 across 4 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Apache Kafka Topic V2
+  description: ''
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/kafka_cluster/{clusterId}/topics/v2:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kafka cluster
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+        x-terraform-id: true
+      x-terraform-id: true
+    x-terraform-resource-name: kafka_topics_v2
+    get:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Get a list of Kafka topics
+      description: Retrieve a list of the kafka Topic names in the given cluster.
+      responses:
+        '200':
+          description: Kafka topic list retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaTopicNamesV2'
+      operationId: getClusterManagementV2DataSourcesKafkaClusterByClusterIdTopicsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/applications/kafka/topics/v2/{kafkaTopicId}/modify-configs/v2:
+    parameters:
+    - name: kafkaTopicId
+      in: path
+      description: ID of the Kafka topic as &lt;clusterId&gt;_&lt;topicName&gt;
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    put:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Update Kafka topic configs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaTopicConfigsV2'
+        required: true
+      responses:
+        '200':
+          description: Requested Kafka topic configs update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicV2'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2OperationsApplicationsKafkaTopicsV2ByKafkaTopicIdModifyConfigsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/topics/v2:
+    x-terraform-resource-name: kafka_topic_v2
+    post:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Create a Kafka Topic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaTopicV2'
+        required: true
+      responses:
+        '202':
+          description: Kafka topic provisioning requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicV2'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaTopicsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/topics/v2/{kafkaTopicId}:
+    parameters:
+    - name: kafkaTopicId
+      in: path
+      description: ID of the Kafka topic as &lt;clusterId&gt;_&lt;topicName&gt;
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Get Kafka Topic details
+      responses:
+        '200':
+          description: Kafka topic details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicV2'
+      deprecated: false
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaTopicsV2ByKafkaTopicId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Update Kafka topic configs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaTopicConfigsV2'
+        required: true
+      responses:
+        '202':
+          description: Requested Kafka topic configs update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicV2'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaTopicsV2ByKafkaTopicId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka Topic V2
+      summary: Delete the kafka topic
+      responses:
+        '204':
+          description: Kafka topic delete requested
+          content: {}
+      deprecated: false
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaTopicsV2ByKafkaTopicId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    KafkaTopicNamesV2:
+      type: object
+      properties:
+        topicNames:
+          type: array
+          description: List of Kafka topic names
+          readOnly: true
+          items:
+            type: string
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster
+          format: uuid
+          readOnly: true
+          x-terraform-id: true
+      description: Definition of Kafka Topic names in the Kafka cluster
+      example:
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        topicNames:
+        - __consumer_offsets
+        - instaclustr-sla
+    KafkaTopicConfigV2:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: Kafka Topic config value
+        key:
+          type: string
+          description: Kafka Topic config key
+      description: Definition of a Kafka Topic Config to be applied to a Kafka topic of a cluster
+    KafkaTopicConfigsV2:
+      required:
+      - configs
+      type: object
+      properties:
+        configs:
+          type: array
+          description: List of Kafka topic configs which have non-default values. These could be set by terraform or other methods like kafka cli etc.
+          items:
+            $ref: '#/components/schemas/KafkaTopicConfigV2'
+          x-terraform-ignore-order: true
+      description: A listable data source of all non-default topic configs within a Kafka topic
+      example:
+        configs:
+        - key: compression.type
+          value: producer
+        - key: min.insync.replicas
+          value: '1'
+        - key: segment.jitter.ms
+          value: '0'
+        - key: cleanup.policy
+          value: delete
+        - key: flush.ms
+          value: '9223372036854775807'
+        - key: segment.bytes
+          value: '1073741824'
+        - key: retention.ms
+          value: '604800000'
+        - key: flush.messages
+          value: '9223372036854775807'
+        - key: max.compaction.lag.ms
+          value: '9223372036854775807'
+        - key: file.delete.delay.ms
+          value: '60000'
+        - key: max.message.bytes
+          value: '1048588'
+        - key: min.compaction.lag.ms
+          value: '0'
+        - key: message.timestamp.type
+          value: CreateTime
+        - key: preallocate
+          value: 'false'
+        - key: min.cleanable.dirty.ratio
+          value: '0.5'
+        - key: index.interval.bytes
+          value: '4096'
+        - key: unclean.leader.election.enable
+          value: 'false'
+        - key: retention.bytes
+          value: '-1'
+        - key: delete.retention.ms
+          value: '86400000'
+        - key: segment.ms
+          value: '604800000'
+        - key: segment.index.bytes
+          value: '10485760'
+    KafkaTopicV2:
+      required:
+      - clusterId
+      - partitions
+      - replicationFactor
+      - topic
+      type: object
+      properties:
+        partitions:
+          type: integer
+          description: Topic partition count
+          x-terraform-force-new: true
+        configs:
+          type: array
+          description: List of Kafka topic configs which have non-default values. These could be set by terraform or other methods like kafka cli etc.
+          items:
+            $ref: '#/components/schemas/KafkaTopicConfigV2'
+          x-terraform-ignore-order: true
+        replicationFactor:
+          type: integer
+          description: Replication factor for Topic
+          x-terraform-force-new: true
+        topic:
+          type: string
+          description: Kafka Topic name
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka topic. The value of this property has the form: [cluster-id]_[kafka-topic]'
+          readOnly: true
+      description: Definition of a Kafka Topic to be applied to a Kafka cluster.
+      example:
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        configs:
+        - key: compression.type
+          value: producer
+        - key: min.insync.replicas
+          value: '1'
+        - key: segment.jitter.ms
+          value: '0'
+        - key: cleanup.policy
+          value: delete
+        - key: flush.ms
+          value: '9223372036854775807'
+        - key: segment.bytes
+          value: '1073741824'
+        - key: retention.ms
+          value: '604800000'
+        - key: flush.messages
+          value: '9223372036854775807'
+        - key: max.compaction.lag.ms
+          value: '9223372036854775807'
+        - key: file.delete.delay.ms
+          value: '60000'
+        - key: max.message.bytes
+          value: '1048588'
+        - key: min.compaction.lag.ms
+          value: '0'
+        - key: message.timestamp.type
+          value: CreateTime
+        - key: preallocate
+          value: 'false'
+        - key: min.cleanable.dirty.ratio
+          value: '0.5'
+        - key: index.interval.bytes
+          value: '4096'
+        - key: unclean.leader.election.enable
+          value: 'false'
+        - key: retention.bytes
+          value: '-1'
+        - key: delete.retention.ms
+          value: '86400000'
+        - key: segment.ms
+          value: '604800000'
+        - key: segment.index.bytes
+          value: '10485760'
+        partitions: 3
+        replicationFactor: 3
+        topic: topic-test
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

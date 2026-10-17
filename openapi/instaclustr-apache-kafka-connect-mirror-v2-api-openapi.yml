@@ -1,0 +1,534 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Apache Kafka Connect Mirror V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Apache Kafka Connect Mirror V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Apache Kafka Connect Mirror V2
+  description: Operations related to Apache Kafka Connect Mirror.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/kafka_connect_cluster/{clusterId}/mirrors/v2/:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kafka Connect cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: mirrors_v2
+    get:
+      tags:
+      - Apache Kafka Connect Mirror V2
+      summary: List all Kafka connect mirrors
+      responses:
+        '200':
+          description: Successfully retrieved Kafka mirrors.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaConnectMirrorSummariesV2'
+      operationId: getClusterManagementV2DataSourcesKafkaConnectClusterByClusterIdMirrorsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka_connect/mirrors/v2:
+    x-terraform-resource-name: kafka_connect_mirror_v2
+    post:
+      tags:
+      - Apache Kafka Connect Mirror V2
+      summary: Create a Kafka Connect mirror
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaConnectMirrorV2'
+        required: true
+      responses:
+        '202':
+          description: Kafka Connect mirror creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaConnectMirrorV2'
+              example:
+                connectorName: '[source-cluster].[target-cluster].[random-string]'
+                connectors:
+                - config: string
+                  name: string
+                  status: string
+                id: 4650aa98-e894-4675-9614-558915d5837a
+                kafkaConnectClusterId: '[UUID of the kafka connect cluster]'
+                maxTasks: 3
+                mirroredTopics:
+                - averageLatency: '5000'
+                  averageRate: '500'
+                  name: string
+                renameMirroredTopics: true
+                sourceCluster:
+                - alias: source-cluster
+                  managedCluster:
+                  - sourceKafkaClusterId: '[UUID of kafka cluster]'
+                    usePrivateIps: true
+                status: RUNNING
+                targetLatency: 5000
+                topicsRegex: .*
+          x-terraform-resource-poll-completed-statuses: IN_SYNC,OUT_OF_SYNC,FAILED,STALE_TOPIC
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: CREATING
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaConnectMirrorsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka_connect/mirrors/v2/{mirrorId}:
+    parameters:
+    - name: mirrorId
+      in: path
+      description: ID of the Kafka Connect mirror.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Apache Kafka Connect Mirror V2
+      summary: Get the details of a kafka connect mirror
+      responses:
+        '200':
+          description: Successfully retrieved kafka connect mirror details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaConnectMirrorV2'
+              example:
+                connectorName: '[source-cluster].[target-cluster].[random-string]'
+                connectors:
+                - config: string
+                  name: string
+                  status: string
+                id: 4650aa98-e894-4675-9614-558915d5837a
+                kafkaConnectClusterId: '[UUID of the kafka connect cluster]'
+                maxTasks: 3
+                mirroredTopics:
+                - averageLatency: '5000'
+                  averageRate: '500'
+                  name: string
+                renameMirroredTopics: true
+                sourceCluster:
+                - alias: source-cluster
+                  managedCluster:
+                  - sourceKafkaClusterId: '[UUID of kafka cluster]'
+                    usePrivateIps: true
+                status: RUNNING
+                targetLatency: 5000
+                topicsRegex: .*
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaConnectMirrorsV2ByMirrorId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka Connect Mirror V2
+      summary: Update a Kafka Connect mirror
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaConnectMirrorUpdateV2'
+        required: true
+      responses:
+        '202':
+          description: Successfully updated the Kafka Connect mirror details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaConnectMirrorV2'
+              example:
+                connectorName: '[source-cluster].[target-cluster].[random-string]'
+                connectors:
+                - config: string
+                  name: string
+                  status: string
+                id: 4650aa98-e894-4675-9614-558915d5837a
+                kafkaConnectClusterId: '[UUID of the kafka connect cluster]'
+                maxTasks: 3
+                mirroredTopics:
+                - averageLatency: '5000'
+                  averageRate: '500'
+                  name: string
+                renameMirroredTopics: true
+                sourceCluster:
+                - alias: source-cluster
+                  managedCluster:
+                  - sourceKafkaClusterId: '[UUID of kafka cluster]'
+                    usePrivateIps: true
+                status: RUNNING
+                targetLatency: 5000
+                topicsRegex: .*
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaConnectMirrorsV2ByMirrorId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka Connect Mirror V2
+      summary: Delete a Kafka Connect Mirror
+      responses:
+        '204':
+          description: Successfully processed the delete request of a Kafka Connect mirror.
+          content: {}
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaConnectMirrorsV2ByMirrorId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    KafkaConnectMirrorV2:
+      required:
+      - kafkaConnectClusterId
+      - maxTasks
+      - renameMirroredTopics
+      - sourceCluster
+      - targetLatency
+      - topicsRegex
+      type: object
+      properties:
+        targetLatency:
+          type: integer
+          description: The latency in milliseconds above which this mirror will be considered out of sync. It can not be less than 1000ms. The suggested initial latency is 30000ms  for connectors to be created.
+        connectors:
+          type: array
+          description: Detailed list of Connectors for the mirror.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/kafkaConnectMirrorConnectorDetailsV2'
+        kafkaConnectClusterId:
+          type: string
+          description: ID of the kafka connect cluster
+          x-terraform-force-new: true
+        sourceCluster:
+          maxItems: 1
+          minItems: 1
+          type: array
+          description: Details to connect to the source kafka cluster
+          items:
+            $ref: '#/components/schemas/KafkaConnectMirrorSourceClusterDetailsV2'
+          x-terraform-force-new: true
+        maxTasks:
+          type: integer
+          description: Maximum number of tasks for Kafka Connect to use. Should be greater than 0.
+          x-terraform-force-new: true
+        renameMirroredTopics:
+          type: boolean
+          description: Whether to rename topics as they are mirrored, by prefixing the sourceCluster.alias to the topic name.
+          x-terraform-force-new: true
+        connectorName:
+          type: string
+          description: 'Name of the mirror connector. The value of this property has the form: [source-cluster].[target-cluster].[random-string]'
+          readOnly: true
+        id:
+          type: string
+          description: ID of the mirror
+          format: uuid
+          readOnly: true
+        mirroredTopics:
+          type: array
+          description: Detailed list of Mirrored topics.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/KafkaConnectMirroredTopicDetailsV2'
+        topicsRegex:
+          type: string
+          description: Regex to select which topics to mirror.
+          example: west-.*
+          x-terraform-force-new: true
+        status:
+          type: string
+          description: The overall status of this mirror.
+          readOnly: true
+      description: Details of a Kafka Connect Mirror
+      example:
+        kafkaConnectClusterId: '[UUID of the kafka connect cluster]'
+        maxTasks: 3
+        renameMirroredTopics: true
+        sourceCluster:
+        - alias: source-cluster
+          managedCluster:
+          - sourceKafkaClusterId: '[UUID of kafka cluster]'
+            usePrivateIps: true
+        targetLatency: 5000
+        topicsRegex: .*
+    KafkaConnectMirroredTopicDetailsV2:
+      type: object
+      properties:
+        averageLatency:
+          type: number
+          description: Average latency in milliseconds for messages to travel from source to destination topics.
+          readOnly: true
+        averageRate:
+          type: number
+          description: Average record rate for messages to travel from source to destination topics, it is 0 if there are no messages travelling in between.
+          readOnly: true
+        name:
+          type: string
+          description: Name of the mirrored topic.
+          readOnly: true
+      description: Details of a mirrored topic.
+    KafkaConnectExternalSourceClusterDetailsV2:
+      required:
+      - sourceConnectionProperties
+      type: object
+      properties:
+        sourceConnectionProperties:
+          type: string
+          description: Kafka connection properties string used to connect to external kafka cluster
+          x-terraform-force-new: true
+      description: ''
+    KafkaConnectMirrorSummariesV2:
+      type: object
+      properties:
+        mirrors:
+          type: array
+          description: List of all mirrors in the cluster.
+          items:
+            $ref: '#/components/schemas/KafkaConnectMirrorSummaryV2'
+        clusterId:
+          type: string
+          description: ID of the kafka Connect cluster
+          x-terraform-id: true
+      description: A listable data source of all Mirrors within a Kafka Connect Cluster.
+    KafkaConnectMirrorUpdateV2:
+      required:
+      - targetLatency
+      type: object
+      properties:
+        targetLatency:
+          type: integer
+          description: The latency in milliseconds above which this mirror will be considered out of sync.
+      description: Details to update a Kafka Connect Mirror.
+    KafkaConnectMirrorSummaryV2:
+      title: ''
+      required:
+      - kafkaConnectClusterId
+      - maxTasks
+      - renameMirroredTopics
+      - sourceCluster
+      - targetLatency
+      - topicsRegex
+      type: object
+      properties:
+        targetLatency:
+          type: integer
+          description: The latency in milliseconds above which this mirror will be considered out of sync. It can not be less than 1000ms. The suggested initial latency is 30000ms  for connectors to be created.
+        kafkaConnectClusterId:
+          type: string
+          description: ID of the kafka connect cluster
+          x-terraform-force-new: true
+        sourceCluster:
+          maxItems: 1
+          minItems: 1
+          type: array
+          description: Details to connect to the source kafka cluster
+          items:
+            $ref: '#/components/schemas/KafkaConnectMirrorSourceClusterDetailsV2'
+          x-terraform-force-new: true
+        maxTasks:
+          type: integer
+          description: Maximum number of tasks for Kafka Connect to use. Should be greater than 0.
+          x-terraform-force-new: true
+        renameMirroredTopics:
+          type: boolean
+          description: Whether to rename topics as they are mirrored, by prefixing the sourceCluster.alias to the topic name.
+          x-terraform-force-new: true
+        connectorName:
+          type: string
+          description: 'Name of the mirror connector. The value of this property has the form: [source-cluster].[target-cluster].[random-string]'
+          readOnly: true
+        id:
+          type: string
+          description: ID of the mirror
+          format: uuid
+          readOnly: true
+        topicsRegex:
+          type: string
+          description: Regex to select which topics to mirror.
+          example: west-.*
+          x-terraform-force-new: true
+      description: Summary of a Mirrors within a Kafka Connect Cluster. Root type for KafkaConnectMirrorV2
+    KafkaConnectManagedSourceClusterDetailsV2:
+      required:
+      - sourceKafkaClusterId
+      - usePrivateIps
+      type: object
+      properties:
+        usePrivateIps:
+          type: boolean
+          description: Whether or not to connect to source cluster's private IP addresses.
+          example: false
+          x-terraform-force-new: true
+        sourceKafkaClusterId:
+          type: string
+          description: Source kafka cluster id.
+          x-terraform-force-new: true
+      description: ''
+    kafkaConnectMirrorConnectorDetailsV2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the connector. Could be one of [Mirror Connector, Checkpoint Connector].
+          readOnly: true
+        config:
+          type: string
+          description: Configuration of the connector.
+          readOnly: true
+          x-terraform-sensitive: true
+        status:
+          type: string
+          description: Status of the connector.
+          readOnly: true
+      description: Details of a connector.
+    KafkaConnectMirrorSourceClusterDetailsV2:
+      required:
+      - alias
+      type: object
+      properties:
+        alias:
+          type: string
+          description: Alias to use for the source kafka cluster. This will be used to rename topics if renameMirroredTopics is turned on
+          x-terraform-force-new: true
+        externalCluster:
+          maxItems: 1
+          type: array
+          description: Details to connect to a Non-Instaclustr managed cluster. Cannot be provided if targeting an Instaclustr managed cluster.
+          items:
+            $ref: '#/components/schemas/KafkaConnectExternalSourceClusterDetailsV2'
+          x-terraform-force-new: true
+        managedCluster:
+          maxItems: 1
+          type: array
+          description: Details to connect to a Instaclustr managed cluster. Cannot be provided if targeting a non-Instaclustr managed cluster.
+          items:
+            $ref: '#/components/schemas/KafkaConnectManagedSourceClusterDetailsV2'
+          x-terraform-force-new: true
+      description: Details to connect to the source kafka cluster.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

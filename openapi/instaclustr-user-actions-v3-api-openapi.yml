@@ -1,0 +1,400 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr User Actions V3 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged User Actions V3 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: User Actions V3
+  description: Operations related to the user actions
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/operations/user-actions/v3:
+    parameters:
+    - name: pageSize
+      in: query
+      description: Number of records per page
+      required: false
+      style: form
+      explode: true
+      schema:
+        maximum: 1000
+        minimum: 1
+        type: integer
+        default: 10
+    - name: actionKinds
+      in: query
+      description: Filter results by types of actions. Multiple actions are allowed. Invalid value will be ignored
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - CREATE_CLUSTER
+          - DELETE_CLUSTER
+          - REQUEST_CLUSTER_DELETE
+          - ADD_NODE
+          - ADD_DATA_CENTRE
+          - CHANGE_CLUSTER_SETTINGS
+          - CHANGE_CLUSTER_FIREWALL_RULES
+          - CREATE_VPC_PEERING_REQUEST
+          - EDIT_VPC_PEERING_REQUEST
+          - DELETE_VPC_PEERING_REQUEST
+          - ACCOUNT_INVITE_USER
+          - ACCOUNT_ACCEPT_INVITATION
+          - ACCOUNT_REVOKE_INVITATION
+          - ACCOUNT_REVOKE_LINK
+          - ACCOUNT_MODIFY_LINK
+          - ACCOUNT_CREATE_LINK
+          - ACCOUNT_GENERATE_API_KEY
+          - ACCOUNT_REVOKE_API_KEY
+          - ACCOUNT_ADD_ENCRYPTION_KEY
+          - ACCOUNT_UPDATE_REGIONS_ENCRYPTION_KEY
+          - ACCOUNT_REVOKE_ENCRYPTION_KEY
+          - RESTORE
+          - BACKUP
+          - CREATE_BACKUP_SCHEDULE
+          - DELETE_BACKUP_SCHEDULE
+          - ADMIN_ADD_CONFIG_OVERRIDE
+          - ADMIN_DELETE_CONFIG_OVERRIDE
+          - ADMIN_ADD_KAFKA_LISTENER
+          - ADMIN_DELETE_KAFKA_LISTENER
+          - ADMIN_RENAME_USER_LOGIN
+          - ADMIN_SET_ACCESS_LEVEL
+          - CREATE_BUNDLE_USER
+          - EDIT_BUNDLE_USER
+          - DELETE_BUNDLE_USER
+          - RESTART_BUNDLE
+          - RECONFIGURE_BUNDLE
+          - RELOAD_BUNDLE
+          - RESIZE_CDC
+          - CANCEL_RESIZE_CDC
+          - RETRY_RESIZE_CDC
+          - CREATE_KAFKA_TOPIC
+          - EDIT_KAFKA_TOPIC
+          - DELETE_KAFKA_TOPIC
+          - CREATE_KAFKA_ACLS
+          - DELETE_KAFKA_ACLS
+          - DEACTIVATE_SERVICE_USER
+          - REACTIVATE_SERVICE_USER
+          - CREATE_SERVICE_USER
+          - DEACTIVATE_SCIM_USER
+          - REACTIVATE_SCIM_USER
+          - CREATE_SCIM_USER
+          - DEACTIVATE_USER
+          - UPDATE_SSO_LOGIN_TYPE
+          - PRIVATE_LINK_MIGRATION_ENABLE
+          - PRIVATE_LINK_MIGRATION_DISABLE
+          - ADMIN_ADD_KAFKA_PRIVATE_LINK_LISTENER
+          - ADMIN_DELETE_KAFKA_PRIVATE_LINK_LISTENER
+          - ADMIN_ADD_KAFKA_PRIVATE_LINK_IAM_ROLE
+          - ADMIN_DELETE_KAFKA_PRIVATE_LINK_IAM_ROLE
+          - MANAGED_IDENTITY_MIGRATION_ENABLE
+          - MANAGED_IDENTITY_MIGRATION_DISABLE
+          - MIGRATE_FROM_AZURE_TO_AZUREAZ
+          - ENABLE_KAFKA_TIERED_STORAGE
+          - BYOC_TEMPLATE_DOWNLOAD
+          - BYOC_SETUP_INIT
+          - BYOC_SETUP_VALIDATE
+          - BYOC_SETUP_DELETE
+          - BYOC_SETUP_UPDATE
+    - name: recordIndex
+      in: query
+      description: Starting index for the records to return, useful for pagination. e.g. 10 will return records starting from 11
+      required: false
+      style: form
+      explode: true
+      schema:
+        minimum: 0
+        type: integer
+        default: 0
+    - name: descriptionKeyword
+      in: query
+      description: Keyword in the action description
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: clusterId
+      in: query
+      description: Cluster Id
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: crudOperations
+      in: query
+      description: Operation type in CRUD form. Invalid value will be ignored
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - ACCOUNT_LEVEL_USER_ACTIONS_CREATE
+          - ACCOUNT_LEVEL_USER_ACTIONS_UPDATE
+          - ACCOUNT_LEVEL_USER_ACTIONS_DELETE
+    - name: userName
+      in: query
+      description: Username
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: startTime
+      in: query
+      description: Start timestamp in milliseconds since epoch or ISO formatted date and time
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: endTime
+      in: query
+      description: End timestamp in milliseconds since epoch or ISO formatted date and time
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: getActionCounts
+      in: query
+      description: If set to true, the response will include counts of each action type
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: boolean
+        default: true
+    get:
+      tags:
+      - User Actions V3
+      summary: Get user actions
+      description: Get user actions for the account
+      responses:
+        '200':
+          description: Successfully retrieved the user actions for the organization and its linked accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserActionSummariesResult'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2OperationsUserActionsV3
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    UserActionSummariesResult:
+      type: object
+      properties:
+        search:
+          type: string
+          description: Search keyword
+        startIndex:
+          type: integer
+          description: Starting index for the records to return, useful for pagination. e.g. 10 will return records starting from 11
+        totalResults:
+          type: integer
+          description: Count of the results
+        totalOrgActionCount:
+          type: integer
+          description: Count of the total organization actions
+        counts:
+          type: array
+          description: List of the User actions type by action kind
+          items:
+            $ref: '#/components/schemas/UserActionCountForKind'
+        itemsPerPage:
+          type: integer
+          description: Number of records to return per page
+        resources:
+          type: array
+          description: List of the user actions
+          items:
+            $ref: '#/components/schemas/UserActionSummaryResponse'
+        totalAccountActionCount:
+          type: integer
+          description: Count of the total account actions
+      description: Contains UserActionSummariesResult
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    UserActionSummaryResponse:
+      type: object
+      properties:
+        actionTime:
+          type: string
+          description: User action time
+        domainType:
+          type: string
+          description: Domain of the User Action - Account or org
+        domainName:
+          type: string
+          description: Domain(Account or Org) name
+        action:
+          type: string
+          description: User action name
+        description:
+          type: string
+          description: User action description
+        userName:
+          type: string
+          description: userName who performed the user action
+        domainId:
+          type: string
+          description: Domain(Account or Org) ID
+          format: uuid
+      description: Contains details of an user action
+    UserActionCountForKind:
+      type: object
+      properties:
+        kind:
+          type: string
+          description: User action kind
+        domain:
+          type: string
+          description: Domain of the User Action - Account or org
+        count:
+          type: integer
+          description: User action counts for the action kind
+      description: Contains information about the User actions count by User action kind
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

@@ -1,0 +1,320 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Cloud Provider Details V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Cloud Provider Details V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Cloud Provider Details V2
+  description: Cloud provider information.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/cloud-provider-details/v2/:
+    parameters:
+    - name: providerAccountName
+      in: query
+      description: For customers running in their own account. Your provider account can be found on the Create Cluster page on the console, or the “Provider Account” property on any existing cluster. For customers running in Instaclustr account, this property may be omitted.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: cloudProvider
+      in: query
+      description: Filter by a cloud provider. If not provided, all available cloud providers are returned.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - AWS_VPC
+        - GCP
+        - AZURE
+        - AZURE_AZ
+        - ONPREMISES
+    - name: region
+      in: query
+      description: Filter by region. If not provided, all available regions are returned.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Cloud Provider Details V2
+      summary: List cloud provider details
+      responses:
+        '200':
+          description: Successfully retrieved cloud provider details.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloudProviderDetailsListV2'
+      operationId: getClusterManagementV2DataSourcesCloudProviderDetailsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    BackupBucketV2:
+      type: object
+      properties:
+        withoutAutoExpiration:
+          type: boolean
+          description: Whether the bucket or Storage Account has been set up without policies to automatically expired old files. This may be recommended or required for some applications such as OpenSearch for backup and restore features. The storage will have to be manually cleared after the cluster is deleted.
+        name:
+          type: string
+          description: Name of the bucket or Storage Account
+      description: Information of Backup Buckets or Storage accounts setup for the region. N/A for GCP Cloud provider accounts
+    NodeSizeDetailsV2:
+      type: object
+      properties:
+        cost:
+          type: integer
+          description: Monthly cost in US Cents.
+          example: 123456
+        ssdBacked:
+          type: boolean
+          description: Determines if the disk is backed by SSD.
+          example: true
+        cpuCores:
+          type: integer
+          description: Number of CPU cores.
+          example: 8
+        name:
+          type: string
+          description: Name of node size.
+          example: r5.2xlarge-400-r
+        freeTrialEligible:
+          type: boolean
+          description: Eligibility for free trial.
+          example: false
+        memoryQuota:
+          type: integer
+          description: Memory capacity in MBs.
+          example: 64000
+        diskQuota:
+          type: integer
+          description: Storage capacity in GBs.
+          example: 400
+      description: Object containing a single application with a version and display string.
+    CloudProviderEnumV2:
+      type: string
+      description: Name of a cloud provider service.
+      example: AWS_VPC
+      enum:
+      - AWS_VPC
+      - GCP
+      - AZURE
+      - AZURE_AZ
+      - ONPREMISES
+      x-insta-unchangeable: true
+    SingleApplicationVersionV2:
+      type: object
+      properties:
+        application:
+          $ref: '#/components/schemas/ApplicationEnumV2'
+        version:
+          type: string
+          description: A sematic version.
+          example: 1.0.0
+      description: Object containing a single application and a version.
+    CloudProviderDetailsListV2:
+      type: object
+      properties:
+        cloudProviderDetails:
+          type: array
+          description: List of all cloud provider details.
+          items:
+            $ref: '#/components/schemas/CloudProviderDetailsV2'
+      description: Object containing all cloud provider details.
+    CloudProviderDetailsV2:
+      type: object
+      properties:
+        regions:
+          type: array
+          description: A list of regions in a cloud provider.
+          items:
+            $ref: '#/components/schemas/CloudProviderRegionV2'
+        displayName:
+          type: string
+          description: Cloud provider display name.
+          example: Amazon Web Services
+        cloudProvider:
+          $ref: '#/components/schemas/CloudProviderEnumV2'
+      description: Object containing details of a cloud provider.
+    ApplicationEnumV2:
+      type: string
+      description: Name of an application, including primary and addon types.
+      example: '[APPLICATION]'
+      enum:
+      - KAFKA
+      - KAFKA_CONNECT
+      - KAFKA_SCHEMA_REGISTRY
+      - KAFKA_REST_PROXY
+      - KARAPACE_SCHEMA_REGISTRY
+      - KARAPACE_REST_PROXY
+      - APACHE_ZOOKEEPER
+      - APACHE_CASSANDRA
+      - CASSANDRA_SHOTOVER_PROXY
+      - SPARK
+      - CADENCE
+      - OPENSEARCH
+      - OPENSEARCH_DASHBOARDS
+      - REDIS
+      - VALKEY
+      - POSTGRESQL
+      - PGBOUNCER
+      - MONGODB
+      - DEBEZIUM_CONNECTOR_CASSANDRA
+      - CLICKHOUSE
+    CloudProviderRegionV2:
+      type: object
+      properties:
+        nodeSizes:
+          type: array
+          description: A list of available node sizes.
+          items:
+            $ref: '#/components/schemas/NodeSizeDetailsV2'
+        displayName:
+          type: string
+          description: Region display name.
+          example: US East (Northern Virginia)
+        name:
+          type: string
+          description: Region name.
+          example: US_EAST_1
+        racks:
+          type: array
+          description: A list of available racks.
+          example:
+          - us-east-1a
+          - us-east-1b
+          items:
+            type: string
+        backupBuckets:
+          type: array
+          description: A list of available backup buckets.
+          items:
+            $ref: '#/components/schemas/BackupBucketV2'
+        mainApplicationVersions:
+          type: array
+          description: A list of available applications and versions.
+          items:
+            $ref: '#/components/schemas/SingleApplicationVersionV2'
+      description: Object containing details of a region in a cloud provider.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

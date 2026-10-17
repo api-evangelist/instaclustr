@@ -1,0 +1,858 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr VPC Peering API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged VPC Peering across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: VPC Peering
+  description: Operations related to VPC Peering.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/vpc-peering/{clusterDataCentreId}:
+    get:
+      tags:
+      - VPC Peering
+      summary: List all VPC peering connections
+      description: Lists the details for all VPC peering connections for the specified Cluster Data Centre.
+      operationId: getVpcPeeringConnectionsInfo
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        description: ID of the Cluster Data Centre
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: aabc665c-8916-40ae-978c-96d39a3a1364
+      responses:
+        '202':
+          description: List retrieved successfully.
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiVpcPeeringConnectionMixedSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: A timeout occurred. Perhaps the Provider was slow in responding to the VPC peering request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      deprecated: false
+    post:
+      tags:
+      - VPC Peering
+      summary: Create VPC Peering Request
+      description: Creates a new VPC peering connection request for the given Cluster Data Centre. This is only available for clusters hosted with either the AWS or GCP provider.
+      operationId: createVpcPeeringConnection
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        description: ID of the Cluster Data Centre
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: aabc665c-8916-40ae-978c-96d39a3a1364
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiVpcPeeringConnectionRequestMixedSchema'
+      responses:
+        '202':
+          description: VPC peering connection request successfully created.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: Subnet provided conflicts with Cluster Data Centre's subnet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: A timeout occurred. Perhaps the Provider was slow in responding to the VPC peering request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/vpc-peering/{clusterDataCentreId}/{vpcPeeringConnectionId}:
+    get:
+      tags:
+      - VPC Peering
+      summary: Get VPC peering connection info
+      description: Fetches the details for a given VPC peering connection.
+      operationId: getVpcPeeringConnectionInfo
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        description: ID of the Cluster Data Centre
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: aabc665c-8916-40ae-978c-96d39a3a1364
+      - name: vpcPeeringConnectionId
+        in: path
+        description: ID of the VPC Peering Connection
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 068c447e-8475-49b2-974b-ca1c91702ed4
+      responses:
+        '202':
+          description: VPC peering connection info retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVpcPeeringConnectionMixedSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: A timeout occurred. Perhaps the Provider was slow in responding to the VPC peering request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      deprecated: false
+    put:
+      tags:
+      - VPC Peering
+      summary: Update VPC peering connection info
+      description: Updates the peering networks for a given VPC peering connection. Modifying fields apart from the peerSubnets field will result in a 415 response. This is only available for clusters hosted with the AWS provider
+      operationId: updateVpcPeeringConnection
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        description: ID of the Cluster Data Centre
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: aabc665c-8916-40ae-978c-96d39a3a1364
+      - name: vpcPeeringConnectionId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsVpcPeeringConnection'
+      responses:
+        '202':
+          description: VPC peering connection info retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsVpcPeeringConnection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: Subnet provided conflicts with Cluster Data Centre's subnet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: A timeout occurred. Perhaps the Provider was slow in responding to the VPC peering request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      deprecated: false
+    delete:
+      tags:
+      - VPC Peering
+      summary: Delete VPC Peering Connection
+      description: Deletes the given VPC peering request/connection for the given Cluster Data Centre.
+      operationId: deleteVpcPeeringConnection
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        description: ID of the Cluster Data Centre
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: aabc665c-8916-40ae-978c-96d39a3a1364
+      - name: vpcPeeringConnectionId
+        in: path
+        description: ID of the VPC Peering Connection to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 068c447e-8475-49b2-974b-ca1c91702ed4
+      responses:
+        '202':
+          description: Delete operation successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: A timeout occurred. Perhaps the Provider was slow in responding to the VPC peering request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ApiVpcPeeringConnectionRequest:
+      required:
+      - peerAccountId
+      - peerVpcId
+      type: object
+      properties:
+        peerAccountId:
+          type: string
+          description: The account ID of the owner of the accepter VPC
+          example: '123888456789'
+        peerVpcId:
+          type: string
+          description: ID of the VPC with which you are creating the peering connection
+          example: vpc-aabb1122
+        peerSubnet:
+          type: string
+          description: The subnet for the peering VPC, mutually exclusive with peerSubnets. Please note, this is a deprecated field, and the peerSubnets field should be used instead.
+          writeOnly: true
+          example: 10.7.0.0/16
+        peerSubnets:
+          uniqueItems: true
+          type: array
+          description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+          items:
+            type: string
+            description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+            example: '["10.1.0.0/16","10.2.0.0/16"]'
+        peerRegion:
+          $ref: '#/components/schemas/Region'
+        addNetworkToFirewallRules:
+          type: boolean
+          description: Whether to add the VPC peer network to the cluster firewall allowed addresses<br><br>Defaults to false.
+          example: true
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    GcpApiPeeringConnectionWithRemoteInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the VPC peering connection
+          format: uuid
+        name:
+          type: string
+          description: Name of the Vpc Peering Connection
+          example: instaclustr-project-123
+        vpcNetworkName:
+          type: string
+          description: Vpc Network Name of the Datacenter VPC
+          example: network-ff12abc1
+        peerVpcNetworkName:
+          type: string
+          description: Vpc Network Name of the Peered VPC
+          example: network-ff12abc1
+        projectId:
+          type: string
+          description: GCP Project ID of the Datacenter
+          example: example-project
+        peerProjectId:
+          type: string
+          description: GCP Project ID of the Peered VPC
+          example: example-project
+        clusterDataCentre:
+          type: string
+          description: ID of the Cluster Data Centre
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+        peerSubnets:
+          required:
+          - cidrs
+          type: object
+          properties:
+            cidrs:
+              uniqueItems: true
+              type: array
+              items:
+                $ref: '#/components/schemas/CidrSchema'
+          description: The subnets for the peering VPC
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+        failureReason:
+          type: string
+          description: Reason for Peering Connection Failure
+          example: An IP range in the peer network (10.5.128.0/18) overlaps with an IP range in the local network (10.5.128.0/18)
+        statusCode:
+          type: string
+          description: Status of the VPC peering connection
+          example: ACTIVE
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - GENESIS
+          - PROVISIONING
+          - FAILED
+          - UNKNOWN
+    ApiVpcPeeringConnectionMixedSchema:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/AwsVpcPeeringConnection'
+      - $ref: '#/components/schemas/AzureApiPeeringConnection'
+      - $ref: '#/components/schemas/GcpApiPeeringConnectionWithRemoteInfo'
+    AwsVpcPeeringConnection:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the VPC peering connection
+          format: uuid
+        aws_vpc_connection_id:
+          type: string
+          description: ID of VPC peering connection on AWS
+          example: pcx-ff12abc1
+        clusterDataCentre:
+          type: string
+          description: ID of the Cluster Data Centre
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+        vpcId:
+          type: string
+          description: AWS VPC ID for the Cluster Data Centre
+          example: vpc-aa770abc
+        peerVpcId:
+          type: string
+          description: ID of the VPC with which you are creating the peering connection
+          example: vpc-aabb1122
+        peerAccountId:
+          type: string
+          description: The account ID of the owner of the accepter VPC
+          example: '123888456789'
+        peerSubnet:
+          $ref: '#/components/schemas/CidrSchema'
+        peerRegion:
+          $ref: '#/components/schemas/Region'
+        peerSubnets:
+          $ref: '#/components/schemas/CidrSetSchema'
+        peerPrefixLists:
+          uniqueItems: true
+          type: array
+          description: Customer-managed AWS prefix list IDs used as peering destinations
+          items:
+            type: string
+            description: Customer-managed AWS prefix list IDs used as peering destinations
+        isManagedByInstaclustr:
+          type: boolean
+    AzureApiPeeringConnection:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the VPC peering connection
+          format: uuid
+        name:
+          type: string
+          description: Name of the Vpc Peering Connection
+          example: instaclustr-project-123
+        peerSubscriptionId:
+          type: string
+          description: Subscription Id of the peered Virtual Network
+          format: uuid
+          example: 00000000-0000-0000-0000-000000000000
+        peerAdObjectId:
+          type: string
+          description: ID of the Active Directory Object to give peering permissions to, required for cross subscription peering
+          format: uuid
+          example: 00000000-0000-0000-0000-000000000000
+        peerResourceGroup:
+          type: string
+          description: Resource Group name of the peered Virtual Network
+          example: resourceGroup-123
+        peerVNet:
+          type: string
+          description: Name of the peered Virtual Network
+          example: vNet-123
+        clusterDataCentre:
+          type: string
+          description: ID of the Cluster Data Centre
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+        peerSubnets:
+          required:
+          - cidrs
+          type: object
+          properties:
+            cidrs:
+              uniqueItems: true
+              type: array
+              items:
+                $ref: '#/components/schemas/CidrSchema'
+          description: The subnets for the peering VPC
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+        subscriptionId:
+          type: string
+          description: Subscription Id of the of the Datacenter Virtual Network
+          format: uuid
+          example: 00000000-0000-0000-0000-000000000000
+        resourceGroup:
+          type: string
+          description: Resource Group name of the Datacenter Virtual Network
+          example: resourceGroup-123
+        vNet:
+          type: string
+          description: Name of the Datacenter Virtual Network
+          example: vNet-123
+        failureReason:
+          type: string
+          description: Reason for Peering Connection Failure
+          example: An IP range in the peer network (10.5.128.0/18) overlaps with an IP range in the local network (10.5.128.0/18)
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    GCPApiVPCPeeringConnectionRequest:
+      required:
+      - peerProjectId
+      - peerVpcNetworkName
+      type: object
+      properties:
+        peerVpcNetworkName:
+          type: string
+          description: VPC Network Name of the VPC with which you are creating the peering connection
+          example: network-aabb1122
+        peerProjectId:
+          type: string
+          description: The project ID of the owner of the accepter VPC
+          example: example-project123
+        peerSubnets:
+          uniqueItems: true
+          type: array
+          description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+          items:
+            type: string
+            description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+            example: '["10.1.0.0/16","10.2.0.0/16"]'
+        addNetworkToFirewallRules:
+          type: boolean
+          description: Whether to add the VPC peer network to the cluster firewall allowed addresses<br><br>Defaults to false.
+          example: true
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    ApiVpcPeeringConnectionRequestMixedSchema:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/ApiVpcPeeringConnectionRequest'
+      - $ref: '#/components/schemas/AzureVNetPeeringConnectionRequest'
+      - $ref: '#/components/schemas/GCPApiVPCPeeringConnectionRequest'
+    CidrSchema:
+      type: object
+      properties:
+        network:
+          type: string
+          format: ipv4
+          example: 10.7.0.0
+        prefixLength:
+          type: integer
+          format: int32
+          example: 16
+    AzureVNetPeeringConnectionRequest:
+      required:
+      - peerResourceGroup
+      - peerSubscriptionId
+      - peerVNetNetworkName
+      type: object
+      properties:
+        peerResourceGroup:
+          type: string
+          description: 'Resource Group Name of the Virtual Network
+
+            '
+          example: example-resource-group-123
+        peerSubscriptionId:
+          type: string
+          description: 'Subscription Id of the Virtual Network
+
+            '
+          example: 00000000-0000-0000-0000-000000000000
+        peerAdObjectId:
+          type: string
+          description: '
+
+            Id of the Active Directory Object to give peering permissions to, required for cross subscription peering
+
+            '
+          example: 00000000-0000-0000-0000-000000000000
+        peerVNetNetworkName:
+          type: string
+          description: 'Name of the Virtual Network you wish to peer to
+
+            '
+          example: network-aabb-1122
+        peerSubnets:
+          uniqueItems: true
+          type: array
+          description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+          items:
+            type: string
+            description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+            example: '["10.1.0.0/16","10.2.0.0/16"]'
+        addNetworkToFirewallRules:
+          type: boolean
+          description: Whether to add the VPC peer network to the cluster firewall allowed addresses<br><br>Defaults to false.
+          example: true
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    Region:
+      type: object
+      properties:
+        globalRegion:
+          type: boolean
+      description: Region code for the accepter VPC, if the accepter VPC is located in a region other than the region in which you make the request.
+      example: US_WEST_2
+    CidrSetSchema:
+      required:
+      - cidrs
+      type: object
+      properties:
+        cidrs:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CidrSchema'
+      description: The subnets for the peering VPC, mutually exclusive with peerSubnet
+      example:
+      - 10.1.0.0/16
+      - 10.2.0.0/16
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

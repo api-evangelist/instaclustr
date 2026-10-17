@@ -1,0 +1,421 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr AWS Endpoint Service Principals API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged AWS Endpoint Service Principals across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: AWS Endpoint Service Principals
+  description: Operations related to AWS endpoint service principals.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/aws-endpoint-service/{clusterDataCentreId}/principals:
+    get:
+      tags:
+      - AWS Endpoint Service Principals
+      summary: Retrieve allowed principals on AWS Endpoint Service
+      description: Retrieve all the allowed principal for accessing Endpoint Service on a specific cluster data centre. AWS principals, such as AWS accounts, IAM users, and IAM roles used to allow connection from AWS interface endpoint to the endpoint service
+      operationId: getEndpointServicePrincipals
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      responses:
+        '200':
+          description: Successfully retrieved the allowed principals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsEndpointServicePrincipalsResponse'
+              example:
+                iamPrincipalARNs:
+                - arn:aws:iam::123456789012:resource-type/resource-id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJsonErrorListResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    put:
+      tags:
+      - AWS Endpoint Service Principals
+      summary: Update principals of AWS Endpoint Service
+      description: Update principals of AWS Endpoint Service on a specific cluster data centre. AWS principals, such as AWS accounts, IAM users, and IAM roles used to allow connection from AWS interface endpoint to the endpoint service
+      operationId: updateEndpointServicePrincipals
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      requestBody:
+        description: List of principals to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsEndpointServicePrincipalsRequest'
+            example:
+              iamPrincipalARNs:
+              - arn:aws:iam::123456789012:resource-type/resource-id
+        required: true
+      responses:
+        '200':
+          description: Successfully update the principals of AWS Endpoint Service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsEndpointServicePrincipalsResponse'
+              example:
+                iamPrincipalARNs:
+                - arn:aws:iam::123456789012:resource-type/resource-id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJsonErrorListResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    patch:
+      tags:
+      - AWS Endpoint Service Principals
+      summary: Modify principals of AWS Endpoint Service
+      description: Modify principals of AWS Endpoint Service on a specific cluster data centre. AWS principals, such as AWS accounts, IAM users, and IAM roles used to allow connection from AWS interface endpoint to the endpoint service
+      operationId: modifyEndpointServicePrincipals
+      parameters:
+      - name: clusterDataCentreId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          pattern: '[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}'
+          type: string
+          format: uuid
+        example: 6b776f1d-5b74-4b46-b813-a94b9c1282ca
+      requestBody:
+        description: List of principals to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyAwsEndpointServicePrincipalsRequest'
+            example:
+              principalsToAdd:
+              - arn:aws:iam::123456789012:resource-type/resource-id
+              principalsToRemove:
+              - arn:aws:iam::123456789012:resource-type/resource-id
+        required: true
+      responses:
+        '200':
+          description: Successfully modified the principals to AWS Endpoint Service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsEndpointServicePrincipalsResponse'
+              example:
+                iamPrincipalARNs:
+                - arn:aws:iam::123456789012:resource-type/resource-id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJsonErrorListResponse'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJsonErrorListResponse'
+        '409':
+          description: Resource conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJsonErrorListResponse'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ModifyAwsEndpointServicePrincipalsRequest:
+      type: object
+      properties:
+        principalsToAdd:
+          type: array
+          description: List of IAM Principal ARNs to add to AWS Endpoint Service
+          example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+          items:
+            type: string
+            description: List of IAM Principal ARNs to add to AWS Endpoint Service
+            example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+        principalsToRemove:
+          type: array
+          description: List of IAM Principal ARNs to remove from AWS Endpoint Service
+          example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+          items:
+            type: string
+            description: List of IAM Principal ARNs to remove from AWS Endpoint Service
+            example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    AwsEndpointServicePrincipalsRequest:
+      type: object
+      properties:
+        iamPrincipalARNs:
+          type: array
+          description: List of IAM Principal ARNs
+          example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+          items:
+            type: string
+            description: List of IAM Principal ARNs
+            example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    AwsEndpointServicePrincipalsResponse:
+      type: object
+      properties:
+        iamPrincipalARNs:
+          type: array
+          description: List of IAM Principal ARNs of the Endpoint Service
+          example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+          items:
+            type: string
+            description: List of IAM Principal ARNs of the Endpoint Service
+            example: '[arn:aws:iam::account-id:resource-type/resource-id]'
+    GenericJsonErrorResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        errorClass:
+          type: string
+        help:
+          type: string
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    GenericJsonErrorListResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenericJsonErrorResponse'
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

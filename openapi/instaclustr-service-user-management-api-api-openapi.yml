@@ -1,0 +1,765 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Service User Management API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Service User Management API across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Service User Management API
+  description: Operations related to service user management.
+  x-insta-tag-group: User Management
+  x-priority: 5
+paths:
+  /v1/service-users:
+    get:
+      tags:
+      - Service User Management API
+      summary: Get service users
+      operationId: getServiceUsers
+      responses:
+        '200':
+          description: Successfully retrieved service users' information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUsersListSchema'
+              example:
+              - administrators:
+                - testadministrator
+                apiKeys:
+                  allowedApiKeyTypes:
+                  - displayName: Monitoring
+                    name: MONITORING
+                  - displayName: Read Only Provisioning
+                    name: PROVISIONING_READONLY
+                  - displayName: Provisioning
+                    name: PROVISIONING
+                  - displayName: User Management
+                    name: USER_MANAGEMENT
+                  apiKeys:
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••7ac6a
+                    keyType: MONITORING
+                    username: testservice
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••a8e61
+                    keyType: PROVISIONING
+                    username: testservice
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••68268
+                    keyType: PROVISIONING_READONLY
+                    username: testservice
+                displayName: testservice
+                email: testservice@test.com
+                role: CLUSTER_ADMIN
+                username: testserviceuser
+              - administrators:
+                - testadministrator
+                apiKeys:
+                  allowedApiKeyTypes:
+                  - displayName: Monitoring
+                    name: MONITORING
+                  - displayName: Read Only Provisioning
+                    name: PROVISIONING_READONLY
+                  apiKeys:
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••41702
+                    keyType: MONITORING
+                    username: testservice2
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••23c46
+                    keyType: PROVISIONING_READONLY
+                    username: testservice2
+                displayName: testservice2
+                email: testservice+2@test.com
+                role: READ_ONLY
+                username: testservice2
+    post:
+      tags:
+      - Service User Management API
+      summary: Create a service user
+      description: 'This endpoint can be used to create a service user.
+
+        The created service user will be under the account that the API key used is associated with.
+
+        The requester user will be the administrator of the created service user.'
+      operationId: createServiceUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServiceUserRequest'
+      responses:
+        '201':
+          description: Successfully created a service user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUser'
+              example:
+                administrators:
+                - testadministrator
+                apiKeys:
+                  allowedApiKeyTypes:
+                  - displayName: Monitoring
+                    name: MONITORING
+                  - displayName: Read Only Provisioning
+                    name: PROVISIONING_READONLY
+                  - displayName: Provisioning
+                    name: PROVISIONING
+                  - displayName: User Management
+                    name: USER_MANAGEMENT
+                  apiKeys:
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    apiKeyType: MONITORING
+                    key: efababd41583c022f191248ec8a7ac6a
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    apiKeyType: PROVISIONING
+                    key: 13aa50408c56765569cc5f5eb65a8e61
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    apiKeyType: PROVISIONING_READONLY
+                    key: 73b3c11632c39eed21d0b14d1ec68268
+                    username: service_user1
+                displayName: testservice
+                email: testservice@test.com
+                role: CLUSTER_ADMIN
+                username: testservice
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                email: email cannot be null.
+                role: role cannot be null.
+                username: username cannot be null.
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/service-users/{username}:
+    get:
+      tags:
+      - Service User Management API
+      summary: Get a service user
+      operationId: getServiceUser
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved a service user's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUser'
+              example:
+                administrators:
+                - testadministrator
+                apiKeys:
+                  allowedApiKeyTypes:
+                  - displayName: Monitoring
+                    name: MONITORING
+                  - displayName: Read Only Provisioning
+                    name: PROVISIONING_READONLY
+                  - displayName: Provisioning
+                    name: PROVISIONING
+                  - displayName: User Management
+                    name: USER_MANAGEMENT
+                  apiKeys:
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    apiKeyType: MONITORING
+                    key: •••••••••••••••••••••••••••7ac6a
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••a8e61
+                    keyType: PROVISIONING
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••68268
+                    keyType: PROVISIONING_READONLY
+                    username: service_user1
+                displayName: testservice
+                email: testservice@test.com
+                role: CLUSTER_ADMIN
+                username: testservice
+    put:
+      tags:
+      - Service User Management API
+      summary: Update a service user
+      description: 'This endpoint can be used to update a service user''s data.
+
+        The updatable data are display name, role, and the administrators.'
+      operationId: updateServiceUser
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateServiceUserRequest'
+      responses:
+        '200':
+          description: Successfully updated a service user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUser'
+              example:
+                administrators:
+                - testadministrator
+                apiKeys:
+                  allowedApiKeyTypes:
+                  - displayName: Monitoring
+                    name: MONITORING
+                  - displayName: Read Only Provisioning
+                    name: PROVISIONING_READONLY
+                  - displayName: Provisioning
+                    name: PROVISIONING
+                  - displayName: User Management
+                    name: USER_MANAGEMENT
+                  apiKeys:
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    apiKeyType: MONITORING
+                    key: •••••••••••••••••••••••••••7ac6a
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••a8e61
+                    keyType: PROVISIONING
+                    username: service_user1
+                  - account: 28c57513-7fae-4297-af6f-07fbf5356f08
+                    key: •••••••••••••••••••••••••••68268
+                    keyType: PROVISIONING_READONLY
+                    username: service_user1
+                displayName: testservice
+                email: testservice@test.com
+                role: CLUSTER_ADMIN
+                username: testservice
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example: "{\n    \"type\": \"type cannot be null.\",\n}"
+        '503':
+          description: Service is currently unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Service User Management API
+      summary: Deactivate a service user
+      operationId: deactivateServiceUser
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deactivated a service user
+        '503':
+          description: Service is currently unavailable.
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/service-users/{username}/apikey:
+    post:
+      tags:
+      - Service User Management API
+      summary: Generate a service user's API key
+      operationId: generateApiKey
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUserApiKeyRequest'
+      responses:
+        '200':
+          description: Successfully generated an API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+              example:
+                account: 175dc592-26c2-4563-ac29-5d54e16aa344
+                apiKeyType: MONITORING
+                cidrAllowList:
+                - 127.0.0.1/32
+                - 127.0.0.2/32
+                key: 1f396892fdfv65c0f57e95123b8cf9f7
+                username: testapikeyserviceuser
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                resource: resource cannot be null.
+    delete:
+      tags:
+      - Service User Management API
+      summary: Revoke a service user's API key
+      operationId: revokeApiKey
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUserApiKeyRequest'
+      responses:
+        '204':
+          description: Successfully revoked an API key
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                resource: resource cannot be null.
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/service-users/{username}/apikey/{apiKeyType}:
+    put:
+      tags:
+      - Service User Management API
+      summary: Update API key's IP restrictions for the service user
+      operationId: updateIpRestrictions
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: apiKeyType
+        in: path
+        description: API resource of the service user to revoke / generate
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: PROVISIONING
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKeyUpdateRequest'
+      responses:
+        '200':
+          description: Successfully updated IP restrictions for an API key
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                apiKeyType: apiKeyType cannot be null.
+                username: username cannot be null.
+    post:
+      tags:
+      - Service User Management API
+      summary: Rotate service user's API key
+      operationId: refreshApiKey
+      parameters:
+      - name: username
+        in: path
+        description: Username of the service user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: apiKeyType
+        in: path
+        description: API resource of the service user to revoke / generate
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: PROVISIONING
+      responses:
+        '200':
+          description: Successfully rotated an API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+              example:
+                account: 175dc592-26c2-4563-ac29-5d54e16aa344
+                apiKeyType: MONITORING
+                cidrAllowList:
+                - 127.0.0.1/32
+                - 127.0.0.2/32
+                key: 1f396892fdfv65c0f57e95123b8cf9f7
+                username: testapikeyserviceuser
+        '400':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                resource: resource cannot be null.
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ServiceUsersListSchema:
+      type: object
+    ApiKeysResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          description: List of generated API keys. The generated API keys can be used to make API requests via basic auth.
+          items:
+            $ref: '#/components/schemas/ApiKeyResponse'
+        allowedApiKeyTypes:
+          type: array
+          description: 'List of allowed API keys. The API keys a user can have depends on their profile.
+
+            For example, a read-only user can only be granted read-only API keys (i.e. read only provisioning and monitoring'
+          items:
+            $ref: '#/components/schemas/ApiKeyTypeResponse'
+      description: 'API keys of the service user.
+
+        Contains two lists. apiKeys attribute lists any API Keys which the given API Service User currently has access to, and allowedApiKeyTypes attribute lists the key types that the service user is permitted to have.'
+    ApiKeyUpdateRequest:
+      type: object
+      properties:
+        cidrAllowList:
+          type: array
+          description: List of IP restrictions for the API key
+          example:
+          - 127.0.0.1/31
+          - 127.0.0.1/32
+          items:
+            type: string
+            description: List of IP restrictions for the API key
+            example: '["127.0.0.1/31","127.0.0.1/32"]'
+    ApiKeyResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the API key for basic auth
+          example: jsmith
+        account:
+          type: string
+          description: Account that the API key is associated with. An API key can only be used for its account's resources.
+        apiKeyType:
+          type: string
+          description: The type of the API key. Different types of API keys must be used for different types of endpoints, such as provisioning and monitoring endpoints.
+          example: PROVISIONING
+        key:
+          type: string
+        isExpired:
+          type: boolean
+        cidrAllowList:
+          type: array
+          items:
+            type: string
+    CreateServiceUserRequest:
+      required:
+      - email
+      - profile
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the service user. must be unique.
+          example: test_service_user
+        email:
+          type: string
+          description: Email of the service user. must be unique (including aliases)
+          example: test_service_user@test.com
+        profile:
+          type: string
+          description: 'Profile of the service user
+
+            OWNER can manage clusters and users (excluding other service users)
+
+            CLUSTER_ADMIN can manage clusters
+
+            READ_ONLY can view clusters and access monitoring'
+          example: READ_ONLY
+        displayName:
+          type: string
+          description: Display name of the service user
+          example: service user
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+      description: Defines all the details required to add a service user.
+    ServiceUser:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the service user. This username is used to authenticate API requests via Basic Auth.
+          example: jsmith
+        email:
+          type: string
+          description: 'Email of the service user. This email '
+          example: jsmith@company.com
+        displayName:
+          type: string
+          description: Display name of the service user
+          example: john smith
+        profile:
+          type: string
+          description: Profile of the service user
+          example: READ_ONLY
+        allowedProfiles:
+          type: array
+          description: Allowed profiles that the service user can be
+          example: READ_ONLY
+          items:
+            type: string
+            description: Allowed profiles that the service user can be
+            example: READ_ONLY
+            enum:
+            - OWNER
+            - CLUSTER_ADMIN
+            - BILLING
+            - READ_ONLY
+        apiKeys:
+          $ref: '#/components/schemas/ApiKeysResponse'
+        administrators:
+          type: array
+          description: 'Administrators of the service user. Administrators are standard users that administer the service user.
+
+            The administrators can perform operations such as update, manage API keys, and delete on service users they administer.'
+          items:
+            type: string
+            description: 'Administrators of the service user. Administrators are standard users that administer the service user.
+
+              The administrators can perform operations such as update, manage API keys, and delete on service users they administer.'
+    ServiceUserApiKeyRequest:
+      type: object
+      properties:
+        apiKeyType:
+          type: string
+          description: API resource of the service user to revoke / generate
+          example: MONITORING
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+      description: The API resource of a service user to revoke / generate
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    ApiKeyTypeResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+      description: 'List of allowed API keys. The API keys a user can have depends on their profile.
+
+        For example, a read-only user can only be granted read-only API keys (i.e. read only provisioning and monitoring'
+    UpdateServiceUserRequest:
+      required:
+      - profile
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Display name of the service user
+          example: service user
+        profile:
+          type: string
+          description: 'Profile of the service user
+
+            OWNER can manage clusters and users (excluding other service users)
+
+            CLUSTER_ADMIN can manage clusters
+
+            READ_ONLY can view clusters and access monitoring'
+          example: READ_ONLY
+        administrators:
+          type: array
+          description: 'Administrators of the service user. Administrators are standard users that administer the service user.
+
+            The administrators can perform operations such as update, manage API keys, and delete on service users they administer.'
+          items:
+            type: string
+            description: 'Administrators of the service user. Administrators are standard users that administer the service user.
+
+              The administrators can perform operations such as update, manage API keys, and delete on service users they administer.'
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+      description: The fields to update a service user
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

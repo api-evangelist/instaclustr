@@ -1,0 +1,504 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Apache Kafka ACL V2 API
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  version: '1.0'
+  description: 'Operations tagged Apache Kafka ACL V2 across 4 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Apache Kafka ACL V2
+  description: ''
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/kafka_cluster/{clusterId}/acls/v2/:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kafka cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: acls_v2
+    get:
+      tags:
+      - Apache Kafka ACL V2
+      summary: List all ACLs in the Kafka cluster
+      responses:
+        '200':
+          description: Successfully retrieved Kafka ACLs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaAclListsV2'
+      operationId: getClusterManagementV2DataSourcesKafkaClusterByClusterIdAclsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/kafka_cluster/{clusterId}/acls/v2/search:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kafka cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    - name: principal
+      in: query
+      description: (Optional) Specifies the users(s) for which this ACL applies and can include the wildcard `*`. Valid values must start with "User:" including the wildcard
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: host
+      in: query
+      description: (Optional) The IP address to which this ACL applies. It takes any string including the wildcard `*` for all IP addresses
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: resourceType
+      in: query
+      description: (Optional) Specifies the type of resource
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - CLUSTER
+        - TOPIC
+        - GROUP
+        - DELEGATION_TOKEN
+        - TRANSACTIONAL_ID
+        - ANY
+    - name: resourceName
+      in: query
+      description: (Optional) Any string that fits the resource name, e.g. topic name if the resource type is TOPIC
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: operation
+      in: query
+      description: (Optional) The operation that will be allowed or denied
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - ALL
+        - READ
+        - WRITE
+        - CREATE
+        - DELETE
+        - ALTER
+        - DESCRIBE
+        - CLUSTER_ACTION
+        - DESCRIBE_CONFIGS
+        - ALTER_CONFIGS
+        - IDEMPOTENT_WRITE
+        - ANY
+    - name: permissionType
+      in: query
+      description: (Optional) Specifies whether to allow or deny the operation
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - ALLOW
+        - DENY
+        - ANY
+    - name: patternType
+      in: query
+      description: (Optional) Indicates the resource-pattern-type
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - LITERAL
+        - PREFIXED
+        - ANY
+    get:
+      tags:
+      - Apache Kafka ACL V2
+      summary: Search for ACLs in the Kafka cluster with optional filters as ACL parameters
+      responses:
+        '200':
+          description: Successfully retrieved Kafka ACLs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaAclListsV2'
+      operationId: getClusterManagementV2DataSourcesKafkaClusterByClusterIdAclsV2Search
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/acls/v2/:
+    x-terraform-resource-name: kafka_acl_v2
+    post:
+      tags:
+      - Apache Kafka ACL V2
+      summary: Create a Kafka ACL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaAclListV2'
+        required: true
+      responses:
+        '202':
+          description: Kafka ACL creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaAclListV2'
+              example:
+                acls:
+                - host: '*'
+                  operation: DESCRIBE
+                  patternType: LITERAL
+                  permissionType: ALLOW
+                  principal: User:test
+                  resourceName: kafka-cluster
+                  resourceType: CLUSTER
+                - host: '*'
+                  operation: CREATE
+                  patternType: PREFIXED
+                  permissionType: ALLOW
+                  principal: User:test
+                  resourceName: kafka-topic
+                  resourceType: TOPIC
+                clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_test
+                userQuery: test
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaAclsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/acls/v2/{kafkaAclId}/:
+    parameters:
+    - name: kafkaAclId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka ACL V2
+      summary: Get list of Kafka ACLs for a given principal
+      description: Get list of Kafka ACLs for a principal.
+      responses:
+        '200':
+          description: Kafka ACL details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaAclListV2'
+      deprecated: false
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaAclsV2ByKafkaAclId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka ACL V2
+      summary: Update ACL list for a principal
+      description: Update ACL list for a specific principal in a Kafka cluster.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaAclListV2'
+        required: true
+      responses:
+        '202':
+          description: Updated list of ACLs for the given kafkaAclId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaAclListV2'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaAclsV2ByKafkaAclId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka ACL V2
+      summary: Delete all ACLs associated with a principal
+      description: Delete all ACLs associated with the given kafkaAclId.
+      responses:
+        '204':
+          description: Kafka ACL delete requested.
+          content: {}
+      deprecated: false
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaAclsV2ByKafkaAclId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    KafkaAclListV2:
+      required:
+      - acls
+      - clusterId
+      - userQuery
+      type: object
+      properties:
+        acls:
+          type: array
+          description: List of ACLs for the given principal.
+          items:
+            $ref: '#/components/schemas/KafkaAclV2'
+          x-terraform-field-name: acl
+          x-terraform-ignore-order: true
+        userQuery:
+          type: string
+          description: This is the principal without the `User:` prefix.
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: UUID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the ACL list for a principal. The value of this property has the form: [clusterId]_[principalUserQuery]
+
+            The user query is the principal value without the leading `User:`.'
+          readOnly: true
+          x-terraform-force-new: true
+          x-terraform-id: true
+      description: List of access control lists for a Kafka cluster.
+      example:
+        acls:
+        - host: '*'
+          operation: DESCRIBE
+          patternType: LITERAL
+          permissionType: ALLOW
+          principal: User:test
+          resourceName: kafka-cluster
+          resourceType: CLUSTER
+        - host: '*'
+          operation: CREATE
+          patternType: PREFIXED
+          permissionType: ALLOW
+          principal: User:test
+          resourceName: kafka-topic
+          resourceType: TOPIC
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        userQuery: test
+    KafkaAclListsV2:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: UUID of the Kafka cluster
+          x-terraform-id: true
+        aclLists:
+          type: array
+          description: List of all ACLs in the Kafka cluster.
+          items:
+            $ref: '#/components/schemas/KafkaAclListV2'
+      description: List of access control lists for a Kafka cluster.
+    KafkaAclV2:
+      title: Root Type for KafkaAclV2
+      required:
+      - host
+      - operation
+      - patternType
+      - permissionType
+      - principal
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        principal:
+          pattern: ^User:[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Specifies the users(s) for which this ACL applies and can include the wildcard `*`. Valid values must start with "User:" including the wildcard.
+        permissionType:
+          type: string
+          description: Specifies whether to allow or deny the operation.
+          enum:
+          - ALLOW
+          - DENY
+        host:
+          type: string
+          description: The IP address to which this ACL applies. It takes any string including the wildcard `*` for all IP addresses.
+        patternType:
+          type: string
+          description: Indicates the resource-pattern-type
+          enum:
+          - LITERAL
+          - PREFIXED
+        resourceName:
+          type: string
+          description: Any string that fits the resource name, e.g. topic name if the resource type is TOPIC
+        operation:
+          type: string
+          description: The operation that will be allowed or denied.
+          enum:
+          - ALL
+          - READ
+          - WRITE
+          - CREATE
+          - DELETE
+          - ALTER
+          - DESCRIBE
+          - CLUSTER_ACTION
+          - DESCRIBE_CONFIGS
+          - ALTER_CONFIGS
+          - IDEMPOTENT_WRITE
+        resourceType:
+          type: string
+          description: Specifies the type of resource.
+          enum:
+          - CLUSTER
+          - TOPIC
+          - GROUP
+          - DELEGATION_TOKEN
+          - TRANSACTIONAL_ID
+      description: Definition of a Kafka access control list.
+      example:
+        host: '*'
+        operation: DESCRIBE
+        patternType: LITERAL
+        permissionType: ALLOW
+        principal: User:test
+        resourceName: kafka-cluster
+        resourceType: CLUSTER
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

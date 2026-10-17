@@ -1,0 +1,1136 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr ClickHouse Integrations API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged ClickHouse Integrations across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: ClickHouse Integrations
+  description: Operations related to ClickHouse integrations.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/applications/clickhouse/clusters/v2/{clusterId}/integrations/list-s3-fsxns/v2/:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the ClickHouse cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve all ClickHouse S3 FSxN integrations
+      description: Get all ClickHouse S3 FSxN integrations for a given cluster.
+      responses:
+        '200':
+          description: ClickHouse S3 FSxN integrations retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3FsxnList'
+        '404':
+          description: ClickHouse S3 FSxN integrations not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2DataSourcesApplicationsClickhouseClustersV2ByClusterIdIntegrationsListS3FsxnsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/applications/clickhouse/fsxn-integrations/v2/:
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve all ClickHouse S3 FSxN integrations for all clusters in the account
+      responses:
+        '200':
+          description: List all ClickHouse FSxN integrations for the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3FsxnList'
+      operationId: getClusterManagementV2DataSourcesApplicationsClickhouseFsxnIntegrationsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/applications/clickhouse/{clusterId}/integrations/list-kafka/v2:
+    parameters:
+    - name: clusterId
+      in: path
+      description: id for the ClickHouse cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve all existing ClickHouse Kafka integrations for the cluster
+      description: Get a list of all ClickHouse Kafka integrations for a cluster.
+      responses:
+        '200':
+          description: ClickHouse Kafka integrations retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationKafkaList'
+        '404':
+          description: ClickHouse Kafka integrations not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2DataSourcesApplicationsClickhouseByClusterIdIntegrationsListKafkaV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/domain/v2:
+    x-terraform-resource-name: clickhouse_integration_domain_v2
+    post:
+      tags:
+      - ClickHouse Integrations
+      summary: Add a ClickHouse Domain integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationDomain'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse Domain integration added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationDomain'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                domains:
+                - status: RUNNING
+                  target: www.example.com
+                - status: GENESIS
+                  target: www.anotherexample.com
+                id: domain-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsClickhouseIntegrationsDomainV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/domain/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: 'ID for the Domain integration. This should be: ''domain-<cluster uuid>'''
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve a ClickHouse Domain integration
+      description: Get a ClickHouse Domain integration
+      responses:
+        '200':
+          description: ClickHouse Domain integration retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationDomain'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                domains:
+                - status: RUNNING
+                  target: www.example.com
+                - status: GENESIS
+                  target: www.anotherexample.com
+                id: domain-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        '404':
+          description: ClickHouse Domain integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsClickhouseIntegrationsDomainV2ById
+      x-operation-id-source: derived
+    put:
+      tags:
+      - ClickHouse Integrations
+      summary: Update a ClickHouse Domain integration
+      description: Update a ClickHouse Domain integration.
+      requestBody:
+        description: Details of Domain Integration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationDomain'
+        required: true
+      responses:
+        '202':
+          description: Updated ClickHouse Domain integration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationDomain'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                domains:
+                - status: RUNNING
+                  target: www.example.com
+                - status: GENESIS
+                  target: www.anotherexample.com
+                id: s3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        '404':
+          description: ClickHouse Domain integration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: putClusterManagementV2ResourcesApplicationsClickhouseIntegrationsDomainV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - ClickHouse Integrations
+      summary: Remove a ClickHouse Domain integration
+      description: Delete a ClickHouse Domain integration
+      responses:
+        '204':
+          description: ClickHouse Domain integration deleted.
+          content: {}
+        '404':
+          description: ClickHouse Domain integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: deleteClusterManagementV2ResourcesApplicationsClickhouseIntegrationsDomainV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/kafka/v2:
+    x-terraform-resource-name: clickhouse_integration_kafka_v2
+    post:
+      tags:
+      - ClickHouse Integrations
+      summary: Add a ClickHouse Kafka integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationKafka'
+        required: true
+      responses:
+        '202':
+          description: Added ClickHouse Kafka integration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationKafka'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: kafka-12345678-32ac-4fa7-ab42-c165fe35aa55
+                kafkaCluster:
+                  format: Avro
+                  id: 10e4320e-32ac-4le7-39ft-c165fe353gb4
+                  topicName: example-topic
+          x-terraform-resource-poll-completed-statuses: APPLIED
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: NOT_APPLIED,APPLYING
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsClickhouseIntegrationsKafkaV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/kafka/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: 'id for the Kafka integration. This should be: ''kafka-<uuid>'''
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve a ClickHouse Kafka integration
+      description: Get a ClickHouse Kafka integration.
+      responses:
+        '200':
+          description: ClickHouse Kafka integration retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationKafka'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: abce1234-12ec-5bd3-fg53-cg32ed15g7th
+                kafkaCluster:
+                  format: Avro
+                  id: abce1234-12ec-5bd3-fg53-cg32ed15g7th
+                  topicName: example-topic
+                namedCollection: kafka_cluster_f06c9a8f_2a64_4904_8e16_bb82bf254a72_topic_test1
+                status: APPLIED
+        '404':
+          description: ClickHouse Kafka integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsClickhouseIntegrationsKafkaV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - ClickHouse Integrations
+      summary: Remove a ClickHouse Kafka integration
+      description: Delete a ClickHouse Kafka integration.
+      responses:
+        '204':
+          description: ClickHouse Kafka integration deleted.
+          content: {}
+        '404':
+          description: ClickHouse Kafka integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: deleteClusterManagementV2ResourcesApplicationsClickhouseIntegrationsKafkaV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3-fsxn/v2:
+    x-terraform-resource-name: clickhouse_integration_s3_fsxn_v2
+    post:
+      tags:
+      - ClickHouse Integrations
+      summary: Add a ClickHouse S3 FSxN integration
+      description: Add a ClickHouse S3 FSxN integration.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationS3Fsxn'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse S3 FSxN integration added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3Fsxn'
+              example:
+                clusterId: 12aq0751-a169-8732-287a-21aedc6d23fd
+                fsxnFilesystem:
+                  endpointAddress: 10.9.3.145
+                  endpointDns: svm-07efef4ffe0d242f5.fs-028e3bb45a3c6bbab.fsx.us-east-1.amazonaws.com
+                  fsxnId: fs-0c315066d18074b67
+                  providerAccountName: AWS-RIYOA
+                  region: US_EAST_1
+                  vpcId: vpc-07efef4ffe0d242f5
+                id: 15gb5751-a184-8298-627a-29aedc6d23
+                namedCollection: fsxn_fs_03b0dec5533476086
+                status: APPLYING
+          x-terraform-resource-poll-completed-statuses: APPLIED
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: NOT_APPLIED,APPLYING
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3FsxnV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3-fsxn/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID for the S3 FSxN integration.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve a ClickHouse S3 FSxN integration
+      description: Get a ClickHouse S3 FSxN integration.
+      responses:
+        '200':
+          description: ClickHouse S3 FSxN integration retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3Fsxn'
+              example:
+                clusterId: 12aq0751-a169-8732-287a-21aedc6d23fd
+                fsxnFilesystem:
+                  endpointAddress: svm-07efef4ffe0d242f5.fs-028e3bb45a3c6bbab.fsx.us-east-1.amazonaws.com
+                  fsxnId: fs-0c315066d18074b67
+                id: 15gb5751-a184-8298-627a-29aedc6d23
+                namedCollection: fsxn_fs_03b0dec5533476086
+                status: APPLIED
+        '404':
+          description: ClickHouse S3 FSxN integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3FsxnV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - ClickHouse Integrations
+      summary: Remove a ClickHouse S3 FSxN integration
+      description: Delete a ClickHouse S3 FSxN integration.
+      responses:
+        '204':
+          description: ClickHouse S3 FSxN integration deleted.
+          content: {}
+        '404':
+          description: ClickHouse S3 FSxN integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: deleteClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3FsxnV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3-private/v2:
+    x-terraform-resource-name: clickhouse_integration_private_s3_v2
+    post:
+      tags:
+      - ClickHouse Integrations
+      summary: Add a ClickHouse Private S3 integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationS3Private'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse Private S3 integration added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3Private'
+              example:
+                buckets:
+                - arn: arn:aws:s3:::example-s3-bucket
+                  readOnly: false
+                - arn: arn:aws:s3:::example-s3-bucket2
+                  readOnly: true
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: privateS3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                kmsKeyArns:
+                - arn:aws:kms:us-west-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+                status: APPLIED
+          x-terraform-resource-poll-completed-statuses: APPLIED
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: NOT_APPLIED,APPLYING
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3PrivateV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3-private/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: 'ID for the Private S3 integration. This should be: ''privateS3-<cluster-uuid>'''
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve a ClickHouse Private S3 integration
+      description: Get a ClickHouse Private S3 integration.
+      responses:
+        '200':
+          description: ClickHouse Private S3 integration retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3Private'
+              example:
+                buckets:
+                - arn: arn:aws:s3:::example-s3-bucket
+                  readOnly: false
+                - arn: arn:aws:s3:::example-s3-bucket2
+                  readOnly: true
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: privateS3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                kmsKeyArns:
+                - arn:aws:kms:us-west-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+                status: APPLIED
+        '404':
+          description: ClickHouse Private S3 integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3PrivateV2ById
+      x-operation-id-source: derived
+    put:
+      tags:
+      - ClickHouse Integrations
+      summary: Update a ClickHouse Private S3 integration
+      description: Update a ClickHouse Private S3 integration.
+      requestBody:
+        description: Details of Private S3 Integration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationS3Private'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse Private S3 integration updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3Private'
+              example:
+                buckets:
+                - arn: arn:aws:s3:::example-s3-bucket
+                  readOnly: false
+                - arn: arn:aws:s3:::example-s3-bucket2
+                  readOnly: true
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: privateS3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                kmsKeyArns:
+                - arn:aws:kms:us-west-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+                status: APPLIED
+          x-terraform-resource-poll-completed-statuses: APPLIED
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: NOT_APPLIED,APPLYING
+        '404':
+          description: ClickHouse Private S3 integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: putClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3PrivateV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - ClickHouse Integrations
+      summary: Remove a ClickHouse Private S3 integration
+      description: Delete a ClickHouse Private S3 integration.
+      responses:
+        '204':
+          description: ClickHouse Private S3 integration deleted.
+          content: {}
+        '404':
+          description: ClickHouse Private S3 integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3PrivateV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3/v2:
+    x-terraform-resource-name: clickhouse_integration_s3_v2
+    post:
+      tags:
+      - ClickHouse Integrations
+      summary: Add a ClickHouse S3 Region integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationS3'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse S3 Region integration added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: s3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                regions:
+                - status: RUNNING
+                  target: US-EAST-1
+                - status: GENESIS
+                  target: US-WEST-1
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3V2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/clickhouse/integrations/s3/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: 'ID for the S3 integration. This should be: ''s3-<cluster uuid>'''
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - ClickHouse Integrations
+      summary: Retrieve a ClickHouse S3 Region integration
+      description: Get a ClickHouse S3 Region integration.
+      responses:
+        '200':
+          description: ClickHouse S3 Region integration retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: s3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                regions:
+                - status: RUNNING
+                  target: US-EAST-1
+                - status: GENESIS
+                  target: US-WEST-1
+        '404':
+          description: ClickHouse S3 Region integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3V2ById
+      x-operation-id-source: derived
+    put:
+      tags:
+      - ClickHouse Integrations
+      summary: Update a ClickHouse S3 Region integration
+      description: Update a ClickHouse S3 Region integration.
+      requestBody:
+        description: Details of S3 Region Integration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickHouseIntegrationS3'
+        required: true
+      responses:
+        '202':
+          description: ClickHouse S3 Region integration updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClickHouseIntegrationS3'
+              example:
+                clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                id: s3-71e4380e-32ac-4fa7-ab42-c165fe35aa55
+                regions:
+                - status: RUNNING
+                  target: US-EAST-1
+                - status: GENESIS
+                  target: US-WEST-1
+        '404':
+          description: ClickHouse S3 Region integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: putClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3V2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - ClickHouse Integrations
+      summary: Remove a ClickHouse S3 Region integration
+      description: Delete a ClickHouse S3 Region integration.
+      responses:
+        '204':
+          description: ClickHouse S3 Region integration deleted.
+          content: {}
+        '404':
+          description: ClickHouse S3 Region integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: deleteClusterManagementV2ResourcesApplicationsClickhouseIntegrationsS3V2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ClickHouseIntegrationS3Private:
+      required:
+      - buckets
+      - clusterId
+      type: object
+      properties:
+        kmsKeyArns:
+          minItems: 0
+          type: array
+          description: List of KMS key ARNs.
+          items:
+            type: string
+            description: ARN of a KMS key
+            example: arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+        buckets:
+          minItems: 1
+          type: array
+          description: S3 buckets for the Private S3 Integration.
+          items:
+            type: object
+            properties:
+              readOnly:
+                type: boolean
+                description: Boolean recording whether the S3 bucket is read-only.
+              arn:
+                type: string
+                description: ARN for the S3 bucket
+                example: arn:aws:s3:::example-s3-bucket
+            description: ''
+        clusterId:
+          type: string
+          description: ID of the ClickHouse cluster
+          example: 12aq0751-a169-8732-287a-21aedc6d23fd
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the Private S3 Integration.
+          readOnly: true
+          example: privateS3-12aq0751-a169-8732-287a-21aedc6d23fd
+        status:
+          type: string
+          description: Status of the Private S3 integration.
+          readOnly: true
+          example: APPLIED
+          x-terraform-field-status: true
+      description: ClickHouse integration with Private S3 buckets - enables access.
+      example:
+        buckets:
+        - arn: arn:aws:s3:::example-s3-bucket
+          readOnly: false
+        - arn: arn:aws:s3:::example-s3-bucket2
+          readOnly: true
+        clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        kmsKeyArns:
+        - arn:aws:kms:us-west-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+    ClickHouseIntegrationS3Fsxn:
+      required:
+      - clusterId
+      - fsxnFilesystem
+      type: object
+      properties:
+        fsxnFilesystem:
+          required:
+          - fsxnId
+          type: object
+          properties:
+            accessKeyId:
+              type: string
+              description: S3 access key ID.
+              format: password
+              x-terraform-sensitive: true
+              x-terraform-write-only: true
+            secretAccessKey:
+              type: string
+              description: S3 secret access key.
+              format: password
+              x-terraform-sensitive: true
+              x-terraform-write-only: true
+            endpointAddress:
+              type: string
+              description: S3 endpoint address.
+              example: 10.3.5.123
+              x-terraform-computed: true
+            fsxnId:
+              type: string
+              description: AWS ID of the FSx ONTAP file system.
+              example: fs-0c315066d18074b67
+              x-terraform-force-new: true
+            httpsEnabled:
+              type: boolean
+              description: Whether HTTPS is enabled for communication with the FSxN S3 endpoint. Defaults to true when not specified.
+            vpcId:
+              type: string
+              description: AWS VPC ID where the FSx ONTAP file system is located.
+              example: vpc-0bb1c79de3EXAMPLE
+              x-terraform-computed: true
+            endpointDns:
+              type: string
+              description: S3 endpoint DNS.
+              example: svm-07efef4ffe0d242f5.fs-028e3bb45a3c6bbab.fsx.us-east-1.amazonaws.com
+              x-terraform-computed: true
+            region:
+              type: string
+              description: AWS region where the FSx ONTAP file system is located.
+              example: us-east-1
+              x-terraform-computed: true
+            caCertificate:
+              type: string
+              description: PEM-encoded root CA certificate for the FSxN SVM endpoint. Required when httpsEnabled is true.
+            providerAccountName:
+              type: string
+              description: Provider account name where the FSx ONTAP file system is located. Not required when selfManagedNetwork is true.
+              example: AWS-RIYOA
+              x-terraform-computed: true
+            selfManagedNetwork:
+              type: boolean
+              description: When true, the customer manages all cross-account network connectivity (VPC peering, route tables, FSxN-side security group).
+              x-terraform-computed: true
+              x-terraform-force-new: true
+          description: FSx ONTAP file system for the S3 FSxN integration.
+        namedCollection:
+          type: string
+          description: A convenience named collection for query use.
+          readOnly: true
+          example: fsxn_fs_03b0dec5533476086
+        clusterId:
+          type: string
+          description: ID of the ClickHouse cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the S3 FSxN integration.
+          format: uuid
+          readOnly: true
+        status:
+          type: string
+          description: Status of the S3 FSxN Integration.
+          readOnly: true
+          example: APPLIED
+          x-terraform-field-status: true
+      description: ClickHouse integration with FSx ONTAP file system.
+      example:
+        clusterId: 12aq0751-a169-8732-287a-21aedc6d23fd
+        fsxnFilesystem:
+          accessKeyId: REDACTED_AWS_ACCESS_KEY_ID
+          endpointAddress: 10.9.3.145
+          endpointDns: svm-07efef4ffe0d242f5.fs-028e3bb45a3c6bbab.fsx.us-east-1.amazonaws.com
+          fsxnId: fs-0c315066d18074b67
+          providerAccountName: AWS-RIYOA
+          region: US_EAST_1
+          secretAccessKey: wJalrXUtnFEMI_K7MDENG_bPxRfiCYEXAMPLEKEY
+          vpcId: vpc-07efef4ffe0d242f5
+    ClickHouseIntegrationKafkaList:
+      required:
+      - integrations
+      type: object
+      properties:
+        integrations:
+          type: array
+          description: All Kafka integrations for the ClickHouse cluster.
+          items:
+            $ref: '#/components/schemas/ClickHouseIntegrationKafka'
+      description: List of all ClickHouse integrations with Kafka Clusters for a cluster.
+    ClickHouseIntegrationS3:
+      type: object
+      properties:
+        regions:
+          minItems: 1
+          type: array
+          description: List of S3 Regions to integrate with.
+          items:
+            required:
+            - target
+            type: object
+            properties:
+              status:
+                type: string
+                description: Status of the S3 Region Integration.
+                readOnly: true
+                example: RUNNING
+              target:
+                type: string
+                description: Target S3 Region for the integration (or 'ALL_REGIONS' for all regions).
+                example: US-EAST-1
+            description: ''
+          x-terraform-field-name: region
+          x-terraform-ignore-order: true
+        clusterId:
+          type: string
+          description: ID of the ClickHouse cluster.
+          example: 12aq0751-a169-8732-287a-21aedc6d23fd
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the S3 Integration
+          readOnly: true
+          example: s3-12aq0751-a169-8732-287a-21aedc6d23fd
+      description: ClickHouse integration with S3 Region - enables access
+      example:
+        clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        regions:
+        - target: US-EAST-1
+        - target: US-WEST-1
+    ClickHouseIntegrationDomain:
+      type: object
+      properties:
+        domains:
+          type: array
+          description: List of domains to integrate with.
+          items:
+            required:
+            - target
+            type: object
+            properties:
+              status:
+                type: string
+                description: Status of the Domain Integration.
+                readOnly: true
+                example: RUNNING
+              target:
+                type: string
+                description: Target for the Domain Integration.
+                example: www.example.com
+            description: ''
+          x-terraform-field-name: domain
+          x-terraform-ignore-order: true
+        clusterId:
+          type: string
+          description: ID of the ClickHouse cluster
+          example: 12aq0751-a169-8732-287a-21aedc6d23fd
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the Domain Integration.
+          readOnly: true
+          example: domain-12aq0751-a169-8732-287a-21aedc6d23fd
+      description: ClickHouse integration with Domain - enables access.
+      example:
+        clusterId: 71e4380e-32ac-4fa7-ab42-c165fe35aa55
+        domains:
+        - target: www.example.com
+        - target: www.anotherexample.com
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    ClickHouseIntegrationS3FsxnList:
+      required:
+      - integrations
+      type: object
+      properties:
+        integrations:
+          type: array
+          description: All S3 FSxN Integrations for the cluster.
+          items:
+            $ref: '#/components/schemas/ClickHouseIntegrationS3Fsxn'
+      description: List of all S3 FSxN Integrations for a given cluster.
+    ClickHouseIntegrationKafka:
+      required:
+      - clusterId
+      - kafkaCluster
+      type: object
+      properties:
+        namedCollection:
+          type: string
+          description: 'Name of of named collection used for the Kafka table integration config. Format: kafka-cluster-<integration-id>_topic_<topic-name>'
+          readOnly: true
+          example: kafka-cluster-15gb5751-a184-8298-627a-29aedc6d23tg
+        clusterId:
+          type: string
+          description: ID of the ClickHouse cluster
+          example: 12aq0751-a169-8732-287a-21aedc6d23fd
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the Kafka Integration.
+          readOnly: true
+          example: kafka-12340751-a169-8732-287a-21aedc6d23fd
+        kafkaCluster:
+          type: object
+          properties:
+            format:
+              type: string
+              description: Format of the Kafka message
+              example: Avro
+            topicName:
+              type: string
+              description: Name of the Kafka topic.
+              example: topic-name-example
+            id:
+              type: string
+              description: ID of the Kafka cluster.
+              example: 12aq0751-a169-8732-287a-21aedc6d23fc
+          description: Kafka cluster for the Kafka Integration.
+        status:
+          type: string
+          description: Status of the Kafka Integration.
+          readOnly: true
+          example: APPLIED
+          x-terraform-field-status: true
+      description: ClickHouse Integration with Kafka clusters - enables access.
+      example:
+        clusterId: 12aq0751-a169-8732-287a-21aedc6d23fd
+        kafkaCluster:
+          format: Avro
+          id: 12aq0751-a169-8732-287a-21aedc6d23fc
+          topicName: kafka-topic
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

@@ -1,0 +1,605 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Kafka Topic API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Kafka Topic across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Kafka Topic
+  description: Operations related to Kafka topics.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/{clusterId}/kafka/topics:
+    get:
+      tags:
+      - Kafka Topic
+      summary: Get a list of Kafka topics
+      description: Retrieve a list of Kafka topics currently in the given cluster.
+      operationId: listTopics
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      responses:
+        '200':
+          description: Successfully returned a JSON list of Kafka topics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicListResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    post:
+      tags:
+      - Kafka Topic
+      summary: Create a Kafka topic
+      description: Create a new Kafka topic in the given cluster with the specified number of partitions and replication factor.
+      operationId: createTopic
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaTopicCreateRequest'
+      responses:
+        '201':
+          description: Kafka topic successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: Topic test-topic created.
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/kafka/topics/{topic}:
+    get:
+      tags:
+      - Kafka Topic
+      summary: Get the information of a Kafka topic
+      description: Retrieve the information (number of partitions and replication factor) of a Kafka topic in the given cluster.
+      operationId: describeTopic
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: topic
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a JSON of Kafka topic information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicDescribeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    delete:
+      tags:
+      - Kafka Topic
+      summary: Delete a Kafka topic
+      description: Delete the Kafka topic for a given topic name
+      operationId: deleteTopic
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: topic
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Kafka topic successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: Kafka topic test-topic has been deleted.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/{clusterId}/kafka/topics/{topic}/config:
+    get:
+      tags:
+      - Kafka Topic
+      summary: Describe the configs of a Kafka topic
+      description: Describe the configs of a Kafka topic.
+      operationId: describeTopicConfig
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: topic
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a JSON of a Kafka topic configs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaTopicDescribeConfigResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    put:
+      tags:
+      - Kafka Topic
+      summary: Modify the configs of a Kafka topic
+      description: Modify the configs of a Kafka topic. Refer to https://kafka.apache.org/23/documentation.html for available keys and valid values.
+      operationId: modifyTopicConfig
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: 64223f17-7c9b-4986-8e2e-a44a91a26635
+      - name: topic
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaTopicModifyConfigRequest'
+      responses:
+        '200':
+          description: Successfully updated the configs of Kafka topic
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: The configs for Kafka topic test-topic has been modified.
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Missing permissions
+        '404':
+          description: Resource not found
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+        '504':
+          description: Gateway Timeout
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    GenericResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message content
+    KafkaTopicListResponse:
+      type: object
+      properties:
+        topics:
+          type: array
+          example:
+          - instaclustr-sla
+          items:
+            type: string
+            example: '["instaclustr-sla"]'
+    KafkaTopicDescribeConfigResponse:
+      type: object
+      properties:
+        topic:
+          type: string
+          example: test-topic
+        config:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"min.insync.replicas":"2"}'
+          example:
+            min.insync.replicas: '2'
+    KafkaTopicDescribeResponse:
+      type: object
+      properties:
+        topic:
+          type: string
+          example: test-topic
+        partitions:
+          type: integer
+          format: int32
+          example: 3
+        replicationFactor:
+          type: integer
+          format: int32
+          example: 3
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    KafkaTopicModifyConfigRequest:
+      type: object
+      properties:
+        config:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"min.insync.replicas":"2"}'
+          example:
+            min.insync.replicas: '2'
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    KafkaTopicCreateRequest:
+      type: object
+      properties:
+        topic:
+          type: string
+          example: topic-test
+        replicationFactor:
+          type: integer
+          format: int32
+          example: 3
+        partitions:
+          type: integer
+          format: int32
+          example: 3
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

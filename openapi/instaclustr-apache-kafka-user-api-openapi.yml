@@ -1,0 +1,1209 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Apache Kafka User API
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  version: '1.0'
+  description: 'Operations tagged Apache Kafka User across 4 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Apache Kafka User
+  description: ''
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/kafka_cluster/{clusterId}/users/v2/:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kafka cluster.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    x-terraform-resource-name: users_v2
+    get:
+      tags:
+      - Apache Kafka User
+      summary: List all Kafka users
+      description: Retrieve a list of the kafka users existing in the given cluster.
+      responses:
+        '200':
+          description: Successfully retrieved Kafka users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaUserSummariesV2'
+      operationId: getClusterManagementV2DataSourcesKafkaClusterByClusterIdUsersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/kafka_users/{kafkaUserId}/certificates/v2/:
+    parameters:
+    - name: kafkaUserId
+      in: path
+      description: ID of the Kafka user which formed by combining ClusterId and Kafka username (ClusterID_Username).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: string
+    x-terraform-resource-name: user_certificates_v2
+    get:
+      tags:
+      - Apache Kafka User
+      summary: List all active certificate of a given kafka user
+      description: Retrieve a list of client certificates of a given kafka user.
+      responses:
+        '200':
+          description: Successfully retrieved user's certificates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KafkaUserCertificateV2'
+              example:
+              - clusterId: Id of the kafka cluster
+                csr: generated csr string
+                expiryDate: Date certificate expires.
+                id: ID of the certificate.
+                kafkaUsername: kafka username
+                signedCertificate: Generated client signed certificate
+                validPeriod: 120
+      operationId: getClusterManagementV2DataSourcesKafkaUsersByKafkaUserIdCertificatesV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/applications/kafka/user-certificates/renew/v2:
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Renew a Kafka user's certificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserCertificateRenewalRequestV2'
+        required: true
+      responses:
+        '202':
+          description: Successfully renew the Kafka user's certificate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserCertificateV2'
+              example:
+                clusterId: Id of the kafka cluster
+                csr: generated csr string
+                expiryDate: Date certificate expires.
+                id: ID of the certificate.
+                kafkaUsername: kafka username
+                signedCertificate: Generated client signed certificate
+                validPeriod: 120
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2OperationsApplicationsKafkaUserCertificatesRenewV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/applications/kafka/user-certificates/{certificateId}/download/v2:
+    parameters:
+    - name: certificateId
+      in: path
+      description: ID of the Certificate.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Download a Kafka user's certificate
+      responses:
+        '200':
+          description: Successfully renew the Kafka user's certificate
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+      operationId: getClusterManagementV2OperationsApplicationsKafkaUserCertificatesByCertificateIdDownloadV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/user-certificates/v2:
+    x-terraform-resource-name: kafka_user_certificate_v2
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Create Kafka user's client certificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserCertificateV2'
+        required: true
+      responses:
+        '202':
+          description: Kafka user's client certificate provisioning requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserCertificateV2'
+              example:
+                clusterId: Id of the kafka cluster
+                csr: generated csr string
+                expiryDate: Date certificate expires.
+                id: ID of the certificate.
+                kafkaUsername: kafka username
+                signedCertificate: Generated client signed certificate
+                validPeriod: 120
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaUserCertificatesV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/user-certificates/v2/{certificateId}:
+    parameters:
+    - name: certificateId
+      in: path
+      description: ID of the Certificate.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Get a Kafka user certificate
+      responses:
+        '200':
+          description: Kafka user certificate retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserCertificateV2'
+              example:
+                clusterId: Id of the kafka cluster
+                csr: generated csr string
+                expiryDate: Date certificate expires.
+                id: ID of the certificate.
+                kafkaUsername: kafka username
+                signedCertificate: Generated client signed certificate
+                validPeriod: 120
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaUserCertificatesV2ByCertificateId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka User
+      summary: Delete a Kafka user's certificate
+      responses:
+        '204':
+          description: Successfully processed the delete user's certificate.
+          content: {}
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaUserCertificatesV2ByCertificateId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v5:
+    x-terraform-resource-name: kafka_user_v5
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Create a Kafka User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserV5'
+        required: true
+      responses:
+        '202':
+          description: Kafka user provisioning requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV5'
+              example:
+                authMechanism: SASL
+                clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                currentOperationStatus: OPERATION_IN_PROGRESS
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+                password: myPassword1.
+                saslScramMechanism: SCRAM-SHA-256
+                username: myKafkaUser
+          x-terraform-resource-poll-completed-statuses: NO_OPERATION
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: OPERATION_IN_PROGRESS
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaUsersV5
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v5/{kafkaUserId}:
+    parameters:
+    - name: kafkaUserId
+      in: path
+      description: ID of the Kafka user which formed by combining ClusterId and Kafka username (ClusterID_Username).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Get Kafka User details
+      responses:
+        '200':
+          description: Kafka user details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV5'
+              example:
+                authMechanism: SASL
+                clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                currentOperationStatus: NO_OPERATION
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+                password: myPassword1.
+                saslScramMechanism: SCRAM-SHA-256
+                username: myKafkaUser
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaUsersV5ByKafkaUserId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka User
+      summary: Update Kafka Authentication Details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserUpdateV5'
+        required: true
+      responses:
+        '202':
+          description: Requested Kafka user update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserUpdateV5'
+              example:
+                authMechanism: SASL
+                clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                currentOperationStatus: NO_OPERATION
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+                password: myPassword1.
+                saslScramMechanism: SCRAM-SHA-256
+                username: myKafkaUser
+          x-terraform-resource-poll-completed-statuses: NO_OPERATION
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: OPERATION_IN_PROGRESS
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaUsersV5ByKafkaUserId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka User
+      summary: Delete a Kafka user
+      responses:
+        '204':
+          description: Kafka user delete requested.
+          content: {}
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaUsersV5ByKafkaUserId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v2:
+    x-terraform-resource-name: kafka_user_v2
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Create a Kafka User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserV2'
+        required: true
+      responses:
+        '202':
+          description: Kafka user provisioning requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV2'
+              example:
+                clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+                initialPermissions: standard
+                options:
+                  overrideExistingUser: false
+                  saslScramMechanism: SCRAM-SHA-256
+                password: myPassword1.
+                username: myKafkaUser
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaUsersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v2/{kafkaUserId}:
+    parameters:
+    - name: kafkaUserId
+      in: path
+      description: ID of the Kafka user which formed by combining ClusterId and Kafka username (ClusterID_Username).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Get Kafka User details
+      responses:
+        '200':
+          description: Kafka user details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV2'
+      deprecated: false
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaUsersV2ByKafkaUserId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka User
+      summary: Update Kafka user password and options
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserUpdateV2'
+        required: true
+      responses:
+        '202':
+          description: Requested Kafka user update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserUpdateV2'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaUsersV2ByKafkaUserId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka User
+      summary: Delete a Kafka user
+      responses:
+        '204':
+          description: Kafka user delete requested.
+          content: {}
+      deprecated: false
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaUsersV2ByKafkaUserId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v3:
+    x-terraform-resource-name: kafka_user_v3
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Create a Kafka User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserV3'
+        required: true
+      responses:
+        '202':
+          description: Kafka user provisioning requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV3'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaUsersV3
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v3/{kafkaUserId}:
+    parameters:
+    - name: kafkaUserId
+      in: path
+      description: ID of the Kafka user which formed by combining ClusterId and Kafka username (ClusterID_Username).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Get Kafka User details
+      responses:
+        '200':
+          description: Kafka user details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV3'
+      deprecated: false
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaUsersV3ByKafkaUserId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka User
+      summary: Update Kafka Authentication Details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserUpdateV3'
+        required: true
+      responses:
+        '202':
+          description: Requested Kafka user update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserUpdateV3'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaUsersV3ByKafkaUserId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka User
+      summary: Delete a Kafka user
+      responses:
+        '204':
+          description: Kafka user delete requested.
+          content: {}
+      deprecated: false
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaUsersV3ByKafkaUserId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v4:
+    x-terraform-resource-name: kafka_user_v4
+    post:
+      tags:
+      - Apache Kafka User
+      summary: Create a Kafka User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserV4'
+        required: true
+      responses:
+        '202':
+          description: Kafka user provisioning requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV4'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsKafkaUsersV4
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/kafka/users/v4/{kafkaUserId}:
+    parameters:
+    - name: kafkaUserId
+      in: path
+      description: ID of the Kafka user which formed by combining ClusterId and Kafka username (ClusterID_Username).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    get:
+      tags:
+      - Apache Kafka User
+      summary: Get Kafka User details
+      responses:
+        '200':
+          description: Kafka user details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserV4'
+      deprecated: false
+      operationId: getClusterManagementV2ResourcesApplicationsKafkaUsersV4ByKafkaUserId
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Apache Kafka User
+      summary: Update Kafka Authentication Details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KafkaUserUpdateV4'
+        required: true
+      responses:
+        '202':
+          description: Requested Kafka user update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KafkaUserUpdateV4'
+      deprecated: false
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsKafkaUsersV4ByKafkaUserId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Apache Kafka User
+      summary: Delete a Kafka user
+      responses:
+        '204':
+          description: Kafka user delete requested.
+          content: {}
+      deprecated: false
+      operationId: deleteClusterManagementV2ResourcesApplicationsKafkaUsersV4ByKafkaUserId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    KafkaUserCertificateV2:
+      required:
+      - clusterId
+      - csr
+      - kafkaUsername
+      - validPeriod
+      type: object
+      properties:
+        expiryDate:
+          type: string
+          description: Date certificate expires.
+          format: string
+          readOnly: true
+        csr:
+          type: string
+          description: Certificate signing request.
+          format: string
+          x-terraform-force-new: true
+        kafkaUsername:
+          type: string
+          description: The Kafka username
+          x-terraform-force-new: true
+        clusterId:
+          type: string
+          description: ID of the kafka cluster
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: ID of the certificate.
+          format: string
+          readOnly: true
+        signedCertificate:
+          type: string
+          description: Generated client signed certificate.
+          format: string
+          readOnly: true
+        validPeriod:
+          maximum: 120
+          minimum: 3
+          type: integer
+          description: Number of months for which the certificate will be valid.
+          x-terraform-force-new: true
+      description: Certificate signing request.
+      example:
+        clusterId: Id of the kafka cluster
+        csr: generated csr string
+        kafkaUsername: kafka username
+        validPeriod: 120
+    KafkaSaslScramMechanism:
+      type: string
+      description: 'Scram Mechanism for SASL authentication. Valid values: SCRAM-SHA-256, SCRAM-SHA-512'
+    KafkaUserSummariesV2:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: ID of the kafka cluster
+          x-terraform-id: true
+        kafkaUsers:
+          type: array
+          description: List of all Kafka users in the cluster.
+          items:
+            $ref: '#/components/schemas/KafkaUserSummaryV2'
+      description: A listable data source of all Kafka users within a Kafka Cluster.
+    KafkaUserUpdateV5:
+      required:
+      - authMechanism
+      - clusterId
+      - username
+      type: object
+      properties:
+        currentOperationStatus:
+          $ref: '#/components/schemas/CurrentOperationStatus'
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User Update to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+    KafkaUserSummaryV2:
+      required:
+      - clusterId
+      - username
+      type: object
+      properties:
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Summary of a Kafka User to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+        username: myKafkaUser
+    KafkaUserV5:
+      required:
+      - authMechanism
+      - clusterId
+      - username
+      type: object
+      properties:
+        currentOperationStatus:
+          $ref: '#/components/schemas/CurrentOperationStatus'
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+    KafkaUserCertificateRenewalRequestV2:
+      required:
+      - certificateId
+      type: object
+      properties:
+        certificateId:
+          type: string
+          description: ID of the certificate.
+          format: string
+      description: Certificate signing request.
+    CurrentOperationStatus:
+      type: string
+      description: Indicates if the cluster is currently performing any operation such as being created, updated, or deleted
+      example: OPERATION_IN_PROGRESS
+      enum:
+      - NO_OPERATION
+      - OPERATION_IN_PROGRESS
+      - OPERATION_FAILED
+      x-insta-tf-import-hidden: true
+      x-terraform-field-status: true
+    KafkaAuthMechanismsEnumV2:
+      type: string
+      description: Authentication mechanisms supported for KafkaClusters.
+      enum:
+      - MTLS
+      - SASL
+      x-insta-comment: Null value included for backwards compatibility
+    KafkaUserV4:
+      required:
+      - authMechanism
+      - clusterId
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        overrideExistingUser:
+          type: boolean
+          description: Overwrite user if already exists.
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        overrideExistingUser: false
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+    KafkaUserUpdateV2:
+      required:
+      - clusterId
+      - options
+      - password
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        options:
+          $ref: '#/components/schemas/KafkaUserOptionsV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User Update to be applied to a Kafka cluster.
+      example:
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+        initialPermissions: standard
+        options:
+          overrideExistingUser: false
+          saslScramMechanism: SCRAM-SHA-256
+        password: myPassword1.
+        username: myKafkaUser
+    KafkaUserV2:
+      required:
+      - clusterId
+      - initialPermissions
+      - options
+      - password
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        options:
+          $ref: '#/components/schemas/KafkaUserOptionsV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        initialPermissions:
+          type: string
+          description: Permissions initially granted to Kafka user upon creation.
+          enum:
+          - standard
+          - read-only
+          - none
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: '!> **Deprecated:** This resource is deprecated and will be removed in the next major version. Use <a href="https://registry.terraform.io/providers/instaclustr/instaclustr/latest/docs/resources/kafka_user_v4"> instaclustr_kafka_user_v4</a> instead.
+
+
+        Definition of a Kafka User to be applied to a Kafka cluster.'
+      example:
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        initialPermissions: standard
+        options:
+          overrideExistingUser: false
+          saslScramMechanism: SCRAM-SHA-256
+        password: myPassword1.
+        username: myKafkaUser
+    KafkaUserUpdateV3:
+      required:
+      - authMechanism
+      - clusterId
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        overrideExistingUser:
+          type: boolean
+          description: Overwrite user if already exists.
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User Update to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+        initialPermissions: standard
+        overrideExistingUser: false
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+    KafkaUserOptionsV2:
+      required:
+      - saslScramMechanism
+      type: object
+      properties:
+        overrideExistingUser:
+          type: boolean
+          description: Overwrite user if already exists.
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+      description: Initial options used when creating Kafka user
+      x-terraform-force-new: true
+      x-terraform-write-only: true
+    KafkaUserUpdateV4:
+      required:
+      - authMechanism
+      - clusterId
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        overrideExistingUser:
+          type: boolean
+          description: Overwrite user if already exists.
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: Definition of a Kafka User Update to be applied to a Kafka cluster.
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37_myKafkaUser
+        overrideExistingUser: false
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+    KafkaUserV3:
+      required:
+      - authMechanism
+      - clusterId
+      - initialPermissions
+      - username
+      type: object
+      properties:
+        password:
+          type: string
+          description: Password for the Kafka user.
+          format: password
+          x-terraform-sensitive: true
+          x-terraform-write-only: true
+        overrideExistingUser:
+          type: boolean
+          description: Overwrite user if already exists.
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        saslScramMechanism:
+          $ref: '#/components/schemas/KafkaSaslScramMechanism'
+        authMechanism:
+          $ref: '#/components/schemas/KafkaAuthMechanismsEnumV2'
+        clusterId:
+          type: string
+          description: ID of the Kafka cluster.
+          format: uuid
+          x-terraform-force-new: true
+        id:
+          type: string
+          description: 'Instaclustr identifier for the Kafka user. The value of this property has the form: [cluster-id]_[kafka-username]'
+          readOnly: true
+        initialPermissions:
+          type: string
+          description: Permissions initially granted to Kafka user upon creation.
+          enum:
+          - standard
+          - read-only
+          - none
+          x-terraform-force-new: true
+          x-terraform-write-only: true
+        username:
+          pattern: ^(?![zZ][oO][oO][kK][eE][eE][pP][eE][rR]$)[a-zA-Z0-9][a-zA-Z0-9_-]*$
+          type: string
+          description: Username of the Kafka user.
+          x-terraform-force-new: true
+      description: '!> **Deprecated:** This resource is deprecated and will be removed in the next major version. Use <a href="https://registry.terraform.io/providers/instaclustr/instaclustr/latest/docs/resources/kafka_user_v4"> instaclustr_kafka_user_v4</a> instead.
+
+
+        Definition of a Kafka User to be applied to a Kafka cluster.'
+      example:
+        authMechanism: SASL
+        clusterId: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        initialPermissions: standard
+        overrideExistingUser: false
+        password: myPassword1.
+        saslScramMechanism: SCRAM-SHA-256
+        username: myKafkaUser
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

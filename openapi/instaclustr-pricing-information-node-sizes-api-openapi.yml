@@ -1,0 +1,315 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Pricing information - Node sizes API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Pricing information - Node sizes across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Pricing information - Node sizes
+  description: Operation to fetch pricing information. These endpoints do not require any API keys to access. These are publicly available information.
+  x-insta-tag-group: Other
+paths:
+  /public/v1/pricing/nodes:
+    get:
+      tags:
+      - Pricing information - Node sizes
+      summary: List node size pricing information
+      description: List pricing information for each type of node size.
+      operationId: getEnabledNodesPricing
+      responses:
+        '200':
+          description: Successfully fetched pricing information for node sizes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeSizeForPricingResourceSchema'
+      security:
+      - No Authentication: []
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    NodeSizeForPricingResource:
+      type: object
+      properties:
+        name:
+          type: string
+        dataCentre:
+          type: string
+        dataCentreDisplayName:
+          type: string
+        provider:
+          type: string
+          enum:
+          - AWS
+          - AWS_VPC
+          - RACKSPACE
+          - AZURE_AZ
+          - VAGRANT
+          - GCP
+          - SOFTLAYER_BARE_METAL
+          - ONPREMISES
+        displayName:
+          type: string
+        displayGroup:
+          type: string
+        cost:
+          type: number
+          format: double
+        managementUnits:
+          type: number
+          format: double
+        awsMarketplaceCost:
+          type: number
+          format: double
+        azureMarketplaceCost:
+          type: number
+          format: double
+        gcpMarketplaceCost:
+          type: number
+          format: double
+        diskQuota:
+          type: integer
+          format: int32
+        cacheDiskQuota:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+        mountedStorageType:
+          type: string
+          enum:
+          - AWS_VPC_GP2
+          - AWS_VPC_ST1
+          - AWS_VPC_GP3
+          - AZURE_STANDARD
+          - AZURE_PREMIUM
+          - AZURE_PREMIUM_V2
+          - GCP_SSD_PERSISTENT_DISK
+          - GCP_BALANCED_PERSISTENT_DISK
+          - GCP_BALANCED_HYPERDISK
+          - ANF_PREMIUM_NFS_V3
+          - ANF_ULTRA_NFS_V3
+          - AWS_VPC_FSX_ONTAP
+          - AWS_VPC_FSX_ONTAP_GEN2
+          - NONE
+        freeTrial:
+          type: boolean
+        providerNodeSizeName:
+          type: string
+        developer:
+          type: boolean
+        memoryQuota:
+          type: integer
+          format: int32
+        cpuCores:
+          type: integer
+          format: int32
+        volumeCount:
+          type: integer
+          format: int32
+        deprecated:
+          type: boolean
+        persistentStorageDiskCount:
+          type: integer
+          format: int32
+        ephemeralStorageDiskCount:
+          type: integer
+          format: int32
+        provisionedDiskIops:
+          type: integer
+          format: int32
+        provisionedDiskThroughput:
+          type: integer
+          format: int32
+        cpuArch:
+          type: string
+          enum:
+          - X86_64
+          - ARM64_GRAVITON2
+          - ARM64
+        mountedStorageTypeDisplayName:
+          type: string
+        instaclustrLifecycleState:
+          type: string
+          enum:
+          - GENERAL_AVAILABILITY
+          - DEPRECATED
+          - PUBLIC_PREVIEW
+          - LIMITED_AVAILABILITY
+          - CLOSED
+          - LEGACY_SUPPORT
+          - END_OF_LIFE
+          - RETIRED
+        key:
+          type: string
+        offeringName:
+          type: string
+        largerNodeSizeKey:
+          type: string
+        persistentStorageDiskQuota:
+          type: integer
+          format: int32
+        ephemeralStorageDiskQuota:
+          type: integer
+          format: int32
+        heroSku:
+          type: boolean
+        nodeSizeFunction:
+          type: string
+          enum:
+          - APACHE_CASSANDRA
+          - CASSANDRA_SHOTOVER_PROXY
+          - KAFKA
+          - KAFKA_SHOTOVER_PROXY
+          - KAFKA_DEDICATED_ZOOKEEPER
+          - KAFKA_DEDICATED_KRAFT
+          - KAFKA_CONNECT
+          - APACHE_ZOOKEEPER
+          - OPENSEARCH
+          - OPENSEARCH_DEDICATED_CLUSTER_MANAGER
+          - OPENSEARCH_DEDICATED_INGEST
+          - OPENSEARCH_VECTOR_INDEX_BUILDER
+          - ELASTICSEARCH
+          - ELASTICSEARCH_DEDICATED_MASTER
+          - REDIS
+          - VALKEY
+          - POSTGRESQL
+          - CADENCE
+          - CADENCE_SHARED_INFRASTRUCTURE
+          - MONGODB
+          - COUCHBASE
+          - CLICKHOUSE
+          - CLICKHOUSE_DEDICATED_KEEPER
+          - MCP_GATEWAY
+        specialNodeSizeFunction:
+          type: boolean
+      description: 'The region of the datacentre. Example: WEST_US_2'
+    ProviderType:
+      type: object
+      properties:
+        PROVIDER:
+          $ref: '#/components/schemas/DataCentreRegion'
+      description: 'The type of Application. Example: APACHE_CASSANDRA.'
+    NodeSizeForPricingResourceSchema:
+      type: object
+      properties:
+        APPLICATION:
+          $ref: '#/components/schemas/ProviderType'
+    DataCentreRegion:
+      type: object
+      properties:
+        DATACENTRE_REGION:
+          $ref: '#/components/schemas/NodeSizeForPricingResource'
+      description: 'The type of cloud provider. Example: AWS_VPC.'
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

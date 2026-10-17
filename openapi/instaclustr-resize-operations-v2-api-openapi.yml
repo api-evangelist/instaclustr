@@ -1,0 +1,360 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Resize Operations V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Resize Operations V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Resize Operations V2
+  description: Operations and information related to resizing clusters.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/cluster-data-centres/v2/{clusterDataCentreId}/resize/compatible-node-sizes/v2:
+    parameters:
+    - name: clusterDataCentreId
+      in: path
+      description: ID of the Cluster Data Centre
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Resize Operations V2
+      summary: Retrieve compatible node sizes for resize
+      description: Retrieve the list of valid node sizes for resize.
+      responses:
+        '200':
+          description: Successfully retrieved the list of compatible node sizes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResizeCompatibleNodeSizesV2'
+      operationId: getClusterManagementV2DataSourcesClusterDataCentresV2ByClusterDataCentreIdResizeCompatibleNodeSizesV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/data-sources/cluster-data-centres/v2/{clusterDataCentreId}/resize/operations/v2:
+    parameters:
+    - name: clusterDataCentreId
+      in: path
+      description: ID of the Cluster Data Centre.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Resize Operations V2
+      summary: Get resize operations for a Cluster Data Centre
+      operationId: listResizeOperationsV2
+      parameters:
+      - name: activeOnly
+        in: query
+        description: Only return active operations.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved the list of resize operations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResizeOperationInfosV2'
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/resize-operations/v2/{operationId}/cancel/v2:
+    parameters:
+    - name: operationId
+      in: path
+      description: ID of the resize operation.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    delete:
+      tags:
+      - Resize Operations V2
+      summary: Cancel a resize Cluster Data Centre operation
+      responses:
+        '204':
+          description: Successfully cancelled the resize operation.
+          content: {}
+      operationId: deleteClusterManagementV2OperationsResizeOperationsV2ByOperationIdCancelV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ResizeOperationInfosV2:
+      type: object
+      properties:
+        operations:
+          type: array
+          description: ''
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ResizeOperationInfoV2'
+      description: ''
+    ResizeOperationInfoV2:
+      type: object
+      properties:
+        concurrentResizes:
+          type: integer
+          description: Number of nodes that can be concurrently resized at a given time.
+          readOnly: true
+          example: 2
+        replaceOperations:
+          type: array
+          description: ''
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ReplaceOperationInfoV2'
+        created:
+          type: string
+          description: Timestamp of the creation of the operation
+          readOnly: true
+          example: '2019-08-24T14:15:22Z'
+        completed:
+          type: string
+          description: Timestamp of the completion of the operation.
+          readOnly: true
+          example: '2019-08-24T14:15:22Z'
+        id:
+          type: string
+          description: ID of the operation.
+          format: uuid
+          readOnly: true
+          example: 657d1cec-1eb8-449f-8be4-467ab1f2b856
+        newNodeSize:
+          type: string
+          description: New size of the node.
+          readOnly: true
+          example: CAS-DEV-t4g.small-30
+        instaclustrSupportAlerted:
+          type: string
+          description: Timestamp of when Instaclustr Support has been alerted to the resize operation.
+          readOnly: true
+          example: '2019-08-24T14:15:22Z'
+        nodePurpose:
+          type: string
+          description: Purpose of the node
+          readOnly: true
+          example: CASSANDRA
+        status:
+          type: string
+          description: Status of the operation
+          readOnly: true
+          example: COMPLETED
+          enum:
+          - COMPLETED
+          - FAILED
+          - DELETED
+          - IN_PROGRESS
+          - UNKNOWN
+      description: ''
+    ReplaceOperationInfoV2:
+      type: object
+      properties:
+        newNodeId:
+          type: string
+          description: ID of the new node in the replacement operation.
+          format: uuid
+          readOnly: true
+          example: 657d1cec-1eb8-449f-8be4-467ab1f2b856
+        created:
+          type: string
+          description: Timestamp of the creation of the node replacement operation.
+          readOnly: true
+          example: '2019-08-24T14:15:22Z'
+        id:
+          type: string
+          description: ID of the node replacement operation.
+          format: uuid
+          readOnly: true
+          example: 657d1cec-1eb8-449f-8be4-467ab1f2b856
+        nodeId:
+          type: string
+          description: ID of the node being replaced.
+          format: uuid
+          readOnly: true
+          example: 657d1cec-1eb8-449f-8be4-467ab1f2b856
+        status:
+          type: string
+          description: Status of the node replacement operation.
+          readOnly: true
+          example: GENESIS
+          enum:
+          - GENESIS
+          - RESIZING_DISK
+          - RESIZED_DISK
+          - EXPANDED_FILESYSTEM
+          - GRACEFULLY_SHUTTING_DOWN
+          - CREATING_REPLACEMENT
+          - PROVISIONING
+          - PROVISIONED
+          - BACKEDUP
+          - RESTORING
+          - FLUSHING
+          - FLUSHED
+          - SWAPPING
+          - SWAPPED
+          - CLEARING_INSTALLED_BUNDLES
+          - CLEARED_INSTALLED_BUNDLES
+          - POST_BUNDLE_PROCESSING
+          - RESTARTING
+          - REPLACED
+          - CANCELLING
+          - CANCELLED
+          - FAILING
+          - FAILED
+          - UNKNOWN
+      description: ''
+    ResizeCompatibleNodeSizeInfoV2:
+      type: object
+      properties:
+        nodeSizes:
+          type: array
+          description: Compatible node sizes to which the Cluster Data Centre can be resized.
+          readOnly: true
+          example: CAS-DEV-t4g.small-30
+          items:
+            type: string
+        nodePurpose:
+          type: string
+          description: Purpose of the node.
+          readOnly: true
+          example: CASSANDRA
+      description: ''
+    ResizeCompatibleNodeSizesV2:
+      type: object
+      properties:
+        compatibleNodeSizes:
+          type: array
+          description: List of compatible node sizes based on the purpose of the node.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ResizeCompatibleNodeSizeInfoV2'
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

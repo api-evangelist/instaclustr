@@ -1,0 +1,297 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr AWS FSx ONTAP File Systems API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged AWS FSx ONTAP File Systems across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: AWS FSx ONTAP File Systems
+  description: Operations related to AWS FSx ONTAP file system provisioning
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/providers/aws/list-fsxns/v2/:
+    get:
+      tags:
+      - AWS FSx ONTAP File Systems
+      summary: List available FSx ONTAP file systems
+      responses:
+        '200':
+          description: List available FSx ONTAP file systems.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AwsFsxOntapFileSystemV2'
+      operationId: getClusterManagementV2DataSourcesProvidersAwsListFsxnsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/fsxn/v2:
+    x-terraform-resource-name: aws_fsxn_v2
+    post:
+      tags:
+      - AWS FSx ONTAP File Systems
+      summary: Create an FSx ONTAP file system
+      description: Create an AWS FSx ONTAP File System.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsFsxOntapFileSystemV2'
+        required: true
+      responses:
+        '202':
+          description: AWS FSx ONTAP File System creation requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsFsxOntapFileSystemV2'
+              example:
+                fsxnId: fs-0c315066d18074b67
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                providerAccountName: MyProviderAccount
+                status: RUNNING
+                vpcId: vpc-05ea1ef2626686855
+          x-terraform-resource-poll-completed-statuses: RUNNING
+          x-terraform-resource-poll-enabled: true
+          x-terraform-resource-poll-pending-statuses: GENESIS,PROVISIONING,PROVISIONED
+      x-codegen-request-body-name: body
+      x-terraform-resource-timeout: 99999m
+      operationId: postClusterManagementV2ResourcesProvidersAwsFsxnV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/aws/fsxn/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID of the AWS FSx ONTAP file system.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - AWS FSx ONTAP File Systems
+      summary: Retrieve an AWS FSx ONTAP file system
+      description: Get an AWS FSx ONTAP file system.
+      responses:
+        '200':
+          description: AWS FSx ONTAP file system retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsFsxOntapFileSystemV2'
+              example:
+                fsxnId: fs-0c315066d18074b67
+                id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+                providerAccountName: MyProviderAccount
+                status: RUNNING
+                vpcId: vpc-05ea1ef2626686855
+        '404':
+          description: AWS FSx ONTAP file system not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      x-terraform-resource-timeout: 99999m
+      operationId: getClusterManagementV2ResourcesProvidersAwsFsxnV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - AWS FSx ONTAP File Systems
+      summary: Remove an AWS FSx ONTAP file system
+      description: Delete an AWS FSx ONTAP File System.
+      responses:
+        '204':
+          description: AWS FSx ONTAP file system successfully deleted.
+          content: {}
+        '404':
+          description: AWS FSx ONTAP file system not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesProvidersAwsFsxnV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    AwsFsxOntapFileSystemV2:
+      required:
+      - clusterId
+      type: object
+      properties:
+        fsxnId:
+          type: string
+          description: AWS ID of the file system.
+          readOnly: true
+          example: fs-0c315066d18074b67
+        vpcId:
+          type: string
+          description: The ID of the VPC where this file system should be provisioned.
+          readOnly: true
+          example: vpc-0b277cbf8341f50ba
+        clusterId:
+          type: string
+          description: The ID of the cluster who's VPC this file system should share.
+          example: 7d01c54a-40f7-4020-8ebc-33547f364417
+          x-terraform-write-only: true
+        id:
+          type: string
+          description: Instaclustr ID representing the file system.
+          readOnly: true
+          example: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        providerAccountName:
+          type: string
+          description: The name of the provider account.
+          readOnly: true
+          example: ExampleProvider
+        status:
+          type: string
+          description: Status of the file system
+          readOnly: true
+          example: RUNNING
+          x-terraform-field-status: true
+      description: AWS FSx ONTAP file system.
+      example:
+        fsxnId: fs-0c315066d18074b67
+        id: c1af59c6-ba0e-4cc2-a0f3-65cee17a5f37
+        providerAccountName: MyProviderAccount
+        status: RUNNING
+        vpcId: vpc-05ea1ef2626686855
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

@@ -1,0 +1,381 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Cadence Global Domain Rate Limits V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Cadence Global Domain Rate Limits V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Cadence Global Domain Rate Limits V2
+  description: Operations related to Cadence cluster-wide domain request-rate limits.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/resources/applications/cadence/global-domain-rate-limits/v2:
+    x-terraform-resource-name: cadence_global_domain_rate_limits_v2
+    post:
+      tags:
+      - Cadence Global Domain Rate Limits V2
+      summary: Create Cadence global domain request rate limits
+      description: Creates a Cadence global domain request-rate-limit rule set for a cluster. Fails if an active rule set already exists.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadenceDomainRateLimitsV2'
+        required: true
+      responses:
+        '202':
+          description: Cadence global domain request rate limits accepted for application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CadenceDomainRateLimitsV2'
+        '400':
+          description: Invalid Cadence domain rate-limit request or cluster state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '403':
+          description: The account does not have permission to edit cluster settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: Cadence cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '409':
+          description: Cadence global domain rate limits already exist for this cluster.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesApplicationsCadenceGlobalDomainRateLimitsV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/applications/cadence/global-domain-rate-limits/v2/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID of the target Cadence cluster and global domain request-rate-limits resource.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        x-terraform-id: true
+      x-terraform-id: true
+    get:
+      tags:
+      - Cadence Global Domain Rate Limits V2
+      summary: Get Cadence domain request rate limits
+      description: Gets the latest active Cadence global domain request-rate-limit rule set for a cluster.
+      responses:
+        '200':
+          description: Successfully retrieved Cadence domain request rate limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CadenceDomainRateLimitsV2'
+              example:
+                clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+                defaultRequestsPerSecond: 250
+                domainRateLimits:
+                - domainName: payments
+                  requestsPerSecond: 1000
+        '400':
+          description: The cluster is not a Cadence cluster.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '403':
+          description: The account does not have permission to view cluster settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: Cadence cluster or domain rate limits not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      operationId: getClusterManagementV2ResourcesApplicationsCadenceGlobalDomainRateLimitsV2ById
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Cadence Global Domain Rate Limits V2
+      summary: Create or replace Cadence domain request rate limits
+      description: Creates a Cadence global domain request-rate-limit rule set that supersedes prior active rule sets for the cluster.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadenceDomainRateLimitsUpdateV2'
+        required: true
+      responses:
+        '202':
+          description: Cadence domain request rate limits accepted for application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CadenceDomainRateLimitsV2'
+              example:
+                clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+                defaultRequestsPerSecond: 250
+                domainRateLimits:
+                - domainName: payments
+                  requestsPerSecond: 1000
+        '400':
+          description: Invalid Cadence domain rate-limit request or cluster state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '403':
+          description: The account does not have permission to edit cluster settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: Cadence cluster not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      x-codegen-request-body-name: body
+      operationId: putClusterManagementV2ResourcesApplicationsCadenceGlobalDomainRateLimitsV2ById
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Cadence Global Domain Rate Limits V2
+      summary: Delete Cadence domain request rate limits
+      description: Deletes all active Cadence global domain request-rate-limit rule sets for a cluster.
+      responses:
+        '204':
+          description: Cadence domain request rate limits deleted successfully.
+          content: {}
+        '400':
+          description: This cluster is currently unable to delete Cadence global domain rate limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '403':
+          description: The account does not have permission to edit cluster settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '404':
+          description: Cadence cluster or domain rate limits not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+      operationId: deleteClusterManagementV2ResourcesApplicationsCadenceGlobalDomainRateLimitsV2ById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    CadenceDomainRateLimitSummaryV2:
+      required:
+      - domainName
+      - requestsPerSecond
+      type: object
+      properties:
+        domainName:
+          minLength: 1
+          pattern: ^[A-Za-z][A-Za-z0-9._-]*$
+          type: string
+          description: Exact Cadence domain name. It must start with a letter and may contain letters, numbers, periods, underscores, and hyphens. Cadence determines the supported maximum length.
+        requestsPerSecond:
+          minimum: 1
+          type: integer
+          description: Requests per second for the domain.
+          format: int32
+      description: A request rate limit for one Cadence domain.
+      example:
+        domainName: payments
+        requestsPerSecond: 1000
+    CadenceDomainRateLimitsUpdateV2:
+      type: object
+      properties:
+        defaultRequestsPerSecond:
+          minimum: 1
+          type: integer
+          description: Requests per second for all domains without a domain-specific limit. Written as the final unconstrained Cadence rule.
+          format: int32
+        domainRateLimits:
+          maxItems: 999
+          type: array
+          description: One cluster-wide request rate limit per Cadence domain. Supersedes the entire prior active rule set.
+          items:
+            $ref: '#/components/schemas/CadenceDomainRateLimitSummaryV2'
+          x-terraform-ignore-order: true
+      description: The complete frontend.globalDomainrps rule set for a Cadence cluster. At least one domain rate limit or a default request rate limit must be specified.
+    CadenceDomainRateLimitsV2:
+      required:
+      - clusterId
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: ID of the Cadence cluster.
+          format: uuid
+          x-terraform-force-new: true
+        defaultRequestsPerSecond:
+          minimum: 1
+          type: integer
+          description: Requests per second for all domains without a domain-specific limit. Written as the final unconstrained Cadence rule.
+          format: int32
+        id:
+          type: string
+          description: ID of the Cadence global domain request-rate-limits resource (the target cluster ID).
+          format: uuid
+          readOnly: true
+          x-terraform-id: true
+        domainRateLimits:
+          maxItems: 999
+          type: array
+          description: Domain request rate limits.
+          items:
+            $ref: '#/components/schemas/CadenceDomainRateLimitSummaryV2'
+          x-terraform-ignore-order: true
+      description: Domain request rate limits for a Cadence cluster.
+      example:
+        clusterId: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+        defaultRequestsPerSecond: 250
+        domainRateLimits:
+        - domainName: payments
+          requestsPerSecond: 1000
+        id: b997a00d-5bd4-4774-9bd7-5c0ad6189246
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

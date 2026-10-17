@@ -1,0 +1,656 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Bundle Information API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Bundle Information across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Bundle Information
+  description: Operations related to retrieving information on bundles.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/bundles/bundle_type:
+    get:
+      tags:
+      - Bundle Information
+      summary: Retrieve all compatible bundles
+      description: Retrieve all compatible bundles for the account.
+      operationId: getCompatibility
+      responses:
+        '200':
+          description: Successfully retrieved all compatible bundles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BundleCompatibilityResponseSchema'
+              example: "{\n  \"APACHE_CASSANDRA\": [\n    \"apache-cassandra-4.1.3\",\n    \"apache-cassandra-4.0.11\",\n    \"apache-cassandra-3.11.16.1\"\n  ],\n  \"REDIS\": [\n    \"redis:7.2.4\"\n    \"redis:7.2.9\"\n  ],\n  \"VALKEY\": [\n    \"valkey:7.2.9\"\n    \"valkey:8.1.1\"\n  ],\n  \"KAFKA\": [\n    \"apache-kafka:4.0.0\",\n    \"apache-kafka:3.9.1\"\n  ],\n  \"CADENCE\": [\n    \"cadence:1.2.2\"\n  ],\n  \"OPENSEARCH\": [\n    \"opensearch:1.3.17\",\n    \"opensearch:2.16.0\"\n  ],\n  \"KAFKA_CONNECT\": [\n    \"kafka-connect:4.0.0\",\n    \"kafka-connect:3.9.1\",\n  ],\n  \"KARAPACE_SCHEMA_REGISTRY\": [\n    \"karapace-schema-registry:5.2.0\"\n  ],\n  \"KARAPACE_REST_PROXY\": [\n    \"karapace-rest-proxy:5.2.0\"\n  ],\n  \"APACHE_ZOOKEEPER\": [\n    \"apache-zookeeper:3.9.3\"\n  ],\n  \"POSTGRESQL\": [\n    \"postgresql:18.6\",\n    \"postgresql:17.11\"\n  ],\n  \"PGBOUNCER\": [\n    \"pgbouncer:1.26.0\"\n  ]\n}\n"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/bundles/detail/{BundleVersion}:
+    get:
+      tags:
+      - Bundle Information
+      summary: Retrieve bundle version compatibility info
+      description: Retrieve bundle options and compatibility list for a specific bundle version.
+      operationId: getVersionCompatibility
+      parameters:
+      - name: BundleVersion
+        in: path
+        description: A specific version of a bundle.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: apache-cassandra-4.1.3
+      responses:
+        '200':
+          description: Successfully retrieved all bundle options and compatibility list for a specific bundle version.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleVersionCompatibilityResponseSchema'
+              example:
+              - bundle: APACHE_CASSANDRA
+                bundle_options:
+                  authnAuthz:
+                    default: 'false'
+                    description: ''
+                    required: 'false'
+                    type: boolean
+                  backupEnabled:
+                    default: 'true'
+                    description: ''
+                    required: 'false'
+                    type: boolean
+                  clientEncryption:
+                    default: 'false'
+                    description: ''
+                    required: 'false'
+                    type: boolean
+                  luceneEnabled:
+                    default: 'false'
+                    description: ''
+                    required: 'false'
+                    type: boolean
+                  usePrivateBroadcastRPCAddress:
+                    default: 'false'
+                    description: ''
+                    required: 'false'
+                    type: boolean
+                compatible_with:
+                - SPARK: apache-spark:2.3.2
+                - SPARK: apache-spark:2.1.3
+                requires_bundle: null
+                version: apache-cassandra-3.11.6
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/bundles/node_size:
+    get:
+      tags:
+      - Bundle Information
+      summary: Retrieve compatible node sizes
+      description: Retrieve a list of compatible node sizes for a specific bundle combination.
+      operationId: getNodeSizeCompatibility
+      parameters:
+      - name: bundles
+        in: query
+        description: A valid combination of bundles separated by commas.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: APACHE_CASSANDRA,DEBEZIUM_CASSANDRA_CONNECTOR
+      - name: bundleVersions
+        in: query
+        description: A valid combination of bundle versions separated by commas, must be of the bundle types given
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: apache-cassandra-4.0.11,debezium-connector-cassandra:2.0.1
+      responses:
+        '200':
+          description: Successfully retrieved all compatible node sizes for a specific bundle combination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeSizeCompatibilityResponseSchema'
+              example: "{\n  \"AWS_VPC\": {\n    \"nodeSizes\": [\n      \"i3en.xlarge\",\n      \"CAS-DEV-t4g.small-5\",\n      \"CAS-DEV-t4g.small-30\",\n      \"CAS-DEV-t4g.medium-30\",\n      \"CAS-DEV-t4g.medium-80\",\n      \"CAS-PRD-m6g.large-120\",\n      \"CAS-PRD-m6g.large-250\",\n      \"CAS-PRD-m6g.large-400\",\n      \"CAS-PRD-m6g.large-600\",\n      \"CAS-PRD-r6g.large-250\",\n      \"CAS-PRD-r6g.large-400\",\n      \"CAS-PRD-r6g.large-600\",\n      \"CAS-PRD-r6g.large-800\",\n      \"CAS-PRD-r6g.large-1200\",\n      \"CAS-PRD-r6g.large-1600\",\n      \"CAS-PRD-r6g.xlarge-400\",\n      \"CAS-PRD-r6g.xlarge-600\",\n      \"CAS-PRD-r6g.xlarge-800\",\n      \"CAS-PRD-r6g.xlarge-1200\",\n      \"CAS-PRD-r6g.xlarge-1600\",\n      \"CAS-PRD-r6g.xlarge-2400\",\n      \"CAS-PRD-r6g.xlarge-3200\",\n      \"CAS-PRD-r6g.2xlarge-800\",\n      \"CAS-PRD-r6g.2xlarge-1200\",\n      \"CAS-PRD-r6g.2xlarge-1600\",\n      \"CAS-PRD-r6g.2xlarge-2400\",\n      \"CAS-PRD-r6g.2xlarge-3200\",\n      \"CAS-PRD-r6g.4xlarge-800\",\n      \"CAS-PRD-r6g.4xlarge-1200\",\n      \"CAS-PRD-r6g.4xlarge-1600\",\n      \"CAS-PRD-r6g.4xlarge-2400\",\n      \"CAS-PRD-r6g.4xlarge-3200\",\n      \"CAS-PRD-m7g.large-120\",\n      \"CAS-PRD-m7g.large-250\",\n      \"CAS-PRD-m7g.large-400\",\n      \"CAS-PRD-m7g.large-600\",\n      \"CAS-PRD-r7g.large-250\",\n      \"CAS-PRD-r7g.large-400\",\n      \"CAS-PRD-r7g.large-600\",\n      \"CAS-PRD-r7g.large-800\",\n      \"CAS-PRD-r7g.large-1200\",\n      \"CAS-PRD-r7g.large-1600\",\n      \"CAS-PRD-r7g.xlarge-400\",\n      \"CAS-PRD-r7g.xlarge-600\",\n      \"CAS-PRD-r7g.xlarge-800\",\n      \"CAS-PRD-r7g.xlarge-1200\",\n      \"CAS-PRD-r7g.xlarge-1600\",\n      \"CAS-PRD-r7g.xlarge-2400\",\n      \"CAS-PRD-r7g.xlarge-3200\",\n      \"CAS-PRD-r7g.2xlarge-800\",\n      \"CAS-PRD-r7g.2xlarge-1200\",\n      \"CAS-PRD-r7g.2xlarge-1600\",\n      \"CAS-PRD-r7g.2xlarge-2400\",\n      \"CAS-PRD-r7g.2xlarge-3200\",\n      \"CAS-PRD-r7g.4xlarge-800\",\n      \"CAS-PRD-r7g.4xlarge-1200\",\n      \"CAS-PRD-r7g.4xlarge-1600\",\n      \"CAS-PRD-r7g.4xlarge-2400\",\n      \"CAS-PRD-r7g.4xlarge-3200\",\n      \"m5xl-800-v2\",\n      \"t3.small-v2\",\n      \"m5xl-1600-v2\",\n      \"r5xl-2000-v2\",\n      \"c5d.2xlarge-v2\",\n      \"m5xl-400-v2\",\n      \"i3.2xlarge-v2\",\n      \"m5l-250-v2\",\n      \"t3.medium-v2\",\n      \"r5xl-1200-v2\",\n      \"CAS-PRD-i3.4xlarge-3538\",\n      \"CAS-PRD-i3en.2xlarge-4656\"\n    ],\n    \"document\": \"https://aws.amazon.com/ec2/instance-types/\"\n  },\n  \"AZURE_AZ\": {\n    \"nodeSizes\": [\n      \"Standard_DS13_v2-2046-an\",\n      \"Standard_DS2_v2-256-an\",\n      \"Standard_DS12_v2-1023-an\",\n      \"Standard_DS12_v2-512-an\",\n      \"Standard_DS12_v2-2046-an,\"\n      \"CAS-PRD-Standard_L8s_v3-1788\"\n    ],\n    \"document\": \"https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes\"\n  },\n  \"GCP\": {\n    \"nodeSizes\": [\n      \"CAS-DEV-n1-standard-1-5\",\n      \"CAS-DEV-n1-standard-2-30\",\n      \"CAS-DEV-n1-standard-2-80\",\n      \"CAS-PRD-n2-standard-2-120\",\n      \"CAS-PRD-n2-standard-2-250\",\n      \"CAS-PRD-n2-standard-2-400\",\n      \"CAS-PRD-n2-standard-2-600\",\n      \"CAS-PRD-n2-highmem-2-250\",\n      \"CAS-PRD-n2-highmem-2-400\",\n      \"CAS-PRD-n2-highmem-2-600\",\n      \"CAS-PRD-n2-highmem-2-800\",\n      \"CAS-PRD-n2-highmem-2-1200\",\n      \"CAS-PRD-n2-highmem-2-1600\",\n      \"CAS-PRD-n2-highmem-2-250\",\n      \"CAS-PRD-n2-highmem-4-400\",\n      \"CAS-PRD-n2-highmem-4-600\",\n      \"CAS-PRD-n2-highmem-4-800\",\n      \"CAS-PRD-n2-highmem-4-1200\",\n      \"CAS-PRD-n2-highmem-4-1600\",\n      \"CAS-PRD-n2-highmem-4-2400\",\n      \"CAS-PRD-n2-highmem-4-3200\",\n      \"CAS-PRD-n2-highmem-8-1200\",\n      \"CAS-PRD-n2-highmem-8-1600\",\n      \"CAS-PRD-n2-highmem-8-2400\",\n      \"CAS-PRD-n2-highmem-8-3200\",\n      \"CAS-PRD-n2-highmem-16-1200\",\n      \"CAS-PRD-n2-highmem-16-1600\",\n      \"CAS-PRD-n2-highmem-16-2400\",\n      \"CAS-PRD-n2-highmem-16-3200\",\n      \"CAS-PRD-n2-highmem-16-2400\",\n      \"CAS-PRD-n2-highmem-16-3200\"\n    ],\n    \"document\": \"https://cloud.google.com/compute/docs/machine-types\"\n  }\n}\n"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/describe-options:
+    get:
+      tags:
+      - Bundle Information
+      summary: Retrieve provisioning options
+      description: Call this endpoint to retrieve all available provisioning options.
+      operationId: getOptions
+      parameters:
+      - name: providerAccountName
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: For customers running in their own account. Your provider account can be found on the Create Cluster page on the console, or the “Provider Account” property on any existing cluster. For customers running in Instaclustr account, this property may be omitted.
+          example: INSTACLUSTR
+          default: INSTACLUSTR
+      - name: provider
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: 'Filter by provider. If not provided, all available providers are returned. '
+          example: AWS_VPC
+          enum:
+          - AWS_VPC
+          - AZURE
+          - GCP
+      - name: region
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: Filter by region. If not provided, all available regions are returned.
+          example: US_EAST_2
+      responses:
+        '200':
+          description: Successfully retrieved provisioning options
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProvisioningOptions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    BundleVersionCompatibilityResponseSchema:
+      type: object
+      properties:
+        bundle:
+          type: string
+          enum:
+          - APACHE_CASSANDRA
+          - SPARK
+          - KAFKA
+          - KAFKA_REST_PROXY
+          - KAFKA_SCHEMA_REGISTRY
+          - ELASTICSEARCH
+          - KAFKA_CONNECT
+          - REDIS
+          - VALKEY
+          - APACHE_ZOOKEEPER
+          - POSTGRESQL
+          - KARAPACE_SCHEMA_REGISTRY
+          - KARAPACE_REST_PROXY
+        version:
+          type: string
+        requires_bundle:
+          type: string
+          description: The prerequisite bundle for this bundle.
+          enum:
+          - APACHE_CASSANDRA
+          - SPARK
+          - KAFKA
+          - KAFKA_REST_PROXY
+          - KAFKA_SCHEMA_REGISTRY
+          - ELASTICSEARCH
+          - KAFKA_CONNECT
+          - REDIS
+          - VALKEY
+          - APACHE_ZOOKEEPER
+          - POSTGRESQL
+          - KARAPACE_SCHEMA_REGISTRY
+          - KARAPACE_REST_PROXY
+        bundle_options:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BundleOption'
+          description: All the applicable bundle options.
+    ProviderNodeSizes:
+      type: object
+      properties:
+        nodeSizes:
+          type: array
+          description: All the node sizes from a specific cloud provider.
+          items:
+            type: string
+            description: All the node sizes from a specific cloud provider.
+        document:
+          type: string
+          description: The link to the node size documentation page for a specific cloud provider.
+          example: https://aws.amazon.com/ec2/instance-types
+    NodeSizeCompatibilityResponseSchema:
+      type: object
+      properties:
+        AWS_VPC:
+          $ref: '#/components/schemas/ProviderNodeSizes'
+        AZURE:
+          $ref: '#/components/schemas/ProviderNodeSizes'
+        GCP:
+          $ref: '#/components/schemas/ProviderNodeSizes'
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    BundleOption:
+      type: object
+      properties:
+        description:
+          type: string
+        type:
+          type: string
+          description: The value type of the bundle option
+          example: boolean
+        required:
+          type: boolean
+          description: Whether the bundle option is required.
+        default:
+          type: boolean
+          description: The default value of the bundle option.
+      description: All the applicable bundle options.
+    ProvisioningOptions:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of provider
+          example: AWS_VPC
+          enum:
+          - AWS_VPC
+          - AZURE_AZ
+          - GCP
+        displayName:
+          type: string
+          description: Display name of provider
+          example: Amazon Web Services
+        regions:
+          type: array
+          description: List of provisioning options related to data centres
+          items:
+            $ref: '#/components/schemas/Region'
+    Region:
+      type: object
+      properties:
+        globalRegion:
+          type: boolean
+      description: Region code for the accepter VPC, if the accepter VPC is located in a region other than the region in which you make the request.
+      example: US_WEST_2
+    BundleCompatibilityResponseSchema:
+      type: object
+      properties:
+        APACHE_CASSANDRA:
+          type: array
+          description: Compatible versions of Cassandra
+          items:
+            type: string
+            description: Compatible versions of Cassandra
+        DEBEZIUM_CONNECTOR_CASSANDRA:
+          type: array
+          description: Compatible versions of Debezium Connector Cassandra
+          items:
+            type: string
+            description: Compatible versions of Debezium Connector Cassandra
+        CASSANDRA_SHOTOVER_PROXY:
+          type: array
+          description: Compatible versions of Cassandra Shotover Proxy
+          items:
+            type: string
+            description: Compatible versions of Cassandra Shotover Proxy
+        REDIS:
+          type: array
+          description: Compatible versions of Redis
+          items:
+            type: string
+            description: Compatible versions of Redis
+        KAFKA:
+          type: array
+          description: Compatible versions of Kafka
+          items:
+            type: string
+            description: Compatible versions of Kafka
+        KAFKA_DISKLESS:
+          type: array
+          description: Compatible versions of Kafka Diskless
+          items:
+            type: string
+            description: Compatible versions of Kafka Diskless
+        ELASTICSEARCH:
+          type: array
+          description: Compatible versions of Elasticsearch
+          items:
+            type: string
+            description: Compatible versions of Elasticsearch
+        SPARK:
+          type: array
+          description: Compatible versions of Spark
+          items:
+            type: string
+            description: Compatible versions of Spark
+        KAFKA_CONNECT:
+          type: array
+          description: Compatible versions of Kafka Connect
+          items:
+            type: string
+            description: Compatible versions of Kafka Connect
+        KAFKA_SCHEMA_REGISTRY:
+          type: array
+          description: Compatible versions of Kafka Schema Registry
+          items:
+            type: string
+            description: Compatible versions of Kafka Schema Registry
+        KAFKA_REST_PROXY:
+          type: array
+          description: Compatible versions of Kafka Rest Proxy
+          items:
+            type: string
+            description: Compatible versions of Kafka Rest Proxy
+        KAFKA_SHOTOVER_PROXY:
+          type: array
+          description: Compatible versions of Apache ZooKeeper
+          items:
+            type: string
+            description: Compatible versions of Apache ZooKeeper
+        APACHE_ZOOKEEPER:
+          type: array
+          description: Compatible versions of Kafka Shotover Proxy
+          items:
+            type: string
+            description: Compatible versions of Kafka Shotover Proxy
+        POSTGRESQL:
+          type: array
+          description: Compatible versions of Postgresql
+          items:
+            type: string
+            description: Compatible versions of Postgresql
+        KARAPACE_REST_PROXY:
+          type: array
+          description: Compatible versions of Karapace Rest Proxy
+          items:
+            type: string
+            description: Compatible versions of Karapace Rest Proxy
+        KARAPACE_SCHEMA_REGISTRY:
+          type: array
+          description: Compatible versions of Karapace Schema Registry
+          items:
+            type: string
+            description: Compatible versions of Karapace Schema Registry
+        MCP_GATEWAY:
+          type: array
+          description: Compatible versions of MCP Gateway
+          items:
+            type: string
+            description: Compatible versions of MCP Gateway
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

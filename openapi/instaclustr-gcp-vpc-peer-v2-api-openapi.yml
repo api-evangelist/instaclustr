@@ -1,0 +1,398 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr GCP VPC Peer V2 API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged GCP VPC Peer V2 across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: GCP VPC Peer V2
+  description: Operations related to GCP VPC Peering with Cluster Data Centers.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/providers/gcp/vpc-peers/v2:
+    x-terraform-resource-name: gcp_vpc_peers_v2
+    get:
+      tags:
+      - GCP VPC Peer V2
+      summary: List all GCP VPC Peering requests
+      responses:
+        '200':
+          description: Successfully retrieved GCP VPC Peering requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountGcpVpcPeersV2'
+      operationId: getClusterManagementV2DataSourcesProvidersGcpVpcPeersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/gcp/vpc-peers/v2:
+    x-terraform-resource-name: gcp_vpc_peer_v2
+    post:
+      tags:
+      - GCP VPC Peer V2
+      summary: Create GCP VPC Peering Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpVpcPeerV2'
+        required: true
+      responses:
+        '202':
+          description: GCP VPC Peering request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GcpVpcPeerV2'
+              example:
+                cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+                dataCentreProjectId: example-project123
+                dataCentreVpcNetworkName: network-aabb1122
+                id: 068c447e-8475-49b2-974b-ca1c91702ed4
+                peerProjectId: example-project123
+                peerSubnets:
+                - 10.1.0.0/16
+                peerVpcNetworkName: network-aabb1122
+                statusCode: GENESIS
+      x-codegen-request-body-name: body
+      operationId: postClusterManagementV2ResourcesProvidersGcpVpcPeersV2
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/resources/providers/gcp/vpc-peers/v2/{vpcPeerId}:
+    parameters:
+    - name: vpcPeerId
+      in: path
+      description: ID of the VPC Peering Connection
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - GCP VPC Peer V2
+      summary: Get GCP VPC Peering Connection info
+      description: Fetches the details for a given GCP VPC Peering Connection.
+      responses:
+        '200':
+          description: GCP VPC Peering Connection info retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GcpVpcPeerV2'
+              example:
+                cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+                dataCentreProjectId: example-project123
+                dataCentreVpcNetworkName: network-aabb1122
+                id: 068c447e-8475-49b2-974b-ca1c91702ed4
+                peerProjectId: example-project123
+                peerSubnets:
+                - 10.1.0.0/16
+                peerVpcNetworkName: network-aabb1122
+                statusCode: GENESIS
+        '404':
+          description: VPC Peering Connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: getClusterManagementV2ResourcesProvidersGcpVpcPeersV2ByVpcPeerId
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - GCP VPC Peer V2
+      summary: Delete GCP VPC Peering Connection
+      responses:
+        '204':
+          description: GCP VPC Peering request deleted
+          content: {}
+        '404':
+          description: VPC Peering Connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponseV2'
+      operationId: deleteClusterManagementV2ResourcesProvidersGcpVpcPeersV2ByVpcPeerId
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    GcpVpcPeerV2:
+      title: Root Type for GcpVpcPeerV2
+      required:
+      - cdcId
+      - peerProjectId
+      - peerSubnets
+      - peerVpcNetworkName
+      type: object
+      properties:
+        peerProjectId:
+          type: string
+          description: The project ID of the owner of the accepter VPC.
+          example: example-project123
+          x-terraform-force-new: true
+        peerSubnets:
+          type: array
+          description: The subnets for the peering VPC.
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+          items:
+            type: string
+          x-terraform-force-new: true
+          x-terraform-ignore-order: true
+        failureReason:
+          type: string
+          description: Reason for Peering Connection Failure.
+          readOnly: true
+          example: An IP range in the peer network (10.5.128.0/18) overlaps with an IP range in the local network (10.5.128.0/18)
+        dataCentreProjectId:
+          type: string
+          description: GCP Project ID of the Data Centre.
+          readOnly: true
+          example: example-project123
+        name:
+          type: string
+          description: Name of the Peering Connection.
+          readOnly: true
+          example: My GPC VPC peering connection
+        id:
+          type: string
+          description: ID of the VPC peering connection.
+          readOnly: true
+          example: 068c447e-8475-49b2-974b-ca1c91702ed4
+        dataCentreVpcNetworkName:
+          type: string
+          description: Vpc Network Name of the Data Centre VPC.
+          readOnly: true
+          example: network-aabb1122
+        peerVpcNetworkName:
+          type: string
+          description: The name of the VPC Network you wish to peer to.
+          example: network-aabb1122
+          x-terraform-force-new: true
+        statusCode:
+          type: string
+          description: Status of the VPC Peering Connection. Values can be `GENESIS`, `PROVISIONING`, `FAILED`, `INACTIVE`, `ACTIVE` or `UNKNOWN`.
+          readOnly: true
+          example: active
+        cdcId:
+          type: string
+          description: ID of the Cluster Data Centre.
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+          x-terraform-force-new: true
+      description: Definition of an GCP VPC Peering request to allow privately routed connections to a target data centre.
+      example:
+        cdcId: f3eab841-6952-430d-ba90-1bfc3f15da10
+        peerProjectId: example-project123
+        peerSubnets:
+        - 10.1.0.0/16
+        peerVpcNetworkName: network-aabb1122
+    ErrorListResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseV2'
+      description: ''
+    GcpVpcPeerSummaryV2:
+      title: Root Type for GcpVpcPeerSummaryV2
+      required:
+      - cdcId
+      - peerProjectId
+      - peerSubnets
+      - peerVpcNetworkName
+      type: object
+      properties:
+        peerProjectId:
+          type: string
+          description: The project ID of the owner of the accepter VPC.
+          example: example-project123
+          x-terraform-force-new: true
+        peerSubnets:
+          type: array
+          description: The subnets for the peering VPC.
+          example:
+          - 10.1.0.0/16
+          - 10.2.0.0/16
+          items:
+            type: string
+          x-terraform-force-new: true
+          x-terraform-ignore-order: true
+        dataCentreProjectId:
+          type: string
+          description: GCP Project ID of the Data Centre.
+          readOnly: true
+          example: example-project123
+        name:
+          type: string
+          description: Name of the Peering Connection.
+          readOnly: true
+          example: My GPC VPC peering connection
+        id:
+          type: string
+          description: ID of the VPC peering connection.
+          readOnly: true
+          example: 068c447e-8475-49b2-974b-ca1c91702ed4
+        dataCentreVpcNetworkName:
+          type: string
+          description: Vpc Network Name of the Data Centre VPC.
+          readOnly: true
+          example: network-aabb1122
+        peerVpcNetworkName:
+          type: string
+          description: The name of the VPC Network you wish to peer to.
+          example: network-aabb1122
+          x-terraform-force-new: true
+        cdcId:
+          type: string
+          description: ID of the Cluster Data Centre.
+          format: uuid
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+          x-terraform-force-new: true
+      description: ''
+    AccountGcpVpcPeersV2:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: UUID of the Instaclustr Account.
+          example: 9879a26c-c565-4c55-aab1-130683d7c876
+          x-terraform-id: true
+        peeringRequests:
+          type: array
+          description: ''
+          items:
+            $ref: '#/components/schemas/GcpVpcPeerSummaryV2'
+      description: A listable data source of all GCP VPC Peering requests in an Instaclustr Account.
+    ErrorResponseV2:
+      title: Root Type for ErrorResponse
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+      description: ''
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

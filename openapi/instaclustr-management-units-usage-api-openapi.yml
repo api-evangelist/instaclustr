@@ -1,0 +1,330 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Management Units Usage API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Management Units Usage across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Management Units Usage
+  description: Account Management Units Usage Information
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/operations/accounts/{accountId}/contracts/v1/:
+    parameters:
+    - name: accountId
+      in: path
+      description: ID of the account.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Management Units Usage
+      summary: Get contract details
+      responses:
+        '200':
+          description: Get contract details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractItem'
+      operationId: getClusterManagementV2OperationsAccountsByAccountIdContractsV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /cluster-management/v2/operations/accounts/{accountId}/mu-usage/v1/:
+    parameters:
+    - name: accountId
+      in: path
+      description: ID of the account.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    - name: aggrType
+      in: query
+      description: Aggregation type (case insensitive), accepted values are cluster/account/region/application.
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: period
+      in: query
+      description: The period of time from which management units usage information is returned.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    - name: end
+      in: query
+      description: 'End time of management unit usage data in format ISO-8601 or epoch time. examples: end=2025-01-01T00:00:00.00Z or end=1735650000'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Management Units Usage
+      summary: List current or historical management unit usage
+      responses:
+        '200':
+          description: List current or historical management unit usage
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MuUsageAggregatedByTime'
+      operationId: getClusterManagementV2OperationsAccountsByAccountIdMuUsageV1
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    ContractItem:
+      type: object
+      properties:
+        contractDetail:
+          $ref: '#/components/schemas/ContractItemDetail'
+        addOnRates:
+          type: array
+          description: List of unique add-on information.
+          items:
+            $ref: '#/components/schemas/AddOnRateItem'
+        riyoaNodeManagementUnits:
+          type: array
+          description: List of unique management units information of node type.
+          items:
+            $ref: '#/components/schemas/NodeManagementUnitItem'
+        defaultRiyoaFlatRatePerMu:
+          type: number
+          description: Flat list price per management unit in dollars from icb.default_riyoa_tiered_unit_rates.
+          format: double
+        hasRiyoaTieredUnitRates:
+          type: boolean
+          description: True when the contract has tiered unit rates defined in contract_riyoa_tiered_unit_rates.
+      description: Contract information.
+    MuUsageAggregatedItem:
+      type: object
+      properties:
+        entityName:
+          type: string
+          description: Name of entity.
+        entityId:
+          type: string
+          description: Id of entity.
+        managementUnitUsage:
+          type: number
+          description: Management unit usage of a cluster/account/region/application.
+          format: double
+      description: Management unit usage result for a cluster/account/region/application.
+    AddOnRateItem:
+      type: object
+      properties:
+        upliftRate:
+          type: integer
+          description: Rate of add-on.
+          format: int32
+        addonType:
+          type: string
+          description: Name of add-on.
+      description: Single add-on info of contract.
+    ContractItemDetail:
+      type: object
+      properties:
+        includedManagementUnits:
+          type: number
+          description: Free management unit quota of contract.
+          format: double
+        addonCap:
+          type: integer
+          description: Cap for add on rate of contract.
+          format: int32
+        buoRiyoaDiscount:
+          type: number
+          description: Discount for bundle used only.
+          format: double
+        supportTier:
+          type: string
+          description: Support tier of contract.
+          enum:
+          - STANDARD
+          - PREMIUM
+      description: Detail of contract.
+    MuUsageAggregatedByTime:
+      type: object
+      properties:
+        totalManagementUnitUsage:
+          type: number
+          description: Total management unit usage of all accounts
+          format: double
+        entities:
+          type: array
+          description: List of management unit usage result aggregated by entity Id/Name.
+          items:
+            $ref: '#/components/schemas/MuUsageAggregatedItem'
+        entityType:
+          type: string
+          description: Entity's type, value should be the same as aggregation type.
+          enum:
+          - ACCOUNT
+          - CLUSTER
+          - APPLICATION
+          - REGION
+        timestamp:
+          type: string
+          description: Point of time that management unit usage result is at.
+          format: string
+      description: Management unit usage result item aggregated by time.
+    NodeManagementUnitItem:
+      type: object
+      properties:
+        managementUnits:
+          type: number
+          description: Management units of node type.
+          format: double
+        nodeType:
+          $ref: '#/components/schemas/NodeType'
+        slaTier:
+          type: string
+          description: SLA tier of node size of contract.
+          enum:
+          - PRODUCTION
+          - NON_PRODUCTION
+        primaryBundle:
+          type: string
+          description: Specific bundle for node type.
+      description: Management unit information of node type.
+    NodeType:
+      type: object
+      properties:
+        cloudProvider:
+          type: string
+          description: Name of provider.
+        name:
+          type: string
+          description: Name of node type.
+        dataCentre:
+          type: string
+          description: Name of data centre.
+      description: Node type information.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

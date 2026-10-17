@@ -1,0 +1,243 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Horizontal Scaling Operations API
+  version: Current
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Horizontal Scaling Operations across 2 of this provider''s published API definitions: instaclustr-current-openapi.json, instaclustr-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Horizontal Scaling Operations
+  description: Operations related to horizontal scaling of Cluster Data Centres.
+  x-insta-tag-group: Cluster Management V2
+paths:
+  /cluster-management/v2/data-sources/cluster-data-centres/v2/{clusterDataCentreId}/horizontal-scaling/operations:
+    parameters:
+    - name: clusterDataCentreId
+      in: path
+      description: ID of the Cluster Data Centre.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Horizontal Scaling Operations
+      summary: Get horizontal scaling operations for a Cluster Data Centre, currently Kafka…
+      parameters:
+      - name: activeOnly
+        in: query
+        description: Only return active operations.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved the list of horizontal scaling operations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HorizontalScalingOperationsResponse'
+      operationId: getClusterManagementV2DataSourcesClusterDataCentresV2ByClusterDataCentreIdHorizontalScalingOperations
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    HorizontalScalingOperationResponse:
+      required:
+      - bundleType
+      - clusterDataCentreId
+      - created
+      - direction
+      - id
+      - numberOfNodes
+      - workflowStatus
+      type: object
+      properties:
+        clusterDataCentreId:
+          type: string
+          description: ID of the cluster data centre.
+          format: uuid
+          readOnly: true
+          example: aabc665c-8916-40ae-978c-96d39a3a1364
+        created:
+          type: string
+          description: When the operation was created.
+          readOnly: true
+          example: '2026-08-11T01:00:00Z'
+        workflowStatus:
+          type: string
+          description: Current workflow status/phase of the horizontal scaling workflow.
+          readOnly: true
+          example: PROVISIONING_NODES
+        errorMessage:
+          type: string
+          description: Error message when the operation has failed.
+          readOnly: true
+        bundleType:
+          type: string
+          description: Primary bundle type of the cluster data centre.
+          readOnly: true
+          example: KAFKA
+        completed:
+          type: string
+          description: When the operation completed, if finished.
+          readOnly: true
+          example: '2026-08-11T02:00:00Z'
+        completedStatus:
+          type: string
+          description: Terminal status of the operation when completed.
+          readOnly: true
+          enum:
+          - COMPLETED
+          - FAILED
+        id:
+          type: string
+          description: ID of the horizontal scaling operation.
+          format: uuid
+          readOnly: true
+        numberOfNodes:
+          type: integer
+          description: Number of nodes requested for this horizontal scaling operation.
+          example: 3
+        direction:
+          type: string
+          description: Direction of the horizontal scaling operation.
+          readOnly: true
+          example: ADD
+          enum:
+          - ADD
+          - REMOVE
+      description: A horizontal scaling operation for a cluster data centre.
+      example:
+        bundleType: KAFKA
+        clusterDataCentreId: aabc665c-8916-40ae-978c-96d39a3a1364
+        created: '2026-08-11T01:00:00Z'
+        direction: ADD
+        id: 4650aa98-e894-4675-9614-558915d5837a
+        numberOfNodes: 3
+        workflowStatus: PROVISIONING_NODES
+    HorizontalScalingOperationsResponse:
+      type: object
+      properties:
+        operations:
+          type: array
+          description: Horizontal scaling operations for the cluster data centre.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/HorizontalScalingOperationResponse'
+      description: Horizontal scaling operations for a cluster data centre.
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-current-openapi.json
+- instaclustr-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

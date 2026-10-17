@@ -1,0 +1,710 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Maintenance Events API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Maintenance Events API across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Maintenance Events API
+  description: Operations related to managing maintenance events on Instaclustr clusters.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /v1/maintenance-events/events:
+    get:
+      tags:
+      - Maintenance Events API
+      summary: List maintenance events
+      description: Lists all upcoming maintenance events for the given cluster
+      operationId: getUpcomingMaintenanceEventsForCluster
+      parameters:
+      - name: clusterId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved maintenance events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceEventsScheduleResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/maintenance-events/events/inprogress:
+    get:
+      tags:
+      - Maintenance Events API
+      summary: List maintenance events
+      description: Lists all in progress maintenance events for the given cluster
+      operationId: getInProgressMaintenanceEventsForCluster
+      parameters:
+      - name: clusterId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved in progress maintenance events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceEventsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/maintenance-events/events/past:
+    get:
+      tags:
+      - Maintenance Events API
+      summary: List maintenance events
+      description: Lists of past maintenance events for the given cluster
+      operationId: getPastMaintenanceEventsForCluster
+      parameters:
+      - name: clusterId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved past maintenance events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceEventsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/maintenance-events/events/{scheduleId}:
+    put:
+      tags:
+      - Maintenance Events API
+      summary: Reschedule a maintenance event schedule
+      description: Reschedules a maintenance event schedule to the given start time.
+      operationId: modifyMaintenanceEventSchedule
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 2c7067d6-c70a-11ea-87d0-0242ac130003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMaintenanceEventScheduleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated maintenance event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceEventScheduleResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/maintenance-events/exclusion-windows:
+    get:
+      tags:
+      - Maintenance Events API
+      summary: List exclusion windows
+      description: Lists all exclusion windows (times when maintenance events cannot be performed) for the given cluster
+      operationId: getExclusionWindowsForCluster
+      parameters:
+      - name: clusterId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '200':
+          description: Successfully retrieved exclusion windows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExclusionWindowsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Maintenance Events API
+      summary: Create exclusion window
+      description: Creates a new exclusion window (time when maintenance events cannot be performed) for the given cluster
+      operationId: createExclusionWindow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExclusionWindowRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully created exclusion window
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExclusionWindowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /v1/maintenance-events/exclusion-windows/{windowId}:
+    delete:
+      tags:
+      - Maintenance Events API
+      summary: Delete exclusion window
+      description: Removes an exclusion window
+      operationId: deleteExclusionWindow
+      parameters:
+      - name: windowId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 3c7067d6-c70a-11ea-87d0-0242ac130003
+      responses:
+        '204':
+          description: Successfully deleted exclusion window
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    MaintenanceEventsResponse:
+      type: object
+      properties:
+        maintenanceEvents:
+          type: array
+          description: List of maintenance events for the given cluster
+          items:
+            $ref: '#/components/schemas/MaintenanceEventResponse'
+    MaintenanceEventsScheduleResponse:
+      type: object
+      properties:
+        maintenanceEvents:
+          type: array
+          description: List of all uncompleted maintenance events for the given cluster
+          items:
+            $ref: '#/components/schemas/MaintenanceEventScheduleResponse'
+    ExclusionWindowsResponse:
+      type: object
+      properties:
+        exclusionWindows:
+          type: array
+          description: List of exclusion windows for the given cluster
+          items:
+            $ref: '#/components/schemas/WindowResponse'
+    CreateExclusionWindowRequest:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Cluster Id for the cluster that this exclusion window relates to
+          example: cf4fccf3-2ac0-494b-9f40-e95288dd752d
+        dayOfWeek:
+          type: string
+          description: The day of the week that this exclusion window starts on
+          example: TUESDAY
+        startHour:
+          type: integer
+          description: The hour of the day that this exclusion window starts on
+          format: int32
+          example: 14
+        durationInHours:
+          type: integer
+          description: The duration (in hours) of this exclusion window
+          format: int32
+          example: 6
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    UpdateMaintenanceEventScheduleRequest:
+      type: object
+      properties:
+        scheduledStartTime:
+          type: string
+          description: The time this maintenance event should be rescheduled to start at (in UTC time)
+          example: '2021-12-21T11:00:00Z'
+        validationMessages:
+          type: object
+          additionalProperties:
+            type: string
+    MaintenanceEventResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique Id for this maintenance event
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        clusterId:
+          type: string
+          description: Unique Id for the cluster that this maintenance event relates to
+          example: af4fccf3-2ac0-494b-9f40-e95288dd752d
+        description:
+          type: string
+          description: A text description of the activities being performed in this maintenance event
+          example: Upgrade Debian on nodes to 11.3
+        startTime:
+          type: string
+          description: The time work on this maintenance event started in UTC time
+          example: '2021-12-21T11:03:32Z'
+        endTime:
+          type: string
+          description: The time work on this maintenance event ended in UTC time
+          example: '2021-12-21T11:03:32Z'
+        outcome:
+          type: string
+          description: Maintenance outcome
+          enum:
+          - COMPLETED
+          - FAILED
+          - PARTIAL
+          - CANCELLED
+      description: List of maintenance events for the given cluster
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    MaintenanceEventScheduleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique Id for this maintenance event
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        clusterId:
+          type: string
+          description: Unique Id for the cluster that this maintenance event relates to
+          example: af4fccf3-2ac0-494b-9f40-e95288dd752d
+        description:
+          type: string
+          description: A text description of the activities being performed in this maintenance event
+          example: Upgrade Debian on nodes to 11.3
+        scheduledStartTime:
+          type: string
+          description: The time this maintenance event is scheduled to start in UTC time
+          example: '2021-12-21T11:00:00Z'
+        scheduledEndTime:
+          type: string
+          description: The time this maintenance event is scheduled to end by in UTC time
+          example: '2021-12-21T13:00:00Z'
+        scheduledStartTimeMin:
+          type: string
+          description: The earliest limit for the scheduled start time in UTC time, i.e., scheduled start time will be after this value
+          example: '2021-12-21T11:00:00Z'
+        scheduledStartTimeMax:
+          type: string
+          description: The latest limit for the scheduled start time in UTC time, i.e., scheduled start time will be before this value
+          example: '2021-12-21T11:00:00Z'
+        isFinalized:
+          type: boolean
+          description: Whether or not we can still allow the event to be rescheduled
+          example: false
+    WindowResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique Id for this exclusion windows
+          example: af4fccf3-2ac0-494b-9f40-e95288dd752d
+        clusterId:
+          type: string
+          description: Cluster Id for the cluster that this exclusion window relates to
+          example: cf4fccf3-2ac0-494b-9f40-e95288dd752d
+        dayOfWeek:
+          type: string
+          description: The day of the week that this exclusion window starts on
+          example: TUESDAY
+        startHour:
+          type: integer
+          description: The hour of the day that this exclusion window starts on
+          format: int32
+          example: 14
+        durationInHours:
+          type: integer
+          description: The duration (in hours) of this exclusion window
+          format: int32
+          example: 6
+      description: List of exclusion windows for the given cluster
+    CreateExclusionWindowResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique Id for this exclusion windows
+          example: af4fccf3-2ac0-494b-9f40-e95288dd752d
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes

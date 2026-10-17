@@ -1,0 +1,473 @@
+openapi: 3.2.0
+info:
+  title: Instaclustr Encryption Key API
+  version: Deprecated
+  x-logo:
+    altText: Instaclustr Logo
+    backgroundColor: '#FFFFFF'
+    url: https://console2.instaclustr.com/assets/logos/instaclustr_logo_for_redocly.svg
+  description: 'Operations tagged Encryption Key across 2 of this provider''s published API definitions: instaclustr-deprecated-openapi.json, instaclustr-deprecated-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.instaclustr.com
+  description: Instaclustr API
+security:
+- Basic Authentication: []
+tags:
+- name: Encryptionkey
+  description: Operations related to encryption keys.
+  x-insta-tag-group: Provisioning V1
+paths:
+  /provisioning/v1/encryption-keys:
+    get:
+      tags:
+      - Encryptionkey
+      summary: List all encryption keys
+      description: List encryption keys previously added to the account
+      operationId: listAllKeys
+      responses:
+        '200':
+          description: Successfully retrieved all encryption keys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EncryptionKeyResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: No encryption keys are associated with this account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    post:
+      tags:
+      - Encryptionkey
+      summary: Add encryption key
+      description: Add an encryption key to the account, please see here for more information on sharing a KMS key with Instaclustr.
+      operationId: provisionRequestHandler
+      requestBody:
+        description: Encryption key to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiEncryptionKeyRequest'
+        required: true
+      responses:
+        '202':
+          description: The encryption key has been successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsProviderEncryptionKey'
+        '400':
+          description: Invalid encryption key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/encryption-keys/{keyId}:
+    delete:
+      tags:
+      - Encryptionkey
+      summary: Delete encryption key
+      description: Delete an encryption key from the account
+      operationId: deleteEncryptionKey
+      parameters:
+      - name: keyId
+        in: path
+        description: The ID of the encryption key to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+      responses:
+        '202':
+          description: Successfully deleted an encryption key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: delete encryption key request accepted
+        '400':
+          description: Encryption key in use. Data centres using this key need to be deleted first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Key does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+  /provisioning/v1/encryption-keys/{keyId}/valid:
+    get:
+      tags:
+      - Encryptionkey
+      summary: Validate encryption Key
+      operationId: validateKeyHandler
+      parameters:
+      - name: keyId
+        in: path
+        description: The ID of the encryption key to be validated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+        example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+      responses:
+        '200':
+          description: Encryption Key validation response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EncryptionKeyValidationResponse'
+        '400':
+          description: Encryption key is not a valid UUID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Not Authorized
+          content:
+            application/json: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json: {}
+        '404':
+          description: Encryption key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '415':
+          description: 'Unsupported media type: returned when the payload is in an unsupported format.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: 'Too many requests: returned when more than 35 requests per second are being received by your user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      deprecated: false
+    servers:
+    - url: https://api.instaclustr.com
+      description: Instaclustr API
+components:
+  schemas:
+    GenericResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message content
+    EncryptionKeyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Encryption key ID
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        arn:
+          type: string
+          description: AWS ARN for the encryption key
+          example: arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789abc
+        alias:
+          type: string
+          description: Encryption key alias
+          example: virginia 1
+        provider:
+          type: string
+          description: Name of the provider account. Defaults to <code>INSTACLUSTR</code>. Must be explicitly provided for Run-In-Your-Own-Account customers.
+          example: INSTACLUSTR
+    EncryptionKeyValidationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The Response message from the API stating if the key is valid
+        isValid:
+          type: boolean
+          description: If the key is valid or invalid
+        regions:
+          type: array
+          items:
+            type: string
+    ApiEncryptionKeyRequest:
+      required:
+      - alias
+      - arn
+      type: object
+      properties:
+        alias:
+          maxLength: 30
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]{1}[a-zA-Z0-9 _-]*$
+          type: string
+          description: Encryption key alias
+          example: virginia 1
+        arn:
+          minLength: 1
+          type: string
+          description: AWS ARN for the encryption key
+          example: arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789abc
+        provider:
+          type: string
+          writeOnly: true
+        providerAccount:
+          minLength: 1
+          type: string
+          description: Name of the provider account. Defaults to <code>INSTACLUSTR</code>. Must be explicitly provided for Run-In-Your-Own-Account customers.
+          example: INSTACLUSTR
+    ErrorMessage:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errorDetails:
+          type: object
+        code:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        link:
+          type:
+          - string
+          - 'null'
+    AwsKmsArn:
+      type: object
+      properties:
+        awsAccountId:
+          type: string
+        kmsId:
+          type: string
+        isValid:
+          type: boolean
+        regions:
+          type: array
+          items:
+            type: string
+        arn:
+          type: string
+        multiRegionARNs:
+          type: array
+          items:
+            type: string
+    AwsProviderEncryptionKey:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: ff4fccf3-2ac0-494b-9f40-e95288dd752d
+        alias:
+          type: string
+        arn:
+          $ref: '#/components/schemas/AwsKmsArn'
+        accountPrimaryKey:
+          type: string
+          format: uuid
+        inUse:
+          type: boolean
+        providerAccount:
+          type: string
+  securitySchemes:
+    Basic_Authentication:
+      type: http
+      description: Most requests to the API must use Basic Authentication and contain a valid username and appropriate API key for the endpoint.<br><br>API keys can be retrieved any time from the <a href='https://console2.instaclustr.com/' target='_blank'>console</a>. To find the API key relevant to the endpoint, refer to the Authentication & Rate Limit section for the endpoint or the group of the endpoint.
+      scheme: basic
+    No_Authentication:
+      type: http
+      description: Certain endpoints are publicly available and does not need any authentication to access.
+      scheme: none
+x-refined-from:
+- instaclustr-deprecated-openapi.json
+- instaclustr-deprecated-openapi.yml
+x-tagGroups:
+- name: Cluster Management V2
+  tags:
+  - Cluster Management V2 - Trait
+  - Account Cluster List V2
+  - AWS Encryption Key V2
+  - AWS Endpoint DNS Names V2
+  - AWS Endpoint Service Names V2
+  - AWS Endpoint Service Principals V2
+  - AWS FSx ONTAP File Systems
+  - AWS FSx ONTAP Filesystem Credentials V2
+  - AWS Prefix List Firewall Rule V1
+  - AWS Prefix List Firewall Rules V1
+  - AWS Security Group Firewall Rule V2
+  - AWS Security Group Firewall Rules V2
+  - AWS VPC Peer V2
+  - Apache Cassandra Provisioning V2
+  - Apache Kafka ACL V2
+  - Apache Kafka ACL V3
+  - Apache Kafka Connect Mirror V2
+  - Apache Kafka Connect Provisioning V2
+  - Apache Kafka Provisioning V2
+  - Apache Kafka Provisioning V3
+  - Apache Kafka Rest Proxy User
+  - Apache Kafka Schema Registry User
+  - Apache Kafka Tiered Storage
+  - Apache Kafka Topic V2
+  - Apache Kafka Topic V3
+  - Apache Kafka User
+  - Apache Zookeeper Provisioning V2
+  - Azure Private Link Service Subscriptions
+  - Azure Vnet Peer V2
+  - BYOC AWS CloudFormation
+  - BYOC AWS Provider Account Setup V1
+  - Cadence Domain Rate Limits V2
+  - Cadence Global Domain Rate Limits V2
+  - Cadence Provisioning V2
+  - ClickHouse Configurations
+  - ClickHouse Integrations
+  - ClickHouse Provisioning
+  - Cloud Provider Details V2
+  - Cluster Exclusion Window V2
+  - Cluster Maintenance Events V2
+  - Cluster Network Firewall Rule V2
+  - Cluster Network Firewall Rules V2
+  - Cluster Non Recurring Exclusion Window V2
+  - Cluster Settings V2
+  - Cluster Suspend Resume V2
+  - Custom Tags V2
+  - GCP PSC Service Attachments Accept List V2
+  - GCP VPC Peer V2
+  - Horizontal Scaling Operations
+  - Karapace Rest Proxy User
+  - Karapace Schema Registry User
+  - MCP Gateway Backend V1
+  - MCP Gateway Persona Access Control V1
+  - MCP Gateway Provisioning V1
+  - MCP Gateway Tool V1
+  - MCP Gateway Virtual Server V1
+  - Management Units Usage
+  - OpenSearch Egress Rules V2
+  - OpenSearch External S3 Bucket V2
+  - OpenSearch Provisioning V2
+  - PostgreSQL Configuration V2
+  - PostgreSQL Operations
+  - PostgreSQL Provisioning V2
+  - Private Link Private Service Connect Endpoint Addresses V2
+  - Redis Provisioning V2
+  - Redis User V2
+  - Resize Operations V2
+  - Terraform Import V2
+  - User Actions V3
+  - Valkey Provisioning V2
+  - Valkey User V2
+- name: Monitoring
+  tags:
+  - Monitoring - Trait
+  - Monitoring API
+  - Monitoring API - Cluster
+  - Monitoring API - Data Centre
+  - Monitoring API - Node
+- name: User Management
+  tags:
+  - User Management and SCIM 2.0 API - Trait
+  - Service User Management API
+  - User Management and SCIM 2.0 API
+- name: Other
+  tags:
+  - Organization Management API
+  - Pricing information - Node sizes
