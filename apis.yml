@@ -33,6 +33,16 @@ tags:
 - PostgreSQL
 - OpenSearch
 - ClickHouse
+- Managed Database
+- Data Streaming
+- MCP
+tags_raw:
+- Company
+- Apache Kafka
+- Apache Cassandra
+- PostgreSQL
+- OpenSearch
+- ClickHouse
 - Managed Databases
 - Data Streaming
 - MCP
@@ -1974,7 +1984,8 @@ apis:
   description: Operations related to GCP PSC Service Attachments Accept List
   humanURL: https://instaclustr.redoc.ly/Current/
   baseURL: https://api.instaclustr.com
-  tags:
+  tags: []
+  tags_raw:
   - GCP PSC Service Attachments Accept List V2
   properties:
   - type: OpenAPI
@@ -2992,7 +3003,8 @@ apis:
   description: Operations related to Private Link / Private Service Connect Endpoint addresses
   humanURL: https://instaclustr.redoc.ly/Current/
   baseURL: https://api.instaclustr.com
-  tags:
+  tags: []
+  tags_raw:
   - Private Link Private Service Connect Endpoint Addresses V2
   properties:
   - type: OpenAPI
