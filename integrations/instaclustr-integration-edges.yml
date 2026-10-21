@@ -11,6 +11,8 @@ checked:
 - https://n8n.io/integrations/instaclustr/
 - https://www.instaclustr.com/support/api-integrations/api-reference/rate-limits/instaclustr-api-rate-limits/
 - https://zapier.com/apps/instaclustr/integrations
+- opentofu/integrations/opentofu-integration-edges.yml
+- terraform/integrations/terraform-integration-edges.yml
 summary: Instaclustr documents provider-written integration guides under support/api-integrations/integrations/
   (Prometheus, New Relic, Heroku, Kong, Datadog, Terraform); no Zapier/n8n marketplace app found.
 marketplace_apps: []
@@ -57,4 +59,43 @@ edges:
   direction: provider-built
   category: infrastructure-as-code
   partner_match: null
+- partner_name: OpenTofu (opentofu-registry)
+  partner: opentofu
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: opentofu-registry
+  evidence: https://search.opentofu.org/provider/instaclustr/instaclustr
+  mirror_of: opentofu/integrations/opentofu-integration-edges.yml
+  apps:
+  - instaclustr/instaclustr
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
+- partner_name: Terraform (terraform-registry)
+  partner: terraform
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: terraform-registry
+  evidence: https://registry.terraform.io/providers/instaclustr/instaclustr
+  mirror_of: terraform/integrations/terraform-integration-edges.yml
+  apps:
+  - instaclustr/instaclustr
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (Terraform partner tier)
+  - Verified publisher (GitHub domain-verified organization)
 templates: []
